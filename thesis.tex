@@ -15,7 +15,7 @@
 
 % Khmer and English fonts
 \newfontfamily\khmerfont{Khmer OS Muol Light}
-\newfontfamily\khmernormal{Khmer OS Fasthand}
+\newfontfamily\khmernormal{Khmer OS Siemreap}
 \newfontfamily\englishfont{TeX Gyre Termes}
 
 \title{}
@@ -29,30 +29,9 @@
 \thispagestyle{empty}
 
 
-% --- Abstract Page (English) ---
-\thispagestyle{plain}
-\begin{center}
-    {\khmerfont\fontsize{16pt}{20pt}\selectfont មូលន័យសង្ខេប \par}
-    \vspace{1cm}
-    \begin{minipage}{0.9\textwidth}
-        \khmernormal
-        \small
-        ការស្រាវជ្រាវនេះផ្តោតលើវិធីសាស្ត្រថ្មីសម្រាប់ការទទួលស្គាល់អត្ថបទសរសេរដោយ ដៃភាសាខ្មែរ។ វាប្រើបច្ចេកវិទ្យា TrOCR ដែលបានបណ្ដុះបណ្ដាលជាមុនលើទិន្នន័យ ពហុភាសាថ្នាក់ធំ ហើយបន្តដំណើរការបណ្ដុះបណ្ដាលបន្ថែមជាផ្នែកបន្ថែម។ ទិន្នន័យសម្រាប់ការបណ្ដុះបណ្ដាលត្រូវបានរៀបចំយ៉ាងប្រុងប្រយ័ត្ន ដើម្បីអាចផ្គូផ្គងនឹងលក្ខណៈពិសេសនៃអក្សរខ្មែរ។ លទ្ធផលនៃការសាកល្បងបង្ហាញថា TrOCR អាចផ្ដល់នូវលទ្ធភាពស្គាល់អក្សរដែលមានតម្លៃខ្ពស់ជាងវិធីបុរាណ។
-    \end{minipage}
-\end{center}
-\newpage
-
 % --- Abstract Page (Khmer) ---
 \thispagestyle{plain}
-\begin{center}
-    {\bfseries\LARGE Abstract \par}
-    \vspace{1cm}
-    \begin{minipage}{0.9\textwidth}
-        \englishfont
-        \small
-        A novel approach to Khmer handwritten text recognition is proposed using a fine-tuned TrOCR transformer model. The system leverages large-scale multilingual pretraining and supervised fine-tuning to handle complex character structures in Khmer script. This thesis presents the dataset preparation, model architecture, training methodology, and performance evaluation using standard benchmarks. The results show significant improvements in recognition accuracy compared to traditional OCR techniques.
-    \end{minipage}
-\end{center}
+\input{abstract}
 \newpage
 
 % Table of contents (no page number on first page)
