@@ -1,22 +1,87 @@
-\begin{center}
-    {\khmerfont\fontsize{13pt}{20pt}\selectfont មូលន័យសង្ខេប \par}
-    \vspace{1cm}
-    \begin{minipage}{0.9\textwidth}
-        \khmernormal
-        \small
-        ដោយសារតែកង្វះឯកសារ ការចងក្រងអក្សរខ្មែរ នៅមានកម្រិតហេតុដូចនេះហើយ ទើបមានការខ្វះខាត ជាខ្លាំងទៅលើ ការស្រាវជ្រាវអក្សរសាស្ដ្រខ្មែរ ជាពិសេស គឺការសិក្សាទៅលើ
-        ការកំណត់សម្គាល់ អត្ថបទអក្សរសាស្ដ្រខ្មែរ ដែលបានសរសេរដោយដៃ មូលហេតុចម្បងដែលវាពិបាកនោះគឺ ការបង្កើត ឯកសារសិប្បនិម្មិត (synthetic data) គឺវាមានភាពស្មុកស្មាញ ដើម្បីទុកសម្រាប់ស្រាវជ្រាវទៅលើ ប្រព័ន្ន ទាំងអស់នោះ។
-        នៅក្នុង អត្ថបទស្រាវជ្រាវមួយនេះ ខ្ញុំនឹងប្រើប្រាស់វិធីសាស្ដ្រដែល មានសក្ដានុពលសម្រាប់ ការកំណត់សម្គាល់ អក្សរសាស្ដ្រខ្មែរដែលបានសរសេរចេញពីដៃផ្ទាល់
-    \end{minipage}
-\end{center}
-\vspace{1.5cm}
+\begin{adjustwidth}{0.5cm}{0.5cm}
 
-\begin{center}
-    {\bfseries\LARGE Abstract \par}
+    % Khmer Abstract
+    \begin{center}
+        {\khmerfont\fontsize{15pt}{25pt}\selectfont \textbf{មូលន័យសង្ខេប} \par}
+    \end{center}
+    
     \vspace{1cm}
-    \begin{minipage}{0.9\textwidth}
-        \englishfont
-        \small
-        A novel approach to Khmer handwritten text recognition is proposed using a fine-tuned TrOCR transformer model. The system leverages large-scale multilingual pretraining and supervised fine-tuning to handle complex character structures in Khmer script. This thesis presents the dataset preparation, model architecture, training methodology, and performance evaluation using standard benchmarks. The results show significant improvements in recognition accuracy compared to traditional OCR techniques.
-    \end{minipage}
-\end{center}
+    \khmernormal
+    \small
+    ក្នុងសហគមន៍បច្ចេកវិទ្យាព័ត៌មានសម័យថ្មី ការចាប់យកអត្ថបទចេញពីរូបភាព  – [ OCR ]
+    (Optical Character Recognition) ក្លាយជាបច្ចេកវិទ្យាសំខាន់មួយដែលត្រូវបានប្រើប្រាស់
+    យ៉ាងទូលំទូលាយ សម្រាប់បំលែងឯកសារសរសេរ ឬរូបភាពអក្សរឱ្យទៅជាអត្ថបទ អេឡិចត្រូនិច (digital text)។ 
+    ការអភិវឌ្ឍ OCR សម្រាប់ភាសាខ្មែរ តែងតែប្រឈមនឹងបញ្ហាជាច្រើន ដោយសារកង្វះនៃប្រភពទិន្នន័យ 
+    និងឯកសារសម្រាប់ train AI model។ ដើម្បីដោះស្រាយបញ្ហានេះ យើងបានបង្កើតទិន្នន័យសិប្បនិម្មិត 
+    (Synthetic Dataset) ដោយប្រើវិធីសាស្ត្របច្ចេកទេសកម្រិតខ្ពស់។\par
+    
+    ក្នុងដំណើរការបង្កើតទិន្នន័យសិប្បនិម្មិត (Synthetic Dataset) រួមមាន៖
+    \begin{itemize}
+        \item វិធីសាស្ដ្រក្នុងការប្រមូលអត្ថបទចេញពីអ៊ីនធឺណិត មានដូចខាងក្រោម (Scrape data) ៖
+        \begin{itemize}
+            \item ដំណាក់កាលទីមួយ៖ យើងបានប្រមូលអត្ថបទចេញពី khsearch.com, Chuon-Nath-Dictionary, Alpha-Word, Google-Word, និងចុងក្រោយគឺ Huggingface.com ។
+            \item ដំណាក់កាលទីពីរ៖ យើងបានសម្អាត ទិន្នន័យទាំងអស់នោះ ឆ្លងកាត់ដំណើរការ ដូចជា លុបចោលតួរអក្សរណាដែលមិនសូវមាន វត្តមាននៅលើ រូបភាព ញឹកញាប់ និងបានលុបចោល តួរអក្សរណាដែល Fonts renders អត់ចេញ។
+            \item ដំណាក់កាលទីបី៖ ដំណាក់កាលមួយនេះ យើងបានធ្វើការ កាត់ប្រយោគទាំងអស់នោះ ជាពាក្យៗ ដោយប្រើប្រាស់ library ឈ្មោះ khmer-nltk
+            \item ដំណាក់កាលទីបួន៖ ចុងក្រោយ ក៏បានរៀបចំជា ប្រយោគដែល មានប្រវែង Random ពី ១ អក្សរ រហូតដល់ ១១០ អក្សរ ។
+        \end{itemize}
+        \item បង្កើតរូបភាពដោយអនុវត្តតាមលក្ខខណ្ឌខាងក្រោម ៖ 
+        \begin{itemize}
+            \item ផ្ទៃខាងក្រោយចៃដន្យ (Apply Different backgrounds)
+            \item បំពាក់ពុម្ពអក្សរផ្សេងៗគ្នា (Apply Different fonts)
+            \item Noise: \texttt{gaussian\_noise}, \texttt{salt\_pepper\_noise}, \texttt{speckle\_noise}, \texttt{blur}
+            \item បង្វិលអក្សរបន្តិច (random rotation text)
+            \item បញ្ចូល Margin Randomly (1, 5) pixels
+        \end{itemize}
+        \item សរុបមកយើងបានបង្កើត Data ជាង ៤ លាន records សម្រាប់ train OCR model
+    \end{itemize}
+    \par
+    
+    Architecture OCR ត្រូវបានបែងចែកជា ២ ផ្នែក៖ \textbf{Text Detection} និង \textbf{Text Recognition}:\par
+    
+    \textbf{Text Detection}: យើងប្រើម៉ូដែល \textbf{CRAFT} ដោយបានធ្វើការ Train ឡើងវិញដោយ បាន annotation ទៅលើ 
+    លើរូបភាពប្រហែល ៥០០ images និងសរុបចំនួន bounding box ជាង ១០,០០០ boxes។\par
+    
+    \textbf{Text Recognition}: យើងប្រើ \textbf{TrOCR base model} ចេញពី Microsoft (មាននៅក្នុង Hugging Face) ហើយបាន
+    fine-tune ទៅលើ dataset ខ្មែរសិប្បនិម្មិត (Synthetic Dataset) ដើម្បីបង្កើនសមត្ថភាពក្នុងការសម្គាល់អក្សរខ្មែរ។\par
+    
+    លទ្ធផលសិក្សាបានបង្ហាញថា OCR របស់ពួកយើងអាចសម្គាល់អត្ថបទចេញពីរូបភាព បានដោយភាពត្រឹមត្រូវលើសពី ៩០\%។ 
+    ដូច្នេះ ការសិក្សានេះបង្ហាញអំពីសក្តានុពលនៃការបង្កើត dataset និងការប្រើម៉ូដែលជំនាន់ថ្មី ដើម្បីអភិវឌ្ឍន៍ OCR ភាសាខ្មែរឱ្យមានប្រសិទ្ធភាពកាន់តែខ្ពស់។
+    វាមានសមត្ថភាព អាចចាប់យកអត្ថបទមិនត្រឹមតែពាក្យខ្លីៗ ប៉ុណ្ណោះទេ តែវាក៏អាចធ្វើការចាប់យក ដូចជា មួយតួអក្សរដោយមួយតួអក្សរ, ពាក្យដោយពាក្យ, ប្រយោគដោយប្រយោគ រហូតដល់ មួយប្រយោគវែង ១១០ តួអក្សរថែមទៀតផង ។ ហើយលើសពីនោះទៀត វាក៏អាចធ្វើការ កំណត់សម្គាល់ទៅលើ ពីរ ភាសាចម្បង ទាំងភាសាខ្មែរ និងភាសាអង់គ្លេស ។    
+    \vspace{1.5cm}
+    
+    % English Abstract
+    \begin{center}
+        {\bfseries\LARGE Abstract \par}
+    \end{center}
+    
+    \vspace{1cm}
+    \englishfont
+    \large
+    In the modern era of information technology, Optical Character Recognition (OCR) has emerged as a crucial technology for converting printed or handwritten text from images into digital form. However, the development of OCR systems for the Khmer language presents significant challenges, primarily due to the lack of large-scale annotated datasets.
+    To address this limitation, we constructed a high-quality synthetic dataset using an advanced data generation pipeline. The pipeline involves the following key steps:
+    \begin{itemize}[leftmargin=1.5em]
+        \item Text Collection: We gathered Khmer text data from various online sources, including khsearch.com, Chuon-Nath Dictionary, Alpha-Word, Google-Word, and Hugging Face.
+        \item Data Cleaning: We processed and cleaned the collected text by removing uncommon characters, symbols that are rarely rendered correctly by fonts, and excessive whitespace.
+        \item Text Segmentation: Sentences were tokenized into words using the khmer-nltk library, and then reconstructed into randomized sentence lengths ranging from 1 to 110 characters.
+        \item Image Generation: We rendered text into synthetic images by:
+        \begin{itemize}[leftmargin=2em]
+            \item Applying random backgrounds and a variety of Khmer fonts
+            \item Adding diverse noise types such as Gaussian noise, salt-and-pepper noise, speckle noise, and blur
+            \item Introducing slight random rotations and random margins (1–5 pixels)
+        \end{itemize}
+        \item As a result, we generated over 4 million high-quality synthetic image-text pairs to train the OCR model.
+    \end{itemize}
+    \par
+    
+    Our Khmer OCR system consists of two core components:
+    
+    \textbf{Text Detection:} We fine-tuned the CRAFT (Character Region Awareness for Text Detection) model using 500 manually annotated images, totaling over 10,000 bounding boxes.
+    
+    \textbf{Text Recognition:} We fine-tuned Microsoft’s TrOCR base model (available on Hugging Face) on our synthetic Khmer dataset to improve its ability to recognize Khmer text.
+    
+    The evaluation results demonstrate that our system achieves a recognition accuracy exceeding 90%. These findings highlight the effectiveness of combining synthetic data generation with modern transformer-based architectures to significantly advance Khmer OCR capabilities. Notably, the system can accurately recognize a wide range of text—from single characters and individual words to full sentences of up to 110 characters—and supports both Khmer and English languages.
+
+
+    
+    \end{adjustwidth}
+    

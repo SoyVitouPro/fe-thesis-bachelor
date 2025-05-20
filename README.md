@@ -29,3 +29,8 @@ please using settings.json
 ```
 fc-list :lang=km
 ```
+
+### 6. auto re-render
+```
+latexmk -xelatex -pvc thesis.tex
+```
