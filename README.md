@@ -34,3 +34,8 @@ fc-list :lang=km
 ```
 latexmk -xelatex -pvc thesis.tex
 ```
+
+### 7. How to recomepile
+```
+latexmk -xelatex thesis.tex
+```
