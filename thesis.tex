@@ -5,6 +5,8 @@
 \usepackage{fancyhdr}
 \usepackage{changepage}
 \usepackage{enumitem}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+
 
 \geometry{
   a4paper,
@@ -42,9 +44,41 @@
 \input{abstract}
 \newpage
 
-% Table of contents (no page number on first page)
-\tableofcontents
+% --- Supervisor Statement Page (Khmer) ---
+\thispagestyle{plain}
+\input{supervisor_statement}
 \newpage
+
+% --- Candidate Statement Page (Khmer) ---
+\thispagestyle{plain}
+\input{candidate_statement}
+\newpage
+
+% --- Acknowledgments Page (Khmer) ---
+\thispagestyle{plain}
+\input{acknowledgements}
+\newpage
+
+% --- Table of Contents Page (Khmer) ---
+\thispagestyle{plain}
+\input{table_content}
+\newpage
+
+% --- List of Tables Page (Khmer) ---
+\thispagestyle{plain}
+\input{list_of_tables}
+\newpage
+
+% --- List of Figures Page (Khmer) ---
+\thispagestyle{plain}
+\input{list_of_figures}
+\newpage
+
+% --- List of Abbreviations Page (Khmer) ---
+\thispagestyle{plain}
+\input{list_of_abbreviations}
+\newpage
+
 
 % Enable normal page numbering (centered at bottom)
 \pagestyle{plain}

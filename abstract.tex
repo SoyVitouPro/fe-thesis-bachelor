@@ -1,11 +1,13 @@
-\begin{adjustwidth}{0.5cm}{0.5cm}
+\begin{adjustwidth}{0.2cm}{0.2cm}
 
+    
     % Khmer Abstract
     \begin{center}
         {\khmerfont\fontsize{15pt}{25pt}\selectfont \textbf{មូលន័យសង្ខេប} \par}
     \end{center}
+    \label{khmer-abstract}
     
-    \vspace{1cm}
+    \vspace{0.5cm}
     \khmernormal
     \small
     ក្នុងសហគមន៍បច្ចេកវិទ្យាព័ត៌មានសម័យថ្មី ការចាប់យកអត្ថបទចេញពីរូបភាព  – [ OCR ]
@@ -47,18 +49,17 @@
     លទ្ធផលសិក្សាបានបង្ហាញថា OCR របស់ពួកយើងអាចសម្គាល់អត្ថបទចេញពីរូបភាព បានដោយភាពត្រឹមត្រូវលើសពី ៩០\%។ 
     ដូច្នេះ ការសិក្សានេះបង្ហាញអំពីសក្តានុពលនៃការបង្កើត dataset និងការប្រើម៉ូដែលជំនាន់ថ្មី ដើម្បីអភិវឌ្ឍន៍ OCR ភាសាខ្មែរឱ្យមានប្រសិទ្ធភាពកាន់តែខ្ពស់។
     វាមានសមត្ថភាព អាចចាប់យកអត្ថបទមិនត្រឹមតែពាក្យខ្លីៗ ប៉ុណ្ណោះទេ តែវាក៏អាចធ្វើការចាប់យក ដូចជា មួយតួអក្សរដោយមួយតួអក្សរ, ពាក្យដោយពាក្យ, ប្រយោគដោយប្រយោគ រហូតដល់ មួយប្រយោគវែង ១១០ តួអក្សរថែមទៀតផង ។ ហើយលើសពីនោះទៀត វាក៏អាចធ្វើការ កំណត់សម្គាល់ទៅលើ ពីរ ភាសាចម្បង ទាំងភាសាខ្មែរ និងភាសាអង់គ្លេស ។    
-    \vspace{1.5cm}
+    \vspace{2cm}
     
     % English Abstract
     \begin{center}
         {\bfseries\LARGE Abstract \par}
     \end{center}
-    
-    \vspace{1cm}
+    \label{abstract}
+    \vspace{0.5cm}
     \englishfont
     \large
-    In the modern era of information technology, Optical Character Recognition (OCR) has emerged as a crucial technology for converting printed or handwritten text from images into digital form. However, the development of OCR systems for the Khmer language presents significant challenges, primarily due to the lack of large-scale annotated datasets.
-    To address this limitation, we constructed a high-quality synthetic dataset using an advanced data generation pipeline. The pipeline involves the following key steps:
+    In the modern era of information technology, Optical Character Recognition (OCR) has emerged as a crucial technology for converting printed or handwritten text from images into digital form. However, the development of OCR systems for the Khmer language presents significant challenges, primarily due to the lack of large-scale annotated datasets. To address this limitation, we constructed a high-quality synthetic dataset using an advanced data generation pipeline. Our Khmer OCR system consists of two core components:
     \begin{itemize}[leftmargin=1.5em]
         \item Text Collection: We gathered Khmer text data from various online sources, including khsearch.com, Chuon-Nath Dictionary, Alpha-Word, Google-Word, and Hugging Face.
         \item Data Cleaning: We processed and cleaned the collected text by removing uncommon characters, symbols that are rarely rendered correctly by fonts, and excessive whitespace.
@@ -73,15 +74,16 @@
     \end{itemize}
     \par
     
+    \vspace{0.2cm}
     Our Khmer OCR system consists of two core components:
+    \begin{itemize}[leftmargin=1.5em]
+        \item \textbf{Text Detection:} We fine-tuned the CRAFT (Character Region Awareness for Text Detection) model using 500 manually annotated images, totaling over 10,000 bounding boxes.
+        
+        \item \textbf{Text Recognition:} We fine-tuned Microsoft's TrOCR base model (available on Hugging Face) on our synthetic Khmer dataset to improve its ability to recognize Khmer text.
+    \end{itemize}
     
-    \textbf{Text Detection:} We fine-tuned the CRAFT (Character Region Awareness for Text Detection) model using 500 manually annotated images, totaling over 10,000 bounding boxes.
-    
-    \textbf{Text Recognition:} We fine-tuned Microsoft’s TrOCR base model (available on Hugging Face) on our synthetic Khmer dataset to improve its ability to recognize Khmer text.
-    
-    The evaluation results demonstrate that our system achieves a recognition accuracy exceeding 90%. These findings highlight the effectiveness of combining synthetic data generation with modern transformer-based architectures to significantly advance Khmer OCR capabilities. Notably, the system can accurately recognize a wide range of text—from single characters and individual words to full sentences of up to 110 characters—and supports both Khmer and English languages.
+    {\englishfont The evaluation results demonstrate that our system achieves a recognition accuracy exceeding 90\%. These findings highlight the effectiveness of combining synthetic data generation with modern transformer-based architectures to significantly advance Khmer OCR capabilities. Notably, the system can accurately recognize a wide range of text—from single characters and individual words to full sentences of up to 110 characters—and supports both Khmer and English languages.}
 
 
     
     \end{adjustwidth}
-    
