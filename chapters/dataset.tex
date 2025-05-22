@@ -1,0 +1,64 @@
+
+\chapter{Dataset Construction}
+\phantomsection
+\label{ch:dataset}
+
+\section{Text Source Collection}
+\label{sec:text-source}
+This section describes the process of collecting Khmer text data from various sources to create a comprehensive dataset for OCR training and evaluation.
+
+\subsection{Khmer Websites and Dictionaries}
+\label{subsec:websites}
+We gathered text samples from popular Khmer news websites, online dictionaries, and digital libraries to ensure diverse vocabulary coverage and writing styles.
+
+\subsection{Online NLP Resources and Tools} 
+\label{subsec:nlp-tools}
+Additional text data was collected using available Khmer NLP tools and resources, including pre-existing corpora and language processing utilities.
+
+\section{Text Cleaning and Preprocessing}
+\label{sec:preprocessing}
+Raw text data underwent several preprocessing steps to ensure quality and consistency for synthetic image generation.
+
+\subsection{Removal of Invalid Characters and Whitespace}
+\label{subsec:cleaning}
+We implemented filtering mechanisms to remove invalid Unicode characters, normalize whitespace, and handle special characters that could affect OCR performance.
+
+\subsection{Unicode Normalization}
+\label{subsec:unicode}
+All text was normalized to ensure consistent Unicode representation of Khmer characters and their combinations.
+
+\section{Sentence Segmentation and Reconstruction}
+\label{sec:segmentation}
+The cleaned text was processed to create meaningful sentence units suitable for OCR training.
+
+\subsection{Tokenization Using khmer-nltk}
+\label{subsec:tokenization}
+We utilized the khmer-nltk library to perform accurate tokenization of Khmer text while preserving linguistic properties.
+
+\subsection{Sentence Length Variation}
+\label{subsec:length}
+Sentences were segmented and reconstructed to create samples with varying lengths, ensuring the dataset represents real-world text diversity.
+
+\section{Image Generation Pipeline}
+\label{sec:generation}
+A robust pipeline was developed to convert processed text into synthetic training images.
+
+\subsection{Font and Background Selection}
+\label{subsec:fonts}
+Multiple Khmer fonts and background variations were incorporated to create diverse and realistic training samples.
+
+\subsection{Noise Injection Techniques}
+\label{subsec:noise}
+Various types of noise and distortions were systematically added to simulate real-world document conditions.
+
+\subsection{Image Rotation and Margin Augmentation}
+\label{subsec:augmentation}
+Geometric transformations and margin variations were applied to improve model robustness to different text orientations and layouts.
+
+\section{Dataset Statistics and Format}
+\label{sec:statistics}
+This section presents detailed statistics about the generated dataset, including size, character distribution, and format specifications.
+
+\section{Comparison with Existing Datasets}
+\label{sec:comparison}
+A comparative analysis of our dataset with existing Khmer OCR datasets, highlighting improvements and unique characteristics.
