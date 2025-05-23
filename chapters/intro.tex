@@ -75,7 +75,7 @@ One of the fundamental obstacles is the lack of clear word boundaries in Khmer w
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{figures/example_of_sequential_text.png}
+    \includegraphics[width=\textwidth]{figures/example_of_long_text.png}
     \caption{Example of sequential Khmer text showing how characters combine to form syllables and words}
     \label{fig:sequential_text}
 \end{figure}
@@ -86,13 +86,31 @@ A critical barrier to advancing Khmer OCR is the scarcity of annotated training 
 
 Additionally, font and style variability further degrade recognition performance. Khmer documents in the real world are printed in diverse typefaces and stylistic variations (e.g., Khmer OS, Nokora, and Hanuman), with differences in stroke thickness, spacing, and decoration. The lack of standardization across documents and poor documentation of these fonts means that OCR models trained on one style often fail to generalize to others. This problem is exacerbated in noisy or low-resolution scans of textbooks and historical texts.
 
+The challenge of font variability is illustrated in Figure \ref{fig:font_variants}, which shows how the same Khmer text can appear significantly different across various fonts and styles.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/varianty_of_font.png}
+    \caption{Examples of the same Khmer text rendered in different fonts, demonstrating the significant visual variations that OCR systems must handle}
+    \label{fig:font_variants}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/text_stacking.png}
+    \caption{Illustration of Khmer text stacking patterns, showing how characters combine vertically and horizontally to form syllables and words \cite{buoy2023khmerocr}}
+    \label{fig:text_stacking}
+\end{figure}
+
 Taken together, these challenges create a significant barrier to digitizing Khmer documents using CRAFT + TrOCR pipelines. The absence of word delimiters, the visual complexity of character stacking, cross-script confusion, data scarcity, and font inconsistency all contribute to the low accuracy and poor reliability of existing OCR solutions for Khmer. Addressing these issues requires the development of customized preprocessing, augmentation, and model training strategies—as well as targeted data collection and annotation efforts—to make Khmer OCR viable for real-world applications, especially in the context of educational digitization and cultural preservation.
+
+
 
 
 \section{Aim and Objectives of the Study}
 \label{sec:objectives}
 
-The primary aim of this research is to develop an improved optical character recognition (OCR) system specifically designed for the Khmer language, addressing the unique challenges of Khmer script while achieving high accuracy and reliability in real-world applications.
+The primary aim of this research is to develop an improved optical character recognition (OCR) system specifically designed for MIX-language (Khmer-English) addressing the unique challenges of Khmer-English script while achieving high accuracy and reliability in real-world applications.
 
 The specific objectives of this study are:
 
@@ -149,13 +167,11 @@ Finally, improving Khmer OCR technology aligns with broader digital transformati
 While this research aims to advance Khmer OCR technology significantly, it is important to acknowledge certain limitations and define the scope of the study:
 
 \begin{enumerate}
-    \item The research focuses specifically on printed Khmer text and does not address handwritten text recognition, which presents additional challenges requiring separate investigation.
+    \item The research focuses specifically on printed Khmer text and English text and does not address handwritten text recognition, which presents additional challenges requiring separate investigation.
     
     \item The study primarily considers modern Khmer fonts and typography, with limited coverage of historical or decorative text styles.
     
     \item While the system aims to handle various document quality levels, extremely degraded or damaged documents may fall outside the scope of reliable recognition.
-    
-    \item The research concentrates on pure Khmer text and may not fully address documents containing mixed scripts or languages.
     
     \item The study focuses on optical character recognition and does not extend to higher-level natural language processing tasks such as semantic analysis or machine translation.
     
@@ -182,5 +198,4 @@ This thesis is organized into the following chapters:
     
     \item \textbf{Conclusion}: Summarizes key findings, contributions, and suggests directions for future research.
 \end{enumerate}
-
 Each chapter builds upon the previous ones to present a comprehensive study of Khmer OCR development.
