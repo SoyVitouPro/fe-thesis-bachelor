@@ -234,22 +234,150 @@ most popular and reliable OCR tools in the world.
     \centering
     \includegraphics[width=\textwidth]{figures/Tesseract.png}
     \caption{Illustration of Tesseract OCR engine advancements, showing the improvement 
-    of recognition accuracy over time and its ability to extract text from complex images}
+    of recognition accuracy over time and its ability to extract text from complex images \cite{
+    zacharias2020tesseract}}
     \label{fig:tesseract_advancements}
 \end{figure}
 
+\subsection{Advancements in Khmer OCR (2021-Present)}
+\phantomsection
+\label{sec:advancements-in-khmer-ocr}
+
+The new Khmer OCR system is built using a sequence-to-sequence (Seq2Seq) 
+deep learning model with attention. Instead of recognizing each character separately, 
+the model looks at a whole line of text and understands it as a sequence, 
+just like how we read. It starts with an encoder that uses convolutional layers 
+to extract visual features from the image and then passes these features 
+through a Gated Recurrent Unit (GRU), which captures the order of the characters.
+
+The decoder then takes this information and generates the output text, one character 
+at a time. With the help of an attention mechanism, the decoder can focus on different 
+parts of the image while predicting each character. This allows the model to handle 
+long text lines and various font styles more effectively.
+
+The model was trained on thousands of computer-generated Khmer text images using seven 
+common fonts. On a test set of 3,000 images, it achieved a character error rate (CER) 
+of only 1\% \cite{buoy2021seq2seq}, which is significantly better than the 3\% \cite{buoy2021seq2seq} CER from Tesseract OCR for Khmer. 
+This shows the model's high accuracy and reliability.
+
+Compared to older OCR tools like Tesseract, which treat text as a series of separate 
+characters, this new end-to-end model sees the text as a whole sequence. 
+This helps it better understand context and spacing. It also adapts better 
+to different fonts and styles, especially in complex scripts like Khmer. 
+The attention mechanism is a major improvement because it lets the model decide 
+where to "look" in the image while decoding, which improves accuracy in challenging cases.
+
+In short, this Khmer OCR model uses modern AI to provide faster, smarter, and 
+more accurate text recognition, especially for a language that has been 
+underserved in OCR research.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/bouy_rina_end_to_end_khmer_ocr.png}
+    \caption{Illustration of the end-to-end Khmer OCR system proposed by Bouy and Rina,
+    which combines a feature extractor, a sequence-to-sequence model,
+     and a post-processing module to achieve high accuracy in recognizing Khmer text. \cite{buoy2021seq2seq}}
+    \label{fig:bouy-rina-end-to-end-khmer-ocr}
+\end{figure}
 
 
 \section{Challenges in Khmer OCR}
 \phantomsection
 \label{sec:datasets}
-A comprehensive review of existing OCR datasets and evaluation benchmarks is presented, with particular focus on those relevant to Southeast Asian scripts and low-resource languages. The limitations of current datasets are also discussed.
+
+One of the biggest challenges in Khmer OCR lies in the complexity of the Khmer script. 
+Unlike Latin-based languages,  Khmer characters can be stacked and combined using 
+subscript consonants (Coeng), \cite{buoy2021seq2seq} diacritics, and various vowel positions. These components 
+can appear above, below, to the left or right, or even surround the base character. 
+This spatial variability significantly complicates the segmentation and recognition 
+process, especially for systems that rely on isolated character analysis.
+
+Khmer script is written in a wide range of fonts, each with its own style and visual 
+characteristics. \cite{buoy2021seq2seq} These differences affect how characters are formed and connected, 
+making it difficult for OCR models to generalize well across different typefaces. 
+An effective OCR system must therefore be font-invariant and capable of accurately 
+recognizing characters in any common or uncommon font.
+
+Khmer is considered a low-resource language in the fields of natural language 
+processing and OCR. This means there are limited publicly available datasets, 
+pretrained models, and tools. As a result, researchers face difficulty in 
+training robust models without generating synthetic data or heavily augmenting 
+existing datasets.
+
+Older Khmer OCR systems typically rely on explicit character segmentation, 
+breaking down the text into individual symbols before recognition. 
+This approach is prone to failure when applied to real-world images that 
+contain noise, uneven spacing, or distorted characters. \cite{buoy2021seq2seq} Since Khmer characters 
+often overlap or combine, segmentation errors are common and negatively affect 
+recognition accuracy.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/overlap_segmentation.png}
+    \caption{Khmer characters can overlap or combine in special ways, 
+    making explicit segmentation prone to errors. \cite{buoy2021seq2seq}}
+    \label{fig:overlap-segmentation}
+\end{figure}
+
+Prior Khmer OCR efforts have primarily focused on isolated character recognition 
+and manual pre/post-processing steps. These systems are limited in their ability to 
+recognize full words, phrases, or sentences. In contrast, an end-to-end solution can 
+read an entire line of text and generate output in a single forward pass, 
+improving speed, simplicity, and accuracy. \cite{buoy2021seq2seq}
+
+
 
 \section{Role of Synthetic Data}
 \phantomsection
 \label{sec:dl-models}
 
-\section{Summary of Research Gaps }
+To overcome the limitations of Khmer being a low-resource language, 
+the authors created a large-scale synthetic dataset of Khmer \textbf{text-line} 
+images using the open-source \textbf{text2image} tool provided by the Tesseract OCR engine.
+
+The dataset was generated from a text corpus containing numbers, words, phrases, 
+and full sentences in Khmer. \cite{buoy2021seq2seq} This corpus provided diverse linguistic content 
+for rendering text-line images.
+
+Multiple common Khmer fonts were used to render each item from the corpus. 
+The variation in fonts helped train the model to be font-invariant and improve 
+generalization across different writing styles.
+
+The \textbf{text2image} tool was used to convert each text entry from the corpus into a 
+grayscale image. The width and height of each image varied based on the text 
+length and presence of stacked or subscript characters. All images were 
+resized to a common height of 32 pixels to match the input size required 
+by the neural network.
+
+To simulate real-world challenges and improve the model's robustness, 
+extensive data augmentation was applied \cite{buoy2021seq2seq} :
+    \begin{itemize}
+        \item Gaussian blurring
+        \item Dilation and erosion
+        \item Blob noise and speckle noise
+        \item Multi-scale noisy backgrounds
+        \item Random concatenation of augmented images
+        \item Rotational and geometric distortions
+    \end{itemize}
+
+Each augmentation had a 50\% \cite{buoy2021seq2seq} chance of being applied to a given image, and multiple augmentations could be combined on a single image. This ensured that the model was trained on a wide range of noisy and distorted text scenarios.
+
+The final synthetic dataset consisted of millions of images representing words, 
+phrases, and sentences across different fonts and styles.
+
+\section{Summary of Research Gaps}
 \phantomsection
-\label{sec:cnn}
-This subsection examines the application of Convolutional Neural Networks in OCR, including architectures specifically designed for text recognition tasks and their performance characteristics.
+\label{sec:research-gaps}
+
+This section identifies the key research gaps in the current literature on 
+Khmer OCR technology. Despite advancements, several areas remain under-explored:
+
+\begin{itemize}
+    \item \textbf{Data Scarcity:} There is a lack of large-scale annotated datasets for Khmer text, which limits the training and evaluation of OCR models.
+    \item \textbf{Complex Script Features:} The unique characteristics of Khmer script, such as character stacking and the absence of word boundaries, are not fully addressed by existing models.
+    \item \textbf{Font Variability:} Current OCR systems struggle with the wide variety of fonts used in Khmer documents, affecting recognition accuracy.
+    \item \textbf{Real-world Document Conditions:} Many models are not robust to the noise, distortions, and variations found in real-world documents.
+\end{itemize}
+
+Addressing these gaps is crucial for developing more effective and reliable Khmer OCR solutions.
+
