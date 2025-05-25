@@ -24,7 +24,6 @@ character/symbols/words/sentences, including Khmer word-by-word data,
 English word-by-word data, Khmer sentences by sentences, English 
 sentences by sentences, and natural language data from the internet.
 
-
 \section{Text Cleaning and Preprocessing}
 \label{sec:preprocessing}
 The text data collected from the Chuon-Nath Dictionary, Alpha-Word, 
@@ -45,6 +44,15 @@ After preprocessing, the dataset was split into two parts: a training set
 and a validation set. The training set was used to train the OCR model, 
 while the validation set was used to evaluate the performance of the OCR model.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/frequency_of_text_length.png}
+    \caption{Frequency of text length in the synthetic dataset, 
+    showing the distribution of text lengths. The majority of the text  
+    lengths are between 1-50 characters, with a peak at around 20-30 characters. 
+    The longer text lengths are less frequent, but still present in the dataset.}
+    \label{fig:frequency_of_text_length}
+\end{figure}
 
 \section{Image Generation Pipeline}
 \label{sec:generation}
@@ -57,6 +65,16 @@ each line was combined with 20 different background images to simulate real-worl
 image text. This was done to ensure that the OCR model could recognize text 
 regardless of the background of the image.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/synthetic_image.png}
+    \caption{Example of a synthetic image generated for the OCR training dataset, 
+    illustrating the application of random fonts, backgrounds, and noise to simulate 
+    real-world conditions.}
+    \label{fig:synthetic-image}
+\end{figure}
+
+
 Various types of noise were applied to the text images to simulate real-world 
 conditions. This included gaussian blurring, dilation and erosion, blob noise, 
 speckle noise, multi-scale noisy backgrounds, random concatenation of augmented 
@@ -66,14 +84,7 @@ degrees to simulate variations in text orientation. Additionally, margins of
 text detection. As each text line could generate two images, the total number 
 of images produced was 3 million.
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{figures/synthetic_image.png}
-    \caption{Example of a synthetic image generated for the OCR training dataset, 
-    illustrating the application of random fonts, backgrounds, and noise to simulate 
-    real-world conditions.}
-    \label{fig:synthetic-image}
-\end{figure}
+
 
 The resulting synthetic dataset contained 3 million images, each with a unique 
 combination of font, background, and noise. The images were designed to simulate 
@@ -93,14 +104,4 @@ variety of contexts.
     \includegraphics[width=\textwidth]{figures/resutl_synthetic_dataset.png}
     \caption{Result of the synthetic dataset generation pipeline, showing the diversity of fonts, backgrounds, and noise types.}
     \label{fig:result_synthetic_dataset}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{figures/frequency_of_text_length.png}
-    \caption{Frequency of text length in the synthetic dataset, 
-    showing the distribution of text lengths. The majority of the text  
-    lengths are between 1-50 characters, with a peak at around 20-30 characters. 
-    The longer text lengths are less frequent, but still present in the dataset.}
-    \label{fig:frequency_of_text_length}
 \end{figure}
