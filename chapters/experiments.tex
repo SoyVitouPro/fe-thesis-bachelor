@@ -192,6 +192,47 @@ This is a very important hyperparameter because we used to train with 8, 16, 32,
 but it was not generalizing as expected; it was really weak to overfitting. That's why we 
 chose 1024.
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/trocr_overfitting_v1.png}
+    \caption{Training and validation loss curves for TrOCR model with batch size 8.}
+    \label{fig:trocr-overfitting}
+\end{figure}
+
+The graph above illustrates a clear case of overfitting in our TrOCR model training. 
+We initially trained the model with a batch size of 8 on our dataset of 3.5 million images. 
+As shown in the figure, while the training loss (blue line) continues to decrease, 
+the validation loss (orange line) starts to increase, indicating that the model is overfitting 
+to the training data. This overfitting occurs because the batch size of 8 is too small relative 
+to our large dataset size of 3.5 million images. With such a small batch size, the model learns 
+very specific patterns from the training data rather than generalizing well to unseen data. 
+This is why we decided to increase the batch size to 1024, which helped improve the model's 
+generalization capabilities and reduce overfitting.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/trocr_fine_tuning.png}
+    \caption{Training and validation metrics for TrOCR model with batch size 1024, 
+    showing Character Error Rate (CER) and Word Error Rate (WER) over training steps. 
+    The model demonstrates excellent performance from early training steps, with CER quickly 
+    reaching around 0.03 and WER staying below 0.12. This rapid convergence indicates effective 
+    learning, likely due to leveraging the pretrained weights from previous training. 
+    The larger batch size of 1024 contributes to better generalization compared to smaller batch sizes.}
+    \label{fig:trocr-fine-tuning}
+\end{figure}
+
+The figure above demonstrates the effectiveness of our fine-tuning approach with a batch size of 1024. 
+The model shows remarkable performance from the early stages of training, with the Character 
+Error Rate (CER) quickly stabilizing around 0.03 and the Word Error Rate (WER) maintaining 
+values below 0.12. This rapid convergence to good performance metrics can be attributed to 
+two main factors: (1) the utilization of pretrained weights from previous training iterations, 
+which provides a strong foundation for the model, and (2) the larger batch size of 1024, which 
+helps the model learn more robust features and generalize better to unseen data. The stable 
+performance across both training and validation sets indicates that the model has achieved a 
+good balance between learning and generalization, avoiding the overfitting issues we 
+encountered with smaller batch sizes.
+
+
 \section{Evaluation Metrics}
 \label{sec:metrics}
 Metrics used to evaluate the performance of the OCR system.
@@ -228,4 +269,38 @@ Text detection evaluation using precision and recall metrics.
 
 \subsection{Recognition Metrics (Accuracy, CER, WER)}
 \label{subsec:recognition-metrics}
-Text recognition evaluation using character error rate, word error rate, and accuracy metrics.
+For evaluating the text recognition performance of our TrOCR model, we employed three key metrics: Character Error Rate (CER), Word Error Rate (WER), and Accuracy. These metrics provide a comprehensive assessment of the model's recognition capabilities.
+
+Character Error Rate (CER) measures the ratio of incorrect characters to the total number of characters in the ground truth text. It is calculated as:
+
+\begin{equation}
+    CER = \frac{S + D + I}{N}
+\end{equation}
+
+where $S$ is the number of substitutions, $D$ is the number of deletions, $I$ is the number of insertions, and $N$ is the total number of characters in the ground truth text.
+
+Word Error Rate (WER) is similar to CER but operates at the word level. It measures the ratio of incorrect words to the total number of words in the ground truth text. WER is calculated as:
+
+\begin{equation}
+    WER = \frac{S_w + D_w + I_w}{N_w}
+\end{equation}
+
+where $S_w$ is the number of word substitutions, $D_w$ is the number of word deletions, $I_w$ is the number of word insertions, and $N_w$ is the total number of words in the ground truth text.
+
+Accuracy is the complement of the error rate, representing the percentage of correctly recognized characters or words. For character-level accuracy:
+
+\begin{equation}
+    Accuracy_{char} = 1 - CER
+\end{equation}
+
+And for word-level accuracy:
+
+\begin{equation}
+    Accuracy_{word} = 1 - WER
+\end{equation}
+
+[Add Figure 1 here: A line plot showing the training and validation CER over epochs]
+[Add Figure 2 here: A line plot showing the training and validation WER over epochs]
+[Add Figure 3 here: A bar chart comparing final CER and WER scores across different test sets]
+
+These metrics provide different perspectives on the model's performance. CER is more sensitive to character-level errors and is particularly useful for evaluating the model's ability to recognize individual characters accurately. WER, on the other hand, provides a higher-level view of the model's performance at the word level, which is often more relevant for practical applications. The accuracy metrics offer an intuitive way to understand the model's overall performance.
