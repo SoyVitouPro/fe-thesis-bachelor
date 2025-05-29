@@ -54,8 +54,43 @@ both languages, Khmer and English. The model achieved an impressive result, we a
 in recognizing text in the images.
 \section{Error Analysis and Failure Cases}
 \label{sec:error-analysis}
-Systematic analysis of common error patterns and challenging cases that lead to recognition failures.
+Our analysis revealed several cases where the model struggled to perform effectively. The primary failure cases can be categorized into two main scenarios:
+
+1. Curved and Circular Text: The model encountered difficulties with text arranged in curved or circular patterns, as shown in Figure \ref{fig:test-case}. These cases proved challenging due to the complex spatial relationships between characters that deviate significantly from standard linear text layouts.
+
+2. Non-standard and Artistic Text: Another significant challenge was presented by text written in unusual fonts and artistic styles. The text detection model particularly struggled with these cases, as the unconventional character shapes and varying sizes created complex visual patterns that were difficult for the model to process accurately.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/test_case.png}
+    \caption{Challenging cases involving both curved text layouts and artistic typography. 
+    The model's performance degraded significantly when processing text arranged in circular 
+    patterns and non-standard fonts, highlighting limitations in handling complex spatial 
+    text arrangements and artistic text styles.}
+    \label{fig:test-case}
+\end{figure}
+
+These failure cases highlight the need for further model improvements, particularly in handling non-standard text layouts and artistic typography. Future work could focus on enhancing the model's ability to process curved text and adapt to various artistic text styles.
 
 \section{System Robustness and Generalization}
 \label{sec:robustness}
-Evaluation of the system's ability to generalize across different document types, fonts, and image quality conditions.
+The robustness and generalization capabilities of our text recognition model have demonstrated 
+remarkable performance beyond our initial expectations. Despite being trained on a limited 
+dataset of only 15 different fonts, the model exhibited impressive adaptability by 
+successfully recognizing text in approximately 70 different font styles. This significant 
+improvement in font recognition capability highlights the model's strong generalization 
+abilities, particularly when dealing with fonts that maintain similar structural characteristics 
+to the training data.
+
+A particularly noteworthy aspect of the model's robustness is its ability to handle slightly 
+curved text. As demonstrated in our test cases, while the model struggles with severely 
+curved or circular text arrangements (as shown in Figure \ref{fig:test-case}), it maintains 
+high accuracy when processing text with moderate curvature. For instance, the model 
+successfully recognized the word "TODAY" despite its slight curvature, showcasing 
+its ability to handle non-linear text layouts within reasonable bounds.
+
+This performance demonstrates that our model has developed a robust understanding of text 
+features that transcends the specific characteristics of the training data. The model's 
+ability to generalize to new font styles and handle moderate text curvature while 
+maintaining high recognition accuracy validates the effectiveness of our approach 
+and the model's practical applicability in real-world scenarios.
