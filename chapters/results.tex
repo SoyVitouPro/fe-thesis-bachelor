@@ -94,3 +94,39 @@ features that transcends the specific characteristics of the training data. The 
 ability to generalize to new font styles and handle moderate text curvature while 
 maintaining high recognition accuracy validates the effectiveness of our approach 
 and the model's practical applicability in real-world scenarios.
+\section{Model Interpretability and Attention Visualization}
+\label{sec:interpretability}
+
+To better understand how our TrOCR model makes predictions, we employed Gradient-weighted Class
+Activation Mapping (Grad-CAM) visualization techniques. Grad-CAM provides insights into which regions 
+of the input image the model focuses on when making predictions, effectively highlighting the areas that 
+contribute most to the model's decision-making process.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/grad_cam_figure.png}
+    \caption{Grad-CAM visualization of the TrOCR model's attention on input text. The heatmap shows how 
+    the model progressively focuses on different parts of the text during prediction, with warmer colors 
+    indicating higher attention weights. This visualization reveals the model's systematic approach to text 
+    recognition, starting from the beginning of the text and moving sequentially.}
+    \label{fig:grad_cam}
+\end{figure}
+
+As shown in Figure \ref{fig:grad_cam}, the Grad-CAM visualization reveals several interesting patterns in the model's 
+attention mechanism:
+
+\begin{enumerate}
+    \item Sequential Processing: The model demonstrates a clear left-to-right reading pattern, focusing attention 
+    on one character or word at a time, which aligns with the natural reading order of text.
+    
+    \item Contextual Awareness: The attention maps show that the model considers surrounding characters when 
+    making predictions, indicating its ability to understand contextual relationships between characters.
+    
+    \item Focus Intensity: The intensity of the attention (shown by the color gradient) varies based on the 
+    complexity of the character or word being processed, with more complex characters receiving stronger attention.
+\end{enumerate}
+
+This visualization not only helps validate the model's learning process but also provides valuable insights 
+for potential improvements. The clear sequential attention pattern suggests that the model has successfully 
+learned the fundamental structure of text recognition, while the contextual awareness indicates its ability to 
+handle the complex relationships between characters in Khmer script.
