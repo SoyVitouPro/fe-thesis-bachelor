@@ -4,9 +4,9 @@
 \usepackage{geometry}
 \usepackage{fancyhdr}
 \usepackage{changepage}
+\usepackage[round]{natbib}
 \usepackage{enumitem}
 \usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
-
 
 \geometry{
   a4paper,
@@ -90,6 +90,8 @@
 \input{chapters/results.tex}
 \input{chapters/discussion.tex}
 \input{chapters/conclusion.tex}
-\input{chapters/references.tex}
+% add references.bib
+\bibliographystyle{plainnat}
+\bibliography{references}
 \input{chapters/appendix.tex}
 \end{document}
