@@ -181,47 +181,70 @@ recognition accuracy reached up to 90\% for specific fonts, demonstrating
 the potential of domain-specific adaptation to enhance OCR performance 
 for complex scripts like Khmer.
 
-\begin{table}[htbp]
-    \centering
-    \caption{Summary of Khmer OCR Research Techniques}
-    \resizebox{\textwidth}{!}{\begin{tabular}{|p{3cm}|p{4cm}|p{3.8cm}
-        |p{2.5cm}|p{4.5cm}|}
-    \hline
-    \textbf{Authors (Year)} & \textbf{Technique} & \textbf{Dataset} & \textbf{Accuracy} & \textbf{Limitation} \\
-    \hline
-    Chey et al. (2006) & Wavelet Descriptors + Euclidean Distance 
-    & 10 Khmer fonts, 3 sizes; 21-page test doc & Up to 92.99\% 
-    & Template-based; affected by deformation; limited generalization \\
-    \hline
-    Sok \& Taing (2014) & SVM with Gaussian Kernel & Khmer 
-    OS Content font (28pt, 32pt, 36pt) & Up to 98.62\% & 
-    Single font; limited font diversity; rule-based post-processing \\
-    \hline
-    Meng \& Morariu (2014) & SOM + MLP Neural Networks & 
-    82 Khmer characters, resized 20×20 images & Train: 65\%, 
-    Test: 30\% & Low test accuracy; outdated architecture \\
-    \hline
-    Muaz \& LengIeng (2015) & HMM with DCT features using HTK Toolkit 
-    & 35,235 shapes; Limon S1 font (22pt) & 96.34\% overall & Single 
-    font; weak on complex shapes (e.g., CC) \\
-    \hline
-    Valy et al. (2018) & CNN (3 conv blocks) + RNN (1D \& 2D for 
-    glyph localization) & Palm leaf manuscripts; 106 character classes 
-    & 95.96\% & Historical texts; focused on ancient script \\
-    \hline
-    Annanurov et al. (2018) & CNN vs. ANN with FT2D/Gabor filters & 
-    6 datasets; 33 consonants, 17 vowels (561 syllables) & CNN: 94.85\% 
-    & Consonants only; no vowel/syllable recognition \\
-    \hline
-    Sokphyrum (2019) & Fine-tuned Tesseract 4.0 (CRNN + CTC) & 
-    14 Unicode + 20 Limon fonts (12pt); 11k clusters & 
-    Unicode: 87.49--89.43\%, Limon: 62.27\%, Fine-tuned: 
-    \textasciitilde90\% & Limon performance poor without tuning; 
-    line-level only \\
-    \hline
-    \end{tabular}}
-    \label{tab:khmer_ocr_summary}
-\end{table}
+\citet{buoy2021seq2seq} Despite progress in OCR for high-resource languages, 
+Khmer OCR still faces significant challenges due to its complex script structure 
+involving stacked consonants, diacritics, and positionally variable vowels. Traditional 
+Khmer OCR methods relied on segmentation-based pipelines and character-level 
+classification, often struggling with noisy or long text-line images. This paper 
+introduces one of the first end-to-end solutions for Khmer OCR using a 
+Sequence-to-Sequence (Seq2Seq) architecture with an attention mechanism. The encoder 
+consists of residual convolutional blocks and bidirectional GRU layers that extract 
+feature sequences from text-line images, while the decoder generates characters one-by-one 
+using attention to focus on relevant parts of the image. The model is trained on a large 
+synthetic dataset generated from the Khmer ALT corpus using multiple fonts and aggressive 
+augmentation techniques. Evaluated on a 3000-image test set, the model achieves 1\% 
+character error rate (CER) and 9\% word error rate (WER), significantly outperforming 
+the Khmer Tesseract OCR engine, which achieves 3\% CER and 26\% WER. Additionally, 
+the model demonstrates robustness to image noise, font variations, and camera-captured texts, 
+highlighting the effectiveness of attention-based Seq2Seq models in low-resource OCR tasks.
+
+\citet{Buoy2022} Khmer printed character recognition presents significant 
+challenges due to the script's complex structure, including stacked consonants, 
+dependent vowels, and diacritics placed in various positions. Traditional approaches, 
+such as SVMs, wavelet-based templates, and CNNs, have largely focused on recognizing standalone 
+characters and depend heavily on accurate segmentation, making them less robust for noisy or 
+continuous text-line images. Tesseract OCR, though improved with deep neural networks 
+and CTC loss, still performs poorly on heavily augmented images with a reported Character 
+Error Rate (CER) of 35.9\%. In contrast, the reviewed study introduces an end-to-end 
+attention-based Sequence-to-Sequence (Seq2Seq) model that directly maps entire text-line 
+images to character sequences without needing pre- or post-processing. Trained on 3 million 
+synthetically generated and augmented images across multiple Khmer fonts, the model 
+achieved a CER of 0.7\% on noisy images and 0.24\% on clean images, significantly 
+outperforming existing methods and demonstrating the effectiveness of attention mechanisms 
+and deep learning for low-resource scripts like Khmer.
+
+\citet{nom2024khmerst} The Khmer script poses significant challenges for scene text detection 
+and recognition due to its complex structure involving stacked consonants, multiple diacritics, 
+subscript characters, and the lack of explicit word boundaries. To address the scarcity of 
+resources for this low-resource language, this study introduces KhmerST, the first annotated 
+scene-text dataset for the Khmer language, consisting of 1,544 real-world images captured 
+from various public settings in Cambodia. Unlike existing synthetic Khmer datasets, 
+KhmerST includes indoor and outdoor images with diverse fonts, orientations, and 
+background conditions, and provides polygon-based line-level annotations for more accurate 
+localization. Benchmarking with YOLO models shows that YOLOv8 performs best in detection 
+tasks due to its ability to handle small and variable text elements, while in recognition 
+tasks, both TrOCR and Tesseract perform poorly, with TrOCR achieving CER of 0.90 and 
+Tesseract CER of 1.30, highlighting the need for Khmer-specific OCR models. The study 
+underscores the gap between current OCR systems and the needs of Khmer script recognition, 
+calling for future research on synthetic data generation, Khmer-aware model design, 
+and multimodal approaches to improve accuracy in real-world applications.
+
+\citet{Rina2025} This research addresses the challenge of Khmer textline recognition, 
+which is particularly difficult due to the absence of spaces between words in the Khmer script. 
+Unlike Latin-based languages, this structure requires recognition to be performed at the textline level, 
+leading to high latency when using autoregressive (AR) decoders that predict one character at a 
+time while considering previous characters. In contrast, non-autoregressive (NAR) decoders can decode 
+all characters in parallel but lack awareness of character dependencies, resulting in lower linguistic 
+accuracy. To solve this, the authors propose an efficient Khmer textline recognition method using an NAR 
+decoder, enhanced by Khmer-specific subword modeling. Instead of predicting single characters, the model 
+recognizes character clusters (subwords), capturing the syntactic, morphological, and orthographic 
+structure of the language implicitly. This design retains the speed of NAR models while improving accuracy. 
+Experimental results show that the proposed method outperforms the character-level NAR baseline 
+in accuracy and matches or exceeds the AR baseline while maintaining lower latency. However, 
+the abstract does not report detailed accuracy or metrics, and access to full experimental results 
+requires a subscription, limiting transparency for non-subscribers. This work contributes an 
+important step toward faster and more linguistically aware Khmer OCR by bridging the gap between 
+speed and accuracy in scene text recognition.
     
 
 \subsection{Advancements in Khmer OCR (2021-Present)}
