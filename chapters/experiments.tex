@@ -6,8 +6,8 @@
 \label{sec:environment}
 All experiments in this study were conducted on a high-performance workstation running 
 Ubuntu 20.04 LTS. The system was equipped with dual NVIDIA RTX 4090 GPUs, each with 
-48 GB of VRAM, and 128 GB of system RAM, ensuring ample memory and computational power 
-for training large-scale deep learning models efficiently.
+24 GB of VRAM, and 128 GB of system RAM, ensuring ample memory and computational power 
+for training large-scalec deep learning models efficiently.
 
 The models were implemented using the PyTorch deep learning framework, with integration of the Hugging Face Transformers library for state-of-the-art model architectures such as TrOCR. GPU acceleration was enabled via CUDA, allowing for fast and parallelized training across the two GPUs.
 
@@ -21,7 +21,10 @@ hyperparameter configurations.
 
 \section{Model Architecture and Configuration}
 \label{sec:architecture}
-Details of the model architectures and configurations used in the OCR system.
+We propose the end-to-end Khmer \& English OCR solution using a CRAFT model combine
+with TrOCR architecture, as shown in Figure \ref{fig:craft-model} and \ref{fig:trocr-model}.
+In this section we will describe the details of the model architecture and configuration
+from document image to text output in each pipeline.
 
 \subsection{CRAFT for Text Detection}
 \label{subsec:craft}

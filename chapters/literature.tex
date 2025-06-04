@@ -32,7 +32,39 @@ which allow for improved accuracy in character detection, segmentation, and clas
 diverse languages and scripts.
 
 OCR systems typically consist of several key components: image preprocessing (e.g., noise removal, binarization), text detection, character segmentation, feature extraction, and recognition. These systems must be adapted to handle various font styles, image distortions, complex layouts, and script-specific features. While OCR for Latin-based languages has become highly accurate, extending such systems to non-Latin scripts—such as Khmer—remains a significant research challenge due to unique linguistic and structural characteristics.
-   
+  
+
+\section{Text Detection}
+\phantomsection
+\label{sec:text_detection_literature}
+
+\citet{Hiremath_text_detection} The task of detecting text regions in images is a 
+crucial first step in many document analysis pipelines.Character Region Awareness by \citet{Baek}
+proposed an efficientand accurate scene text detection approach by incorporating character region 
+masking and attention. 
+
+\citet{Hiremath_text_detection} Some other popular research Methodology for text detection and 
+highly cited text detection algorithms such as:
+
+EAST (Efficient and Accurate Scene Text Detector) \citet{Zhou} uses a fully convolutionalnetwork to 
+directly predict word or text line bounding boxes along with their orientation. 
+It was one of the first modern deep learning models for this task. TextBoxes++ \citet{TextBoxes}
+extended the TextBoxes model with more powerful convolutional features and anangle 
+vector to better handle oriented and curved text instances.  CRAFT (CharacterRegion Awareness for 
+Text Detection) \citet{Baek} akes a different approach, using a regionscore map to localize 
+individual character regions which are then grouped into words/text lines.
+Mask TextSpotter \citet{TextSpotter} combines semantic segmentation + attention-based 
+recognition to directly read text of any shape from natural scenes—all in one unified model.
+TextFuseNet \citet{ijcai2020p72} is detects text by extracting and fusing features 
+at three levels: character-level, word-level, and global-level. It uses a semantic segmentation 
+branch for global context, detects characters and words through a modified Mask R-CNN pipeline, 
+and combines all levels using a multi-path fusion architecture. This fusion enriches the text 
+representation, enabling the model to better localize and segment text instances of arbitrary shapes.
+ABCNet \citet{ABCNet} have been proposed which aim to jointly optimize text detection and 
+recognition in a unified architecture. Such unified frameworks potentially allow the two tasks 
+to benefit from each other during training. 
+
+
 \section{Khmer Optical Character Recognition (OCR)}
 \phantomsection
 \label{sec:khmer_OCR_literature}
