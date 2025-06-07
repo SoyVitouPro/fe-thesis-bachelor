@@ -24,7 +24,7 @@ hyperparameter configurations.
 We propose the end-to-end Khmer \& English OCR solution using a CRAFT model combine
 with TrOCR architecture, as shown in Figure \ref{fig:craft-model} and \ref{fig:trocr-model}.
 In this section we will describe the details of the model architecture and configuration
-from document image to text output in each pipeline.
+from document image to digital text output in whole pipeline.
 
 \subsection{CRAFT for Text Detection}
 \label{subsec:craft}
@@ -57,17 +57,20 @@ marks. The model was trained using Adam optimizer with a learning rate of 1e-4 a
 size of 16. Early stopping and validation-based checkpointing were employed to 
 prevent overfitting.
 
-The output of the CRAFT detector was then passed to the text recognition 
-model (TrOCR), enabling a two-stage pipeline for accurate and end-to-end 
-Khmer text reading in natural scenes.
-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/craft_model.png}
-    \caption{Illustration of the CRAFT model architecture used for text detection. \cite{baek2019craft}}
+    \caption{Illustration of the CRAFT model architecture used for text detection. 
+    The model consists of a VGG16-based backbone followed by a series of 
+    convolutional layers to produce two output maps: a region score map and 
+    an affinity score map. The model is fine-tuned on a custom Khmer dataset 
+    composed of synthetic and real-world scene text images. \cite{baek2019craft}}
     \label{fig:craft-model}
 \end{figure}
 
+The model has 20,770,466 trainable parameters. The output of the CRAFT detector was then passed to the text recognition 
+model (TrOCR), enabling a two-stage pipeline for accurate and end-to-end 
+Khmer text reading in general scenes.
 
 \subsection{TrOCR for Text Recognition}
 \label{subsec:trocr}
@@ -90,6 +93,10 @@ We fine-tuned the base version of TrOCR using the Hugging Face \texttt{transform
     \label{fig:trocr-model}
 \end{figure}
 
+\subsection{The end-to-end pipeline}
+\label{subsec:khmer-ocr-pipeline}
+The TrOCR model is a transformer-based OCR system that integrates a vision
+ encoder with a language decoder in
 
 \section{Training Methodology}
 \label{sec:training}
