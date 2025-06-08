@@ -57,14 +57,15 @@ marks. The model was trained using Adam optimizer with a learning rate of 1e-4 a
 size of 16. Early stopping and validation-based checkpointing were employed to 
 prevent overfitting.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/craft_model.png}
     \caption{Illustration of the CRAFT model architecture used for text detection. 
     The model consists of a VGG16-based backbone followed by a series of 
     convolutional layers to produce two output maps: a region score map and 
     an affinity score map. The model is fine-tuned on a custom Khmer dataset 
-    composed of synthetic and real-world scene text images. \cite{baek2019craft}}
+    composed of synthetic and real-world scene text images. 
+    \citet{baek2019craft}}
     \label{fig:craft-model}
 \end{figure}
 
@@ -86,7 +87,7 @@ The TrOCR model takes the cropped text-line image detected by CRAFT and processe
 
 We fine-tuned the base version of TrOCR using the Hugging Face \texttt{transformers} library on our custom synthetic Khmer dataset. During training, we tracked key metrics such as Character Error Rate (CER) and Word Error Rate (WER) using MLflow. The model demonstrated strong generalization across different fonts and text conditions, benefiting from both large-scale pretraining and our domain-specific fine-tuning.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/trocr_model.png}
     \caption{Illustration of the TrOCR model architecture used for text recognition.}
@@ -95,8 +96,24 @@ We fine-tuned the base version of TrOCR using the Hugging Face \texttt{transform
 
 \subsection{The end-to-end pipeline}
 \label{subsec:khmer-ocr-pipeline}
-The TrOCR model is a transformer-based OCR system that integrates a vision
- encoder with a language decoder in
+
+        The overall workflow is given in Figure \ref{fig:trocr-inference-full-pipeline}.
+It starts with the image-of-text inputs which are English and
+Khmer image-text, or even mixing language image-text, the pre-processing
+step is converted image into grayscale because we want to down-stream
+the task, to make model prediction more accurate. Then the CRAFT model
+detects the text region in the image, it's detect text-line based,
+we using post processing stop for reordering the detected text-line
+to make sure the detected text-line is in the correct order.
+After that, the detected text-line is cropped and passed to the TrOCR
+model for text recognition. The output of the TrOCR model is the
+recognized text. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/khmerOCR_inference_full_pipeline.png}
+    \caption{End-to-end OCR inference pipeline for converting text images into digital text.}
+    \label{fig:trocr-inference-full-pipeline}
+\end{figure}
 
 \section{Training Methodology}
 \label{sec:training}
@@ -113,63 +130,54 @@ domains.
 \subsection{Fine-tuning Configuration for CRAFT}
 \label{subsec:craft-training}
 
-The CRAFT model was fine-tuned on a custom Khmer text dataset using weak supervision, 
-leveraging the strengths of annotated real images. During 
-training, we applied a range of augmentations to improve robustness against font 
-variations, noise, and other distortions. To further enhance the model's generalization 
-abilities, we employed techniques such as random cropping, flipping, and rotation to 
-increase the diversity of the training data. Additionally, we used a combination of 
-contrastive learning and adversarial training to improve the model's ability to 
-discriminate between different characters and fonts. Finally, we used transfer learning 
-to adapt the model to the Khmer language by fine-tuning it on a small dataset of 4000 
-manually annotated bounding boxes. This dataset was carefully curated to capture the 
-unique characteristics of the Khmer script, such as its complex diacritic marks and 
-ligatures. The most important configuration values for training the CRAFT model are 
-summarized in Table~\ref{tab:craft-training-config}, including the training mode, 
-backbone architecture, pre-trained weights, loss function, normalization parameters, 
-and optimization hyperparameters. These settings are crucial for achieving optimal 
-performance on the Khmer text dataset.
+The CRAFT model was fine-tuned on a custom Khmer text dataset 
+using weak supervision, leveraging the strengths of annotated 
+real-world images. Throughout the training process, a variety 
+of data augmentation techniques were employed to enhance the 
+model's robustness against font diversity, image noise, and 
+other real-world distortions. These augmentations included random 
+rotation of text instances by up to 20 degrees, random cropping 
+with varying scales and aspect ratios, and horizontal flipping 
+to introduce mirrored perspectives. Additionally, color jittering 
+was applied, involving simultaneous adjustments in brightness, 
+contrast, saturation, and hue, each parameter being varied by a 
+factor of 0.2. These transformations enriched the training set 
+with diverse visual variations, which in turn helped the model 
+generalize more effectively to unseen examples.
 
-\noindent
-\textbf{Data Augmentation:} During training, the following augmentations were applied:
-\begin{itemize}
-    \item \textbf{Random rotation:} Up to 20° (enabled).
-    \item \textbf{Random cropping:} Variable scale and aspect ratio.
-    \item \textbf{Horizontal flipping:} Enabled.
-    \item \textbf{Color jittering:} Adjustments in brightness, contrast, saturation, and hue (each set to 0.2).
-\end{itemize}
+To further strengthen the model’s discriminative capabilities, 
+we incorporated contrastive learning alongside adversarial training. 
+These approaches were particularly beneficial in enabling the model 
+to distinguish between visually similar Khmer characters and 
+different font styles. Transfer learning also played a pivotal 
+role in adapting the model to the Khmer script. Specifically, 
+we fine-tuned the pretrained model using a manually annotated 
+dataset comprising 4,000 bounding boxes that captured the 
+intricate structure of the Khmer script, including its unique 
+diacritics and ligatures.
+
+The most important configuration parameters for training the CRAFT 
+model are summarized in Table~\ref{tab:craft-training-config}. 
+These include the selected training mode, backbone architecture, 
+initialization weights, loss function, normalization scheme, and 
+optimization hyperparameters. Each setting was carefully selected 
+to achieve optimal performance on the Khmer text recognition task.
 
 
 
-\begin{table}[ht]
+
+\begin{table}[H]
 \centering
 \begin{tabular}{|p{0.4\linewidth}|p{0.55\linewidth}|}
 \hline
 \textbf{Parameter} & \textbf{Value} \\
 \hline
-Training mode & \texttt{weak\_supervision} \\
 Backbone architecture & VGG \\
-Use of SynthText & False \\ 
-Real dataset & \texttt{custom} \\
 Pretrained weights & \texttt{CRAFT.pth} \\
-Batch size & 5 \\
+Batch size & 8 \\
 Training iterations & 0 to 10,000 \\
 Evaluation interval & Every 500 iterations \\
 Learning rate & 0.0001 \\
-Learning rate decay step & 7,500 \\
-Decay rate ($\gamma$) & 0.2 \\
-Weight decay & 0.00001 \\
-Mixed precision (AMP) & Enabled \\
-Loss function type & 2 \\
-Negative ratio & 0.3 \\
-Minimum negative samples & 5,000 \\
-Output image size & 768 \\
-Normalization mean & [0.485, 0.456, 0.406] \\
-Normalization std (variance) & [0.229, 0.224, 0.225] \\
-Region enlargement factor & [0.5, 0.5] \\
-Affinity enlargement factor & [0.5, 0.5] \\
-Gaussian kernel init size & 200 \\
-Gaussian sigma & 40 \\
 \hline
 \end{tabular}
 \caption{Key configuration parameters for training the CRAFT model on a custom Khmer dataset 
@@ -184,16 +192,47 @@ factors, Gaussian kernel initialization size, and Gaussian sigma.}
 
 \subsection{Customizing TrOCR Processor}
 \label{subsec:customizing-trocr-processor}
-To make the TrOCR model understand Khmer tokens, we customized the processor of the TrOCR 
-model from Microsoft. We collected unique Khmer and English tokens and then modified the 
-processor to encode text to IDs and decode IDs to text. After customizing the processor, 
-everything looked fine, and we could start fine-tuning.
+        To make the TrOCR model understand Khmer tokens, 
+we customized the processor without modifying the original 
+model architecture. We developed a CustomKhmerTokenizer 
+based on a predefined list of unique Khmer and English characters, 
+including special tokens such as \textit{<s>}, \textit{</s>}, and 
+\textit{<pad>}, to handle 
+the encoding of text into token IDs and the decoding of token IDs 
+back into readable text. This tokenizer was then wrapped inside 
+a custom processor that mimics the behavior of Hugging Face’s 
+TrOCRProcessor, allowing seamless integration with TrOCR’s image 
+processing pipeline. By doing so, we enabled the model to work 
+with Khmer script during both training and inference, while 
+preserving the original TrOCR model’s structure and leveraging 
+its pretrained capabilities.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Customize_processor.png}
+    \caption{Architecture of the customized TrOCR pipeline. 
+    The original TrOCR model is extended with a custom processor, 
+    which includes two additional fully connected layers 
+    (FC1 and FC2) tailored for Khmer character decoding.}
+    \label{fig:trocr-custom-processor}
+\end{figure}
+
+
 
 \subsection{Fine-tuning TrOCR Model}
 \label{subsec:fine-tuning-trocr-model}
 For the TrOCR model, we selected the base model because we were working with a multilingual 
 dataset. We wanted the model to have a large parameter size, so we chose the base model for 
 this task.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/trocr_model_overflow_training.png}
+    \caption{Overview of the TrOCR training process. Text-generated 
+    images form the training set, while real-world samples are 
+    manually collected for testing and evaluation.}
+    \label{fig:trocr-training-pipeline}
+\end{figure}
 
 After experimenting with different hyperparameters, we found the desired results. Here are the 
 desired hyperparameters: batch size = 1024, learning rate = 0.0001, epoch = 2, dataset = 3.5 
@@ -202,7 +241,9 @@ This is a very important hyperparameter because we used to train with 8, 16, 32,
 but it was not generalizing as expected; it was really weak to overfitting. That's why we 
 chose 1024.
 
-\begin{figure}[ht]
+
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/trocr_overfitting_v1.png}
     \caption{Training and validation loss curves for TrOCR model with batch size 8.}
@@ -219,7 +260,7 @@ very specific patterns from the training data rather than generalizing well to u
 This is why we decided to increase the batch size to 1024, which helped improve the model's 
 generalization capabilities and reduce overfitting.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/trocr_fine_tuning.png}
     \caption{Training and validation metrics for TrOCR model with batch size 1024, 
@@ -251,7 +292,7 @@ Metrics used to evaluate the performance of the OCR system.
 \label{subsec:detection-metrics}
 Text detection evaluation using precision and recall metrics.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/mean_loss_craft.png}
     \caption{Illustration of the mean loss during CRAFT model training, showing the performance 
@@ -263,7 +304,7 @@ Text detection evaluation using precision and recall metrics.
     \label{fig:mean-loss-craft}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/iou_craft.png}
     \caption{Illustration of the intersection over union (IOU) vs. recall performance of the CRAFT model 

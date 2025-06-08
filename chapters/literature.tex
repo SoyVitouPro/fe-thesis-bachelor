@@ -5,7 +5,7 @@
 \section{Overview}
 \phantomsection
 \label{sec:ocr-overview}
-This chapter provides a comprehensive literature review covering several 
+​ ​ ​ ​ This chapter provides a comprehensive literature review covering several 
 key aspects of Optical Character Recognition (OCR). 
 It begins with a definition of OCR, followed by an overview of its technological
  evolution over time. Particular attention is given to the unique challenges 
@@ -20,7 +20,7 @@ It begins with a definition of OCR, followed by an overview of its technological
 \section{Definition of Optical Character Recognition (OCR)}
 \phantomsection
 \label{sec:ocr-definition}
-Optical Character Recognition (OCR) is a field of computer vision and pattern recognition
+​ ​ ​ ​ Optical Character Recognition (OCR) is a field of computer vision and pattern recognition
  that focuses on the automatic identification and digitization of printed or handwritten 
  text from images, scanned documents, or other visual media \citep{singh2012survey}. 
  OCR systems aim to convert visual representations of text into machine-encoded formats, 
@@ -38,7 +38,7 @@ OCR systems typically consist of several key components: image preprocessing (e.
 \phantomsection
 \label{sec:text_detection_literature}
 
-\citet{Hiremath_text_detection} The task of detecting text regions in images is a 
+  ​ ​ ​ ​  \citet{Hiremath_text_detection} The task of detecting text regions in images is a 
 crucial first step in many document analysis pipelines.Character Region Awareness by \citet{Baek}
 proposed an efficientand accurate scene text detection approach by incorporating character region 
 masking and attention. 
@@ -64,25 +64,47 @@ ABCNet \citet{ABCNet} have been proposed which aim to jointly optimize text dete
 recognition in a unified architecture. Such unified frameworks potentially allow the two tasks 
 to benefit from each other during training. 
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{figures/summary_text_detection.png}
-    \caption{Summary of text detection techniques reviewed in the literature. 
-    The methodologies range from early rule-based systems to modern deep learning 
-    approaches, emphasizing character region awareness and the integration of 
-    semantic segmentation for detecting text in complex scenes. Each technique 
-    addresses specific challenges such as handling diverse scripts, curved text, 
-    and varying font styles, contributing to the advancement of OCR technology 
-    for both high-resource and low-resource languages.}
-    \label{fig:summary-text-detection}
-\end{figure}
+% Define a custom column type for better control
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % left-aligned fixed width
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}   % centered fixed width
+
+\begin{table}[H]
+  \centering
+  \caption{Text Detection Accuracy}
+  \begin{tabularx}{\linewidth}{|L{3.5cm}|L{2.5cm}|L{2.5cm}|C{2cm}|C{2cm}|C{2cm}|}
+    \hline
+    \textbf{Model} & \textbf{Backbone} & \textbf{Dataset} & \textbf{Recall (\%)} & \textbf{Precision (\%)} & \textbf{F1-score (\%)} \\
+    \hline
+    EAST* & VGG-16 & ICDAR 2015 & 78.3 & 83.3 & 80.7 \\
+    He et al. & ResNet-50 & ICDAR 2015 & 80.0 & 82.0 & 81.0 \\
+    R2CNN & VGG-16 & ICDAR 2015 & 79.7 & 85.6 & 82.5 \\
+    TextSnake & VGG-16 & ICDAR 2015 & 80.4 & 84.9 & 82.6 \\
+    TextBoxes++* & VGG-16 & ICDAR 2015 & 78.5 & 87.8 & 82.9 \\
+    EAA & ResNet-50 & ICDAR 2015 & 83.0 & 84.0 & 83.0 \\
+    Mask TextSpotter & ResNet-50 & ICDAR 2017 & 81.2 & 85.8 & 83.4 \\
+    PixelLink* & VGG-16 & ICDAR 2017 & 82.0 & 85.5 & 83.7 \\
+    RRD* & ResNet-50 & ICDAR 2017 & 80.0 & 88.0 & 83.8 \\
+    Lyu et al.* & ResNet-50 & ICDAR 2017 & 79.7 & 89.5 & 84.3 \\
+    FOTS & ResNet-50 & ICDAR 2017 & 82.0 & 88.8 & 85.3 \\
+    CRAFT & VGG-16 & ICDAR 2015 & 84.3 & 89.8 & 86.9 \\
+    \hline
+  \end{tabularx}
+  \caption*{Source: Results sourced from the CRAFT research paper \cite{Hiremath_text_detection}. 
+  Results are reported on quadrilateral-type datasets such as ICDAR. 
+  Asterisks (*) denote results based on multi-scale tests. 
+  The table compares various scene text detection models—including the CRAFT model used in the proposed system—across key performance metrics such as precision, recall, and F1-score.}
+  \label{tab:text_detection_accuracy}
+\end{table}
+
+\vspace{1em}
+
 
 
 \section{Khmer Optical Character Recognition (OCR)}
 \phantomsection
 \label{sec:khmer_OCR_literature}
 
-\citet{CheyFirstOCR} The first significant research on Optical Character Recognition (OCR) 
+​ ​ ​ ​ \citet{CheyFirstOCR} The first significant research on Optical Character Recognition (OCR) 
 for Khmer script was proposed in 2006, marking a foundational contribution 
 to Khmer language digitization. The study addressed critical challenges 
 inherent to Khmer printed characters, notably the variation in character 

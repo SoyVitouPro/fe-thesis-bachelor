@@ -1,13 +1,20 @@
 \documentclass[12pt]{report}
+
+% ==== Essential Packages ====
 \usepackage{fontspec}
 \usepackage{graphicx}
 \usepackage{geometry}
+\usepackage{float}
+\usepackage{caption} 
+\usepackage{array}
+\usepackage{tabularx} 
 \usepackage{fancyhdr}
 \usepackage{changepage}
 \usepackage[round]{natbib}
 \usepackage{enumitem}
 \usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
 
+% ==== Page Layout ====
 \geometry{
   a4paper,
   top=1.5cm,
@@ -16,15 +23,17 @@
   right=2.0cm
 }
 
+% ==== Font Setup ====
 
-% Khmer and English fonts
-\newfontfamily\khmerfont{Khmer OS Muol Light}
-\newfontfamily\khmernormal{Khmer OS Siemreap}
-\newfontfamily\englishfont{TeX Gyre Termes}
-
-
+% Khmer fonts
+\newfontfamily\khmerfont{Khmer OS Muol Light}       % for headings
+\newfontfamily\khmernormal{Khmer OS Content}        % for body text
 
 
+% English font
+\newfontfamily\englishfont{Times New Roman}
+
+% Enable proper line breaking for Khmer
 \XeTeXlinebreaklocale "khmer"
 \XeTeXlinebreakskip = 0pt plus 1pt
 
@@ -34,53 +43,47 @@
 
 \begin{document}
 
-% Title page with no page number
+% === Title Pages ===
 \input{titlepage}
 \thispagestyle{empty}
 
-% --- Supervisor Statement Page (Khmer) ---
+\input{title_second_page}
+\thispagestyle{empty}
+
+% === Preliminary Pages ===
 \thispagestyle{plain}
 \input{supervisor_statement}
 \newpage
 
-% --- Abstract Page (Khmer) ---
 \thispagestyle{plain}
 \input{abstract}
 \newpage
 
-
-% --- Candidate Statement Page (Khmer) ---
 \thispagestyle{plain}
 \input{candidate_statement}
 \newpage
 
-% --- Acknowledgments Page (Khmer) ---
 \thispagestyle{plain}
 \input{acknowledgements}
 \newpage
 
-% --- Table of Contents Page (Khmer) ---
 \thispagestyle{plain}
 \input{table_content}
 \newpage
 
-% --- List of Tables Page (Khmer) ---
 \thispagestyle{plain}
 \input{list_of_tables}
 \newpage
 
-% --- List of Figures Page (Khmer) ---
 \thispagestyle{plain}
 \input{list_of_figures}
 \newpage
 
-% --- List of Abbreviations Page (Khmer) ---
 \thispagestyle{plain}
 \input{list_of_abbreviations}
 \newpage
 
-
-% Enable normal page numbering (centered at bottom)
+% === Main Body ===
 \pagestyle{plain}
 
 \input{chapters/intro.tex}
@@ -90,8 +93,12 @@
 \input{chapters/results.tex}
 \input{chapters/discussion.tex}
 \input{chapters/conclusion.tex}
-% add references.bib
+
+% === References ===
 \bibliographystyle{plainnat}
 \bibliography{references}
+
+% === Appendix ===
 \input{chapters/appendix.tex}
+
 \end{document}

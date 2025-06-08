@@ -59,30 +59,55 @@
     \vspace{0.5cm}
     \englishfont
     \large
-    In the modern era of information technology, Optical Character Recognition (OCR) has emerged as a crucial technology for converting printed or handwritten text from images into digital form. However, the development of OCR systems for the Khmer language presents significant challenges, primarily due to the lack of large-scale annotated datasets. To address this limitation, we constructed a high-quality synthetic dataset using an advanced data generation pipeline. Our Khmer OCR system consists of two core components:
-    \begin{itemize}[leftmargin=1.5em]
-        \item Text Collection: We gathered Khmer text data from various online sources, including khsearch.com, Chuon-Nath Dictionary, Alpha-Word, Google-Word, and Hugging Face.
-        \item Data Cleaning: We processed and cleaned the collected text by removing uncommon characters, symbols that are rarely rendered correctly by fonts, and excessive whitespace.
-        \item Text Segmentation: Sentences were tokenized into words using the khmer-nltk library, and then reconstructed into randomized sentence lengths ranging from 1 to 110 characters.
-        \item Image Generation: We rendered text into synthetic images by:
-        \begin{itemize}[leftmargin=2em]
-            \item Applying random backgrounds and a variety of Khmer fonts
-            \item Adding diverse noise types such as Gaussian noise, salt-and-pepper noise, speckle noise, and blur
-            \item Introducing slight random rotations and random margins (1–5 pixels)
-        \end{itemize}
-        \item As a result, we generated over 4 million high-quality synthetic image-text pairs to train the OCR model.
-    \end{itemize}
-    \par
     
-    \vspace{0.2cm}
-    Our Khmer OCR system consists of two core components:
-    \begin{itemize}[leftmargin=1.5em]
-        \item \textbf{Text Detection:} We fine-tuned the CRAFT (Character Region Awareness for Text Detection) model using 500 manually annotated images, totaling over 10,000 bounding boxes.
-        
-        \item \textbf{Text Recognition:} We fine-tuned Microsoft's TrOCR base model (available on Hugging Face) on our synthetic Khmer dataset to improve its ability to recognize Khmer text.
-    \end{itemize}
+    OCR technology continues to evolve rapidly, but Khmer text 
+    recognition still presents challenges—mainly because of the 
+    limited availability of high-quality training data. In this work, 
+    we introduce an end-to-end OCR approach for both Khmer and English text, 
+    tailored to work well even under low-resource conditions. Our pipeline combines 
+    reliable text detection and advanced recognition techniques, designed to reflect real-world multilingual usage in Cambodia.
+
+    We began by manually collecting a dataset of 1,000 real-world images, 
+    carefully annotating 13,200 text-line bounding boxes in both Khmer and English. 
+    This gave us a strong foundation to train our text detection model using CRAFT, 
+    which excels at detecting irregular text regions. Training on our custom-annotated 
+    data, the CRAFT model achieved strong performance, with 90\% recall, 89\% precision, 
+    and an F1-score of 86.8\%. These results show that with focused annotation efforts, 
+    high-quality detection is achievable even without large public datasets.
     
-    {\englishfont The evaluation results demonstrate that our system achieves a recognition accuracy exceeding 90\%. These findings highlight the effectiveness of combining synthetic data generation with modern transformer-based architectures to significantly advance Khmer OCR capabilities. Notably, the system can accurately recognize a wide range of text—from single characters and individual words to full sentences of up to 110 characters—and supports both Khmer and English languages.}
+    To further improve the system’s performance and handle a wider variety of input, 
+    we generated a synthetic training dataset using a text-to-image method. We 
+    collected a large corpus of Khmer and English sentences from the web and used 
+    this to create thousands of synthetic images simulating different fonts, layouts, 
+    and noise patterns. This synthetic data expanded the diversity of our training 
+    set and allowed the model to better generalize to unseen real-world samples.
+    
+    For the recognition stage, we used TrOCR—a transformer-based architecture built 
+    for OCR tasks. However, the original TrOCR processor was not designed to support 
+    Khmer text and could not correctly interpret the language. To address this, 
+    we customized the processor so that it could properly tokenize and decode Khmer 
+    characters. This modification was essential to ensure that the model could 
+    understand and accurately transcribe Khmer script.
+    
+    After training on both real and synthetic data, our TrOCR-based recognition model 
+    showed strong results on real-world test images: a character error rate (CER) 
+    of 0.02 overall, with 0.04 for Khmer, 0.01 for English, and 0.06 for lines 
+    containing both languages.
+    
+    One of the key motivations behind this work is the increasing use of English 
+    in Cambodia. While Khmer remains the national language, English is now widely 
+    used as a second language and often appears alongside Khmer in signs, documents, 
+    and digital platforms. By building a system that supports both languages, 
+    we aim to match the multilingual nature of everyday text in Cambodia.
+    
+    Finally, unlike most academic research that never reaches real-world usage, 
+    we’ve made our OCR system publicly accessible through a production-ready API. 
+    This allows others to test and integrate the model into their own applications, 
+    bridging the gap between research and practical deployment. According to recent 
+    studies, nearly 80\% of research models never get deployed or made accessible—our 
+    goal was to break that trend. By turning our model into a usable, open API, 
+    we ensure that the results of this work are not only measurable in papers 
+    but also usable by the community.
 
 
     
