@@ -9,45 +9,57 @@
     \vspace{0.5cm}
     \khmernormal
     \small
-    ក្នុងសហគមន៍បច្ចេកវិទ្យាព័ត៌មានសម័យថ្មី ការចាប់យកអត្ថបទចេញពីរូបភាព  – [ OCR ]
-    (Optical Character Recognition) ក្លាយជាបច្ចេកវិទ្យាសំខាន់មួយដែលត្រូវបានប្រើប្រាស់
-    យ៉ាងទូលំទូលាយ សម្រាប់បំលែងឯកសារសរសេរ ឬរូបភាពអក្សរឱ្យទៅជាអត្ថបទ អេឡិចត្រូនិច (digital text)។ 
-    ការអភិវឌ្ឍ OCR សម្រាប់ភាសាខ្មែរ តែងតែប្រឈមនឹងបញ្ហាជាច្រើន ដោយសារកង្វះនៃប្រភពទិន្នន័យ 
-    និងឯកសារសម្រាប់ train AI model។ ដើម្បីដោះស្រាយបញ្ហានេះ យើងបានបង្កើតទិន្នន័យសិប្បនិម្មិត 
-    (Synthetic Dataset) ដោយប្រើវិធីសាស្ត្របច្ចេកទេសកម្រិតខ្ពស់។\par
-    
-    ក្នុងដំណើរការបង្កើតទិន្នន័យសិប្បនិម្មិត (Synthetic Dataset) រួមមាន៖
-    \begin{itemize}
-        \item វិធីសាស្ដ្រក្នុងការប្រមូលអត្ថបទចេញពីអ៊ីនធឺណិត មានដូចខាងក្រោម (Scrape data) ៖
-        \begin{itemize}
-            \item ដំណាក់កាលទីមួយ៖ យើងបានប្រមូលអត្ថបទចេញពី khsearch.com, Chuon-Nath-Dictionary, Alpha-Word, Google-Word, និងចុងក្រោយគឺ Huggingface.com ។
-            \item ដំណាក់កាលទីពីរ៖ យើងបានសម្អាត ទិន្នន័យទាំងអស់នោះ ឆ្លងកាត់ដំណើរការ ដូចជា លុបចោលតួរអក្សរណាដែលមិនសូវមាន វត្តមាននៅលើ រូបភាព ញឹកញាប់ និងបានលុបចោល តួរអក្សរណាដែល Fonts renders អត់ចេញ។
-            \item ដំណាក់កាលទីបី៖ ដំណាក់កាលមួយនេះ យើងបានធ្វើការ កាត់ប្រយោគទាំងអស់នោះ ជាពាក្យៗ ដោយប្រើប្រាស់ library ឈ្មោះ khmer-nltk
-            \item ដំណាក់កាលទីបួន៖ ចុងក្រោយ ក៏បានរៀបចំជា ប្រយោគដែល មានប្រវែង Random ពី ១ អក្សរ រហូតដល់ ១១០ អក្សរ ។
-        \end{itemize}
-        \item បង្កើតរូបភាពដោយអនុវត្តតាមលក្ខខណ្ឌខាងក្រោម ៖ 
-        \begin{itemize}
-            \item ផ្ទៃខាងក្រោយចៃដន្យ (Apply Different backgrounds)
-            \item បំពាក់ពុម្ពអក្សរផ្សេងៗគ្នា (Apply Different fonts)
-            \item Noise: \texttt{gaussian\_noise}, \texttt{salt\_pepper\_noise}, \texttt{speckle\_noise}, \texttt{blur}
-            \item បង្វិលអក្សរបន្តិច (random rotation text)
-            \item បញ្ចូល Margin Randomly (1, 5) pixels
-        \end{itemize}
-        \item សរុបមកយើងបានបង្កើត Data ជាង ៤ លាន records សម្រាប់ train OCR model
-    \end{itemize}
-    \par
-    
-    Architecture OCR ត្រូវបានបែងចែកជា ២ ផ្នែក៖ \textbf{Text Detection} និង \textbf{Text Recognition}:\par
-    
-    \textbf{Text Detection}: យើងប្រើម៉ូដែល \textbf{CRAFT} ដោយបានធ្វើការ Train ឡើងវិញដោយ បាន annotation ទៅលើ 
-    លើរូបភាពប្រហែល ៥០០ images និងសរុបចំនួន bounding box ជាង ១០,០០០ boxes។\par
-    
-    \textbf{Text Recognition}: យើងប្រើ \textbf{TrOCR base model} ចេញពី Microsoft (មាននៅក្នុង Hugging Face) ហើយបាន
-    fine-tune ទៅលើ dataset ខ្មែរសិប្បនិម្មិត (Synthetic Dataset) ដើម្បីបង្កើនសមត្ថភាពក្នុងការសម្គាល់អក្សរខ្មែរ។\par
-    
-    លទ្ធផលសិក្សាបានបង្ហាញថា OCR របស់ពួកយើងអាចសម្គាល់អត្ថបទចេញពីរូបភាព បានដោយភាពត្រឹមត្រូវលើសពី ៩០\%។ 
-    ដូច្នេះ ការសិក្សានេះបង្ហាញអំពីសក្តានុពលនៃការបង្កើត dataset និងការប្រើម៉ូដែលជំនាន់ថ្មី ដើម្បីអភិវឌ្ឍន៍ OCR ភាសាខ្មែរឱ្យមានប្រសិទ្ធភាពកាន់តែខ្ពស់។
-    វាមានសមត្ថភាព អាចចាប់យកអត្ថបទមិនត្រឹមតែពាក្យខ្លីៗ ប៉ុណ្ណោះទេ តែវាក៏អាចធ្វើការចាប់យក ដូចជា មួយតួអក្សរដោយមួយតួអក្សរ, ពាក្យដោយពាក្យ, ប្រយោគដោយប្រយោគ រហូតដល់ មួយប្រយោគវែង ១១០ តួអក្សរថែមទៀតផង ។ ហើយលើសពីនោះទៀត វាក៏អាចធ្វើការ កំណត់សម្គាល់ទៅលើ ពីរ ភាសាចម្បង ទាំងភាសាខ្មែរ និងភាសាអង់គ្លេស ។    
+    នៅក្នុងអត្ថបទស្រាវជ្រាវមួយនេះ យើងនឹងបង្ហាញអំពី ការបំប្លែងរូបភាពឯកសារទៅជាអក្សរ 
+    ដែលអាចកែប្រែបាន នៅលើ ភាសាខ្មែរ និងភាសាអង្គគ្លេស។ ចំពោះការបំប្លែងរូបភាពឯកសារ 
+    នៃភាសាខ្មែរ ទៅជាអក្សរដែលអាចកែប្រែបាន នៅតែមានបញ្ហាសម្រាប់ OCR System ។ 
+    មិនត្រឹមតែភាពខ្វះខាតនៃ ទិន្នន័យ (dataset) សម្រាប់ ឲ្យម៉ូដែលរៀនប៉ុណ្ណោះ ទេ ប៉ុន្តែ 
+    ភាពស្មុកស្មាញនៃភាសាខ្មែររឹតតែមានភាពពិបាកក្នុងការចាប់យកអក្សរចេញពីរូបភាពផងដែរ 
+    ដូចជា ការសរសេរតម្រួតជាន់លើគ្នា ការចុះដកឃ្លាមានភាពមិនទៀតទាត់ ដែលធ្វើឲ្យការចាប់ 
+    យកអក្សរចេញពី រូបភាព មានការលំបាក ខ្លាំង។ ការស្រាវជ្រាវភាគច្រើន គឺគេធ្វើតែទៅលើភាសា 
+    អក្សរឡាតាំងតែប៉ុណ្ណោះ ជាប្រភេទ latin-based scripts ដែលជាអក្សរ System មួយប្រភេទ. 
+    ដែលមិនសូវមានការសរសេរតម្រួតគ្នាច្រើនតង់។ ការកើនឡើងនៃការប្រើប្រាស់ភាសាចូលគ្នានៅ
+    ក្នុងប្រទេសកម្ពុជា មានការកើនឡើងយ៉ាងខ្លាំង នៅពីរទសវត្សរ៍ចុងក្រោយមកនេះ ទៅលើឯក
+    សារដូចជា ស្លាកសញ្ញា អត្ថបទការសែត មេរៀន និង ការសន្ទនាផ្សេងៗទៀតដែលបង្កឲ្យមាន
+    ភាពស្មុកស្មាញ ខ្លាំងសម្រាប់ការចាប់យកអក្សរ ចេញពីរូបភាពដែលមានអក្សរលាយលំគ្នាច្រើន
+    ភាសាបែបនេះ។
+
+    នៅក្នុងការសិក្សាស្រាវជ្រាវមួយនេះ ពួកយើងបានបង្កើត វិធីសាស្ដ្រមួយដែលហៅថា end-to-end 
+    OCR approach ដែលធ្វើឡើងសម្រាប់ដោះស្រាយបញ្ហាខាងលើ។ វិធីសាស្ដ្រមួយនេះបានធ្វើការបែង
+    ចែកជាពីរផ្នែកធំៗ ដំណាក់កាលទីមួយនោះគឺ ការចាប់យកទីតាំងអក្សរនៅលើរូបភាពដើម្បី បង្កឲ្យ
+    មានភាពងាយស្រួលសម្រាប់ ការចាប់យកអក្សរចេញពី រូបភាពឲ្យបានប្រសិទ្ធភាពខ្ពស់ជាងមុន 
+    (text-detection)។ នៅក្នុងដំណាក់កាលទី២វិញ គឺការបម្លែងរូបភាពទាំងអស់នោះ ទៅជា
+    អត្ថបទដែលអាចធ្វើការកែប្រែបាន (text-recognition)។ ដំណាក់កាលទាំងពីរនេះ គឺបង្កើត
+    ឡើងសម្រាប់ធ្វើការដោះស្រាយភាពស្មុកស្មាញទៅលើភាសាខ្មែរ និងការលាយលំភាសាខ្មែរជាមួយ
+    នឹងភាសាអង់គ្លេស។
+    ដើម្បីបង្រៀនម៉ូដែល និងធ្វើការវាយតម្លៃបាន ដំបូងយើង បានរៀបចំ dataset ដែលមាន 
+    high-quality ទាំង real dataset និង synthetic dataset, យើងបានប្រមូល 
+    data ទាំងអស់នោះដោយខ្លួនឯង ចំនួន 1000 រូបភាព ហើយបានធ្វើការកំណត់ទីតាំងអក្សរ
+    នៅលើរូបភាព ទទួលបាន 13200 ទីតាំងផ្សេងគ្នា។
+    ដើម្បីបង្កើន data ឲ្យកាន់តែច្រើន យើងបានប្រើប្រាស់វិធីសាស្ដ្រ text-to-image ដើម្បី
+    បង្កើនរូបភាពឲ្យកាន់តែច្រើនជាងមុន ដោយសារតែបើពឹងផ្អែកតែទៅលើ ការប្រមូលម្ដងមួយៗ
+    គឺចំណាយពេលវេលានឹងថវិការច្រើន ដូច្នេះមានតែប្រើប្រាស់វិធីសាស្ដ្រ Generate នេះឯង។ 
+    បន្ទាប់មកយើងទទួលបានពីការ generate ប្រហែល 8 លាន រូបភាព។
+
+    សម្រាប់ ការកំណត់ទីតាំងនៃអក្សរនៅលើរូបភាព (text detection stage), ពួកយើងបាន
+    ប្រើប្រាស់ Craft ម៉ូដែល, ដែលវាល្អសម្រាប់ ការចាប់យកទីតាំងអក្សរ នៅលើរូបភាព។ ពួក
+    យើងបាន បង្រៀនម៉ូដែល ទៅលើ dataset manually collected ប្រហែល 1000 
+    រូបភាព ដែលអាចកំណត់ទីតាំងអក្សរនៅលើរូបភាពបានល្អ។ យើងទទួលបាន recall 90\%, 
+    precision 89\%, និងចុងក្រោយគឺ F1-score 86.8\% ។ 
+
+    នៅក្នុង ការចាប់យកអក្សរចេញពីរូបភាពយើងបានប្រើប្រាស់ TrOCR ម៉ូដែលដែលបាន បង្កើត
+    ឡើងដោយក្រុមស្រាវជ្រាវរបស់ microsoft ដែលវាបានប្រើប្រាស់ transformer-based 
+    architecture ម៉ូដែលមួយនេះមិនមាន feature ដើម្បី បម្លែងរូបភាពនៅលើភាសាខ្មែរនោះទេ 
+    យើងមានតែធ្វើការ កែប្រែ processor របស់ម៉ូដែលមួយនេះ ដើម្បីឲ្យម៉ូដែលមួយនេះ មាន
+    សមត្ថភាព បំប្លែងរូបភាពភាសាខ្មែរបាន។ យើងបានបង្រៀនវាទៅលើ dataset ទាំងពីរប្រភព 
+    real dataset និង synthetic dataset ដែលទទួលបាន CER 0.02 សម្រាប់ទូទៅ, 
+    CER 0.04 សម្រាប់ ភាសាខ្មែរ,  CER 0.01 សម្រាប់ភាសាអង្គគ្លេស និងចុងក្រោយទទួលបាន 
+    CER 0.06 សម្រាប់ ការលាយលំអក្សរខ្មែរ ជាមួយនឹងភាសាអង្គគ្លេស។
+
+    ដើម្បីឲ្យការស្រាវជ្រាវមួយនេះ មានការប្រើប្រាស់ជាក់ស្ដែងបាន យើងបាន សរសេរពីរបៀប 
+    hosting ការស្រាវជ្រាវមូយនេះ សម្រាប់អនុញ្ញាតឲ្យ មានការ យកទៅប្រើប្រាស់បាន 
+    តាមរយៈបង្កើតជា API service សម្រាប់ការតភ្ជាប់ជាមួយនឹងកម្មវិធីផ្សេងៗទៀតបាន។ 
+    វាបានបំពេញចន្លោះប្រហោងរវាងការស្រាវជ្រាវនិងការអនុវត្តន៍ក្នុងភាពពិតជាក់ស្ដែងក្នុងសហគមន៍។
+    ដែលវាមានសមត្ថភាពស្គាល់អក្សរពហុភាសាខ្មែរ-អង់គ្លេស បានយ៉ាងល្អ។   
     \vspace{2cm}
     
     % English Abstract
@@ -60,54 +72,58 @@
     \englishfont
     \large
     
-    OCR technology continues to evolve rapidly, but Khmer text 
-    recognition still presents challenges—mainly because of the 
-    limited availability of high-quality training data. In this work, 
-    we introduce an end-to-end OCR approach for both Khmer and English text, 
-    tailored to work well even under low-resource conditions. Our pipeline combines 
-    reliable text detection and advanced recognition techniques, designed to reflect real-world multilingual usage in Cambodia.
+    Khmer text recognition presents persistent challenges for OCR 
+    systems—not only due to the limited availability of annotated 
+    training data, but also because of the language's complex script 
+    structure, including stacked characters, overlapping diacritics, 
+    and inconsistent font rendering. These features make Khmer 
+    particularly difficult for OCR models, Most of OCR systems which 
+    are often designed around Latin-based scripts. The increasing 
+    use of English alongside Khmer Cambodia’s signage, documents, 
+    and digital content further adds to the complexity of building 
+    an effective multilingual OCR system.
 
-    We began by manually collecting a dataset of 1,000 real-world images, 
-    carefully annotating 13,200 text-line bounding boxes in both Khmer and English. 
-    This gave us a strong foundation to train our text detection model using CRAFT, 
-    which excels at detecting irregular text regions. Training on our custom-annotated 
-    data, the CRAFT model achieved strong performance, with 90\% recall, 89\% precision, 
-    and an F1-score of 86.8\%. These results show that with focused annotation efforts, 
-    high-quality detection is achievable even without large public datasets.
-    
-    To further improve the system’s performance and handle a wider variety of input, 
-    we generated a synthetic training dataset using a text-to-image method. We 
-    collected a large corpus of Khmer and English sentences from the web and used 
-    this to create thousands of synthetic images simulating different fonts, layouts, 
-    and noise patterns. This synthetic data expanded the diversity of our training 
-    set and allowed the model to better generalize to unseen real-world samples.
-    
-    For the recognition stage, we used TrOCR—a transformer-based architecture built 
-    for OCR tasks. However, the original TrOCR processor was not designed to support 
-    Khmer text and could not correctly interpret the language. To address this, 
-    we customized the processor so that it could properly tokenize and decode Khmer 
-    characters. This modification was essential to ensure that the model could 
-    understand and accurately transcribe Khmer script.
-    
-    After training on both real and synthetic data, our TrOCR-based recognition model 
-    showed strong results on real-world test images: a character error rate (CER) 
-    of 0.02 overall, with 0.04 for Khmer, 0.01 for English, and 0.06 for lines 
-    containing both languages.
-    
-    One of the key motivations behind this work is the increasing use of English 
-    in Cambodia. While Khmer remains the national language, English is now widely 
-    used as a second language and often appears alongside Khmer in signs, documents, 
-    and digital platforms. By building a system that supports both languages, 
-    we aim to match the multilingual nature of everyday text in Cambodia.
-    
-    Finally, unlike most academic research that never reaches real-world usage, 
-    we’ve made our OCR system publicly accessible through a production-ready API. 
-    This allows others to test and integrate the model into their own applications, 
-    bridging the gap between research and practical deployment. According to recent 
-    studies, nearly 80\% of research models never get deployed or made accessible—our 
-    goal was to break that trend. By turning our model into a usable, open API, 
-    we ensure that the results of this work are not only measurable in papers 
-    but also usable by the community.
+    In this work, we introduce an end-to-end OCR approach tailored 
+    for both Khmer and English, designed specifically for 
+    low-resource and multilingual interpretation. Our OCR system 
+    follows a two-stage pipeline, consisting of (1) a text detection 
+    model and (2) a text recognition model, both optimized to handle 
+    the structural and linguistic challenges unique to Khmer script.
+
+    To train and evaluate the system, we first constructed a 
+    high-quality dataset combining both real and synthetic data. 
+    This included manually collecting 1,000 real-world images and 
+    annotating 13,200 text-line bounding boxes. To increase data 
+    diversity and simulate real-world variability, we also generated 
+    thousands of synthetic images using a text-to-image method, 
+    based on a large corpora of Khmer and English sentences rendered 
+    with varied fonts, layouts, real world background environments 
+    and visual noise.
+
+    For the text detection stage, we adopted the CRAFT model, which 
+    is well-suited for detecting irregular and curved text. Trained 
+    on our annotated dataset, CRAFT achieved strong results: 90\% 
+    recall, 89\% precision, and an F1-score of 86.8\%—demonstrating 
+    that accurate detection is achievable even in low-resource 
+    settings.
+
+    In the recognition stage, we used TrOCR, a transformer-based 
+    OCR architecture. Since TrOCR’s original processor lacked 
+    support for Khmer language, we customize it to properly tokenize 
+    and decode Khmer characters by build on top of original 
+    processor. After training on the combined real and synthetic 
+    datasets, the model achieved a character error rate (CER) of 
+    0.02 overall—0.04 for Khmer, 0.01 for English, and 0.06 for 
+    mixed-language text-line.
+
+    To ensure practical usability, we deployed the system as a 
+    production-ready public API, allowing direct integration into 
+    real-world applications. Unlike many academic models that 
+    remain unused after publication, our deployment helps close 
+    the gap between research and application—supporting broader 
+    adoption of Khmer-English OCR in multilingual, low-resource 
+    environments.
+
 
 
     
