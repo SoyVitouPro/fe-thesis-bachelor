@@ -13,60 +13,48 @@ language such as Khmer and English. We will talk about the scope
 of this research because it'll help us to keep 
 our research scope ensures clarity, direction, and feasibility 
 throughout the study.
+
 \section{Background to the Study}
 \label{sec:background}
 
-In recent decades, Optical Character Recognition (OCR) technology—powered by advancements in Artificial Intelligence (AI)—has revolutionized the way physical texts are converted into machine-readable formats. AI-based OCR systems use deep learning models to detect, segment, and classify characters from images or scanned documents, enabling efficient digitization of printed or handwritten text. These systems form a critical foundation for applications in digital libraries, information retrieval, natural language processing, and AI-powered search systems.
+Optical Character Recognition (OCR) has changed how we turn printed text into digital formats. Thanks to AI advances, OCR systems now use deep learning to detect and classify characters from images. This technology powers digital libraries, search systems, and language processing tools.
 
-Globally, OCR for high-resource languages such as English, Chinese, and Japanese has been extensively researched and developed over the last eight decades \citep{memon2020handwritten}. These systems benefit from large annotated datasets, robust typographic models, and standardized script structures. In contrast, OCR development for low-resource languages like Khmer remains significantly underdeveloped.
+OCR works great for major languages like English, Chinese, and Japanese. These languages have tons of training data and well-studied text structures. But OCR for smaller languages like Khmer? That's a different story.
 
-In Cambodia, OCR technology has become increasingly important due to the growing demand for digitized content across sectors such as education and research. The past two decades have seen rapid growth in digital adoption, resulting in a pressing need for intelligent systems capable of processing Khmer-language documents efficiently.
+Cambodia needs OCR technology more than ever. Over the past 20 years, the country has gone digital fast. People want to digitize Khmer documents for education, research, and everyday use. But here's the problem: Khmer script is incredibly complex.
 
-Khmer is the official language of the Kingdom of Cambodia and is also used to write other minority languages such as Kuay, Tampuan, Jarai, Krung, Brao, and Kravet. The Khmer writing system, which dates back to the 7th century, is an abugida script featuring complex combinations of consonants, subscript forms, diacritics, and vowel markers. Unlike Latin-based scripts, Khmer characters can stack vertically or combine in ways that affect the spatial layout and visual appearance of the text. As a result, OCR for Khmer requires not only accurate character recognition but also careful handling of contextual dependencies between character components.
-
-A complete Khmer OCR system must be capable of recognizing all script elements. Any omission—such as failing to detect a subscript or diacritic—can lead to incorrect rendering or interpretation of the entire word. Due to this complex layout rendering, character-level accuracy is critical for preserving the meaning and readability of digitized Khmer texts.
-
-The growing need for Khmer OCR technology is particularly evident in the education sector. Many school textbooks from grade 1 to 12 exist only in physical form, with no digital versions available due to the loss or absence of original files. This severely limits accessibility and updatability in modern digital learning environments. Table~\ref{sec:textbook} summarizes the current state of Khmer textbook digitization.
-
+Khmer writing goes back to the 7th century. It's not like English where letters sit in a row. Khmer characters stack on top of each other. They have subscripts, diacritics, and vowel markers that can appear above, below, or around the main character. Miss one tiny mark and you change the whole meaning of a word.
 
 \begin{table}[ht]
-    \caption{Current State of Khmer Textbook Digitization in Cambodia's Education System}
+    \caption{Why Khmer OCR is Desperately Needed}
     \vspace{10pt}
     \phantomsection
     \label{sec:textbook}
     \resizebox{\textwidth}{!}{
-    \begin{tabular}{|l|l|l|l|}
+    \begin{tabular}{|l|l|l|}
     \hline
-    Education Level & Subject Areas & Format Availability & Notes \\
+    Sector & Current Problem & Impact \\
     \hline
-    Grade 1--6 & All core subjects & Mostly physical only & Many original digital files missing \\
-    Grade 7--9 & Math, Science, Khmer & Some digital scans & Scanned PDFs, not text-searchable \\
-    Grade 10--12 & All major subjects & Few digitized & Hard to find editable versions \\
+    Education & Physical textbooks only & Students can't search or edit content \\
+    Libraries & Books rotting on shelves & Knowledge becomes inaccessible \\
+    Government & Paper records everywhere & Slow bureaucracy, hard to find documents \\
+    Healthcare & Handwritten patient files & Doctors waste time, medical errors increase \\
+    Business & Manual data entry & Companies lose money on inefficiency \\
+    Culture & Ancient texts deteriorating & We're losing our heritage \\
     \hline
     \end{tabular}
     }
 \end{table}
 
-Beyond education, Khmer OCR has broader implications across multiple sectors:
+Look at education. Most school textbooks exist only on paper. The original digital files? Gone. Lost. This creates real problems for students who need accessible learning materials.
 
-\begin{itemize}
-    \item \textbf{Digital Libraries:} Converting physical Khmer books into searchable formats enables efficient access to national knowledge repositories.
-    
-    \item \textbf{Cultural Heritage:} Ancient palm leaf manuscripts and religious texts can be preserved digitally and accessed by scholars and AI systems.
-    
-    \item \textbf{Government Records:} Legal, civil, and administrative documents can be digitized for automated search, archiving, and public service use.
-    
-    \item \textbf{Healthcare:} Khmer OCR can support the digitization of medical records, improving data accessibility and enabling medical AI models.
-    
-    \item \textbf{AI and NLP Applications:} Digitized Khmer texts can be used to train AI language models, making systems more inclusive and capable of understanding Khmer input.
-    
-    \item \textbf{Business Intelligence:} Companies can extract structured data from scanned Khmer documents for analytics and automation.
-    
-    \item \textbf{Media Archives:} Historical newspapers and magazines can be processed for research into social, political, and cultural trends.
-\end{itemize}
+But it's bigger than just schools. Ancient palm leaf manuscripts are crumbling. Government documents pile up in storage rooms. Hospitals still use paper files that doctors can't read properly. Businesses waste hours typing data that OCR could handle in minutes.
 
-In summary, OCR technology in Cambodia is no longer a niche research area but a national priority aligned with the country’s digital transformation roadmap. With Khmer script presenting significant challenges and opportunities, developing a robust OCR system is essential for Cambodia’s progress toward a digital future.
+And here's what's really frustrating: while Google can read English text perfectly, it struggles with basic Khmer sentences. The technology gap is huge.
 
+The thing is, Khmer OCR isn't just a nice to have anymore. It's essential for Cambodia's digital future. The country needs this technology to preserve its culture, modernize its institutions, and give its people better access to information.
+
+That's exactly why this research matters. We're not just building another OCR system. We're creating technology that could unlock thousands of years of Khmer knowledge and make it searchable, editable, and accessible to everyone.
 
 
 \section{Problem Statement}
