@@ -76,53 +76,63 @@ multiple problems with Khmer writing system that make it
 difficult to implement OCR model as listed below:
 
 \begin{enumerate}
-    \item \textbf{Complex Character Structure:} Khmer OCR faces unique challenges with character stacking and diacritics. Characters pile on top of each other in complex ways with tiny accent marks, subscripts, and vowel symbols that can appear above, below, or wrapped around the main letter. Missing even a small mark completely changes the word meaning.
+    \item \textbf{Complex Character Structure:} Khmer script presents unique recognition challenges due to its intricate character composition. Unlike Latin scripts, Khmer characters feature complex stacking arrangements with diacritics, subscripts, and vowel markers positioned above, below, or surrounding base characters. Even minor mark omissions can drastically alter word meanings, making precise recognition critical.
     
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\textwidth]{figures/example_of_text_format.png}
-            \caption{Example of Khmer text format showing the complexity of character combinations and diacritics}
-            \label{fig:text_format}
+            \includegraphics[width=0.87\textwidth]{figures/example_of_text_format.png}
+            \begin{minipage}{0.87\textwidth}
+                \caption{Example of Khmer text format showing the complexity of character combinations and diacritics}
+                \label{fig:text_format}
+            \end{minipage}
         \end{figure}
-
-    \item \textbf{Inconsistent Word Boundaries:} Khmer OCR faces unique challenges with inconsistency in word boundaries. English have spaces to separate words unlike Khmer writing with no standard spacing format. This kind of case creates a major problem for AI to tell where one word ends and another begins.
+ 
+    \item \textbf{Inconsistent Word Boundaries:} Khmer lacks standardized word spacing conventions, creating significant segmentation challenges. While English consistently uses spaces between words, Khmer writers apply spacing inconsistently or omit it entirely. This variability makes it extremely difficult for OCR systems to determine word boundaries accurately.
     
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\textwidth]{figures/example_of_long_text.png}
-            \caption{Example of sequential Khmer text showing how characters combine to form syllables and words}
-            \label{fig:sequential_text}
+            \includegraphics[width=0.87\textwidth]{figures/example_of_long_text.png}
+            \begin{minipage}{0.87\textwidth}
+                \caption{Example of sequential Khmer text showing how characters combine to form syllables and words}
+                \label{fig:sequential_text}
+            \end{minipage}
         \end{figure}
-
-    \item \textbf{Mixed-Language Complexity:} Modern Cambodia faces a growing challenge with mixed-language documents, as the rise of English education and international business over the past two decades that made it common to see signs, textbooks, and digital content mixing both languages within the same sentence or paragraph. This mixed-language phenomenon creates several specific problems for OCR systems including script switching confusion, different text layouts, and font inconsistencies.
+ 
+    \item \textbf{Mixed-Language Complexity:} Cambodia's increased English education and international business integration over recent decades has led to widespread mixed-language documents. Signs, textbooks, and digital content frequently blend Khmer and English within single sentences or paragraphs, creating OCR challenges including script transition confusion, conflicting layout patterns, and font inconsistencies.
     
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\textwidth]{figures/mix_language_khmer_and_english.png}
-            \caption{Example of mixed Khmer-English text showing how both languages appear together in modern Cambodian documents}
-            \label{fig:mix_language}
+            \includegraphics[width=0.87\textwidth]{figures/mix_language_khmer_and_english.png}
+            \begin{minipage}{0.87\textwidth}
+                \caption{Example of mixed Khmer-English text showing how both languages appear together in modern Cambodian documents}
+                \label{fig:mix_language}
+            \end{minipage}
         \end{figure}
         
-        Most existing Khmer OCR systems are designed for single-language scenarios and perform poorly when encountering this mixed-language reality that exist everywhere in Cambodia today. This situation becomes even more challenging when seeking properly labeled mixed-language datasets that combine Khmer and English text. Without enough training data, OCR model stays dumb. It can't learn the patterns to recognize text accurately.
-
-    \item \textbf{Font Variation Challenges:} English has maybe around 15 to 25 common fonts that most people use, based on reported study use case, from websites such as rigorousthemes.com, lifehack.org, and indeed.com. Khmer has many different fonts that look very unique from each other, some are thick and bold, others are thin and delicate, some have fancy decorations. To train model on one font and it fails completely on another.
+        Current Khmer OCR systems typically target single-language scenarios and struggle with mixed-language content prevalent in modern Cambodia. The scarcity of properly annotated multilingual datasets compounds this challenge, limiting model training effectiveness and recognition accuracy.
+ 
+    \item \textbf{Font Variation Challenges:} While English utilizes approximately 15-25 common fonts according to industry studies from rigorousthemes.com, lifehack.org, and indeed.com, Khmer encompasses numerous visually distinct font families ranging from bold and thick to thin and decorative styles. Models trained on limited font sets often fail when encountering different typefaces, highlighting the need for comprehensive font coverage in training data.
     
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\textwidth]{figures/varianty_of_font.png}
-            \caption{Examples of the same Khmer text rendered in different fonts, demonstrating the significant visual variations that OCR systems must handle}
-            \label{fig:font_variants}
+            \includegraphics[width=0.87\textwidth]{figures/varianty_of_font.png}
+            \begin{minipage}{0.87\textwidth}
+                \caption{Examples of the same Khmer text rendered in different fonts, demonstrating the significant visual variations that OCR systems must handle}
+                \label{fig:font_variants}
+            \end{minipage}
         \end{figure}
-
-    \item \textbf{Character Stacking Patterns:} Khmer text has complex stacking patterns where characters combine vertically and horizontally to form syllables and words. This creates spatial relationships that are difficult for traditional OCR systems to handle.
+ 
+    \item \textbf{Character Stacking Patterns:} Khmer employs sophisticated vertical and horizontal character stacking to form syllables and words, creating complex spatial relationships that challenge traditional OCR architectures. These multidimensional arrangements require specialized recognition approaches capable of understanding hierarchical character dependencies.
     
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\textwidth]{figures/text_stacking_mixing_language.png}
-            \caption{Illustration of Khmer text stacking patterns, showing how characters combine vertically and horizontally to form syllables and words \citep{buoy2023khmerocr}}
-            \label{fig:text_stacking}
+            \includegraphics[width=0.87\textwidth]{figures/text_stacking_mixing_language.png}
+            \begin{minipage}{0.87\textwidth}
+                \caption{Illustration of Khmer text stacking patterns, showing how characters combine vertically and horizontally to form syllables and words \citep{buoy2023khmerocr}}
+                \label{fig:text_stacking}
+            \end{minipage}
         \end{figure}
-\end{enumerate}
+ \end{enumerate}
 
 
 \section{Aim and Objectives of the Study}
