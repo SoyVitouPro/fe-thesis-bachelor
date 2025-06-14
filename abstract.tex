@@ -81,7 +81,6 @@
     \vspace{0.5cm}
     \englishfont
     \large
-    
     Khmer text recognition presents persistent challenges for OCR 
     systems—not only due to the limited availability of annotated 
     training data, but also because of the language's complex script 
@@ -91,15 +90,12 @@
     are often designed around Latin-based scripts. The increasing 
     use of English alongside Khmer Cambodia’s signage, documents, 
     and digital content further adds to the complexity of building 
-    an effective multilingual OCR system.
-
-    In this work, we introduce an end-to-end OCR approach tailored 
+    an effective multilingual OCR system.In this work, we introduce an end-to-end OCR approach tailored 
     for both Khmer and English, designed specifically for 
     low-resource and multilingual interpretation. Our OCR system 
     follows a two-stage pipeline, consisting of (1) a text detection 
     model and (2) a text recognition model, both optimized to handle 
     the structural and linguistic challenges unique to Khmer script.
-
     To train and evaluate the system, we first constructed a 
     high-quality dataset combining both real and synthetic data. 
     This included manually collecting 1,000 real-world images and 
@@ -109,24 +105,19 @@
     based on a large corpora of Khmer and English sentences rendered 
     with varied fonts, layouts, real world background environments 
     and visual noise.
-
     For the text detection stage, we adopted the CRAFT model, which 
     is well-suited for detecting irregular and curved text. Trained 
     on our annotated dataset, CRAFT achieved strong results: 90\% 
     recall, 89\% precision, and an F1-score of 86.8\%—demonstrating 
     that accurate detection is achievable even in low-resource 
-    settings.
-
-    In the recognition stage, we used TrOCR, a transformer-based 
+    settings. In the recognition stage, we used TrOCR, a transformer-based 
     OCR architecture. Since TrOCR’s original processor lacked 
     support for Khmer language, we customize it to properly tokenize 
     and decode Khmer characters by build on top of original 
     processor. After training on the combined real and synthetic 
     datasets, the model achieved a character error rate (CER) of 
     0.02 overall—0.04 for Khmer, 0.01 for English, and 0.06 for 
-    mixed-language text-line.
-
-    To ensure practical usability, we deployed the system as a 
+    mixed-language text-line. To ensure practical usability, we deployed the system as a 
     production-ready public API, allowing direct integration into 
     real-world applications. Unlike many academic models that 
     remain unused after publication, our deployment helps close 

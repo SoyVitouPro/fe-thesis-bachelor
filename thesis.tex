@@ -37,6 +37,12 @@
 \XeTeXlinebreaklocale "khmer"
 \XeTeXlinebreakskip = 0pt plus 1pt
 
+% Center chapter titles
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\centering}
+  {\chaptertitlename\ \thechapter}{5pt}{\Huge}
+
 \title{}
 \author{}
 \date{}
