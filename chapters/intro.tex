@@ -25,7 +25,7 @@ Cambodia needs OCR technology more than ever. Over the past 20 years, the countr
 
 Khmer writing goes back to the 7th century. It's not like English where letters sit in a row. Khmer characters stack on top of each other. They have subscripts, diacritics, and vowel markers that can appear above, below, or around the main character. Miss one tiny mark and you change the whole meaning of a word.
 
-\begin{table}[ht]
+\begin{table}[H]
     \caption{Why Khmer OCR is Desperately Needed}
     \vspace{10pt}
     \phantomsection
@@ -60,54 +60,76 @@ That's exactly why this research matters. We're not just building another OCR sy
 \section{Problem Statement}
 \label{sec:problem}
 
-Optical Character Recognition (OCR) for the Khmer language presents a 
-unique set of challenges that significantly hinder the development 
-of accurate and robust recognition systems. Unlike Latin-based scripts, 
-Khmer is an abugida writing system, where each character represents a 
-consonant-vowel unit and includes complex combinations of base 
-characters, subscripts, superscripts, and diacritics. This structural 
-complexity introduces difficulties at both the text detection 
-stage and the text recognition stage.
-\begin{figure}[ht]
+To develop OCR for English is really hard, but the way much more harder than you think is 
+OCR on mixing languages such as English and Khmer languages. 
+
+Most OCR systems work great with English because English is simple. Letters sit 
+in a line. You read left to right. Done.
+
+Khmer? That's a completely different beast. Characters stack on top of each other. 
+They have tiny marks above and below that change the meaning. Miss one little dot 
+and you've got the wrong word entirely.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/example_of_text_format.png}
     \caption{Example of Khmer text format showing the complexity of character combinations and diacritics}
     \label{fig:text_format}
 \end{figure}
 
-One of the fundamental obstacles is the lack of clear word boundaries 
-in Khmer writing. In contrast to Latin-based languages, 
-where spaces are consistently used to separate words, 
-spaces in Khmer are used infrequently and inconsistently. 
-This makes it extremely difficult to segment text accurately 
-into word-level units for training sequence-to-sequence OCR models 
-such as TrOCR. The absence of reliable word boundaries reduces 
-recognition accuracy and complicates tasks like error correction, 
-search indexing, and language modeling.
+Here's what makes Khmer OCR so frustrating. First, there are no clear word breaks. In English, we use spaces between words. Easy. Khmer writers use spaces sometimes, sometimes they don't. This makes it impossible to know where one word ends and another begins.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/example_of_long_text.png}
     \caption{Example of sequential Khmer text showing how characters combine to form syllables and words}
     \label{fig:sequential_text}
 \end{figure}
 
+A growing challenge in modern Cambodia is the increasing prevalence of mixed-language 
+documents that combine Khmer and English text. As English education and international 
+business have expanded over the past two decades, it's become common to see documents, 
+signs, textbooks, and digital content that seamlessly blend both languages within the 
+same sentence or paragraph.
 
-A critical barrier to advancing Khmer OCR is the scarcity of annotated training datasets. There is a severe lack of high-quality, large-scale datasets that provide paired image-text data with bounding boxes, character-level annotations, or transcription lines tailored to Khmer script. This data scarcity limits the potential for supervised learning approaches and transfer learning, which are essential for training modern deep OCR models like TrOCR.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/mix_language_khmer_and_english.png}
+    \caption{Example of mixed Khmer-English text showing how both languages appear together in modern Cambodian documents}
+    \label{fig:mix_language}
+\end{figure}
 
+This mixed-language phenomenon creates several specific problems for OCR systems:
+\begin{itemize}
+    \item \textbf{Script switching confusion:} OCR models must quickly adapt between completely different writing systems within the same text line
+    \item \textbf{Different text layouts:} English flows horizontally while Khmer has vertical stacking, creating complex spatial relationships
+    \item \textbf{Font inconsistencies:} The same document often uses different fonts for Khmer and English portions, confusing recognition models
+    \item \textbf{Training data scarcity:} Very few datasets contain properly annotated mixed-language examples
+\end{itemize}
 
-Additionally, font and style variability further degrade recognition performance. Khmer documents in the real world are printed in diverse typefaces and stylistic variations (e.g., Khmer OS, Nokora, and Hanuman), with differences in stroke thickness, spacing, and decoration. The lack of standardization across documents and poor documentation of these fonts means that OCR models trained on one style often fail to generalize to others. This problem is exacerbated in noisy or low-resolution scans of textbooks and historical texts.
+Most existing OCR systems are designed for single-language scenarios 
+and perform poorly when encountering this mixed-language reality 
+that's everywhere in Cambodia today.
 
-The challenge of font variability is illustrated in Figure \ref{fig:font_variants}, which shows how the same Khmer text can appear significantly different across various fonts and styles.
+Then there's the data problem. Building good OCR needs tons of 
+examples. English has millions of labeled images. How about Khmer lanugage? 
+We're lucky if we find a few thousand decent samples. And forget 
+about finding mixed language examples that are properly labeled.
 
-\begin{figure}[ht]
+Without enough training data, your OCR model stays dumb. It can't learn the patterns it needs to recognize text accurately.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/varianty_of_font.png}
     \caption{Examples of the same Khmer text rendered in different fonts, demonstrating the significant visual variations that OCR systems must handle}
     \label{fig:font_variants}
 \end{figure}
 
-\begin{figure}[ht]
+And let's talk about fonts. English has maybe 10 common fonts that most people use. Khmer has dozens of wildly different fonts. Some are thick and bold. Others are thin and delicate. Some have fancy decorations. Train your model on one font and it fails completely on another.
+
+Look at Figure \ref{fig:font_variants}. Same text, different fonts. To a human, it's obviously the same words. To a computer? It might as well be different languages.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/text_stacking_mixing_language.png}
     \caption{Illustration of Khmer text stacking patterns, 
@@ -116,10 +138,9 @@ The challenge of font variability is illustrated in Figure \ref{fig:font_variant
     \label{fig:text_stacking}
 \end{figure}
 
-Taken together, these challenges create a significant barrier to digitizing Khmer documents using CRAFT + TrOCR pipelines. The absence of word delimiters, the visual complexity of character stacking, cross-script confusion, data scarcity, and font inconsistency all contribute to the low accuracy and poor reliability of existing OCR solutions for Khmer. Addressing these issues requires the development of customized preprocessing, augmentation, and model training strategies—as well as targeted data collection and annotation efforts—to make Khmer OCR viable for real-world applications, especially in the context of educational digitization and cultural preservation.
+All these problems add up. You end up with OCR systems that work maybe 60% of the time on clean text. Add some noise, mix in English, or use a different font? Forget it. The accuracy drops to basically useless levels.
 
-
-
+That's exactly why we need a better approach. Current OCR tools aren't built for the messy reality of Khmer text. They expect perfect conditions that just don't exist in the real world.
 
 \section{Aim and Objectives of the Study}
 \label{sec:objectives}
