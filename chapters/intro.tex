@@ -154,21 +154,34 @@ that just don't exist in the real world.
 \section{Aim and Objectives of the Study}
 \label{sec:objectives}
 
-The primary aim of this research is to develop an improved optical character 
-recognition (OCR) system specifically designed for MIX-language (Khmer-English) 
-addressing the unique challenges of Khmer-English script while achieving high 
-accuracy and reliability in real-world applications.
+Here's what we're trying to do. We want to build an OCR system that actually 
+works for real Khmer documents. Not just clean textbook pages, but the messy, 
+mixed-language stuff you see everywhere in Cambodia. Our main goal is simple: 
+create an OCR system that can handle both Khmer and 
+English text in the same document with high accuracy. Something that doesn't 
+fall apart when it sees a content on social media or a textbook page.
 
-The specific objectives of this study are:
+To get there, we need to tackle specific problems:
 
 \begin{enumerate}
-    \item To create text annotation tool to bounding boxes for create real-dataset for Khmer-English for both text detection and text recognition tasks.
-    \item To create a robust training dataset such as varianty of font, real-world environment that addresses the lack of annotated data for Khmer OCR
-    \item To develop end-to-end OCR pipelines such as text detection and recognition models that utilizing CRAFT and TrOCR model architectures, particularly focusing on text line based segmentation.
-    \item To achieve the state-of-the-art (Accuracy \& CER) and reliability in real-world applications for Khmer-English OCR.
+    \item \textbf{Create a text annotation tool:    } Before we can train anything, we need a way to mark up images with bounding boxes and text labels. We'll build our own tool that can handle both tasks such as text detection and text recognition efficiently.
+
+    \item \textbf{Generate synthetic data that actually helps:} Real data is expensive and time-consuming to collect. We'll create millions of synthetic images that look realistic enough to train our models. Different fonts, various backgrounds, realistic noise and distortions.
+
+    \item \textbf{Build an end-to-end OCR pipeline:} We're using CRAFT for text detection and TrOCR for recognition. But we need to modify them to work well with Khmer script and mixed-language content. This means customizing the models, not just using them out of the box.
+
+    \item \textbf{Make it work in the real world:} Our system needs to handle text lines, not just individual characters. It should work on documents with varying quality, different fonts, and mixed Khmer-English content.
+
+    \item \textbf{Beat existing solutions:} We want to achieve better accuracy than current OCR tools like Tesseract when it comes to Khmer text (excluding commercial models). And we want to do it reliable, not just for testing a few samples.
+    
+    \item \textbf{Provide an easy-to-use inference model:} Instead of hosting a public API, we’ll share our OCR model on Hugging Face so developers and businesses can run it themselves with minimal setup—no need to dive into technical details. Making the model accessible allows others to test its quality and helps the community continue improving Khmer OCR systems.
 \end{enumerate}
 
-Through achieving these objectives, this research aims to significantly advance the state of Khmer OCR technology and enable more effective digitization of Cambodian textual heritage.
+The end result should be an OCR system that Cambodian schools, libraries, 
+and businesses can actually use. Something that turns physical Khmer documents 
+into searchable, editable digital text without requiring a PhD to operate.
+That's the goal, Build something that solves real problems for real people.
+
 
 \section{Research Questions}
 \label{sec:questions}
