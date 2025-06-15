@@ -100,7 +100,7 @@ vector to better handle oriented and curved text instances.  CRAFT (CharacterReg
 Text Detection) \citet{Baek} akes a different approach, using a regionscore map to localize 
 individual character regions which are then grouped into words/text lines.
 Mask TextSpotter \citet{TextSpotter} combines semantic segmentation + attention-based 
-recognition to directly read text of any shape from natural scenes—all in one unified model.
+recognition to directly read text of any shape from natural scenes all in one unified model.
 TextFuseNet \citet{ijcai2020p72} is detects text by extracting and fusing features 
 at three levels: character-level, word-level, and global-level. It uses a semantic segmentation 
 branch for global context, detects characters and words through a modified Mask R-CNN pipeline, 
@@ -138,7 +138,7 @@ to benefit from each other during training.
   \caption*{Source: Results sourced from the CRAFT research paper \cite{Hiremath_text_detection}. 
   Results are reported on quadrilateral-type datasets such as ICDAR. 
   Asterisks (*) denote results based on multi-scale tests. 
-  The table compares various scene text detection models—including the CRAFT model used in the proposed system—across key performance metrics such as precision, recall, and F1-score.}
+  The table compares various scene text detection models including the CRAFT model used in the proposed system across key performance metrics such as precision, recall, and F1-score.}
   \label{tab:text_detection_accuracy}
 \end{table}
 
@@ -201,28 +201,21 @@ and remains a landmark study in Khmer script recognition.
 Khmer Optical Character Recognition (OCR) introduces a Support 
 Vector Machine (SVM)-based approach for printed Khmer character 
 recognition in bitmap documents. Given the inherent complexity 
-of the Khmer script—which includes 74 alphabets and the potential 
-for up to five vertical levels in word compounds—the study focuses 
+of the Khmer script which includes 74 alphabets and the potential 
+for up to five vertical levels in word compounds the study focuses 
 on identifying the most effective SVM kernel for classification.
-
 The proposed method evaluates three SVM kernels: Gaussian, Polynomial, 
 and Linear. Rather than training on large datasets, the system adopts 
 a modular approach, segmenting characters into smaller parts. Each 
 segment is transformed into a binary matrix, with 1s representing 
 black pixels and 0s for whitespace. Feature extraction is applied 
 to these matrices for SVM training and classification.
-
 Following recognition, post-processing rules are employed to merge 
 character clusters and correct common misclassifications based on 
 character levels. The training utilized one font ("Khmer OS Content") 
 at 32pt and tested recognition performance across three font sizes 
-(28pt, 32pt, and 36pt). The results demonstrated strong accuracy:
-\begin{itemize}
-  \item 98.17\% for 28pt,
-  \item 98.62\% for 32pt,
-  \item 98.54\% for 36pt.
-\end{itemize}
-
+(28pt, 32pt, and 36pt). The results demonstrated strong accuracy
+98.17\% for 28pt, 98.62\% for 32pt, 98.54\% for 36pt.
 The Gaussian kernel outperformed the other kernels, confirming its 
 suitability for Khmer character recognition. This study highlights 
 the effectiveness of machine learning-based OCR for complex scripts 
@@ -236,7 +229,7 @@ MATLAB environment, the system integrates a Self-Organizing Map (SOM)
 for unsupervised clustering with a Multilayer Perceptron (MLP) 
 trained via the backpropagation algorithm for supervised classification. 
 The recognition process follows a two-stage pipeline: first, the input 
-image—resized to 20×20 pixels—is categorized by the SOM into one of 
+image resized to 20×20 pixels is categorized by the SOM into one of 
 nine coarse groups. Then, each group is assigned to a dedicated MLP 
 model, which performs fine-grained classification into one of 82 
 target classes, including Khmer consonants, vowels, and numerals. 
@@ -275,7 +268,7 @@ developed. The output layer of the network predicts one of 106
 character classes, achieving a reported test accuracy of 95.96\%. 
 In addition to CNNs, the study also explores other neural 
 architectures including LSTM-RNN and hybrid CNN-RNN models. 
-For the word/text image recognition task, the authors leveraged 
+For the word-text image recognition task, the authors leveraged 
 both one-dimensional and two-dimensional RNNs to handle the complex 
 spatial structure of Khmer script and to localize glyphs within 
 variable-length text patches. This research highlights the potential 
@@ -288,8 +281,8 @@ symbol recognition, focusing on the use of Convolutional Neural
 Networks (CNNs) for digitizing large-scale handwritten document corpora. 
 The study used image data from six handwriting datasets containing 
 33 Khmer consonants and 17 vowels, forming a total of 561 syllables. 
-For consonant recognition, the authors trained 33 individual CNNs—one 
-for each root radical—which were later integrated into a recognition 
+For consonant recognition, the authors trained 33 individual CNNs one 
+for each root radical which were later integrated into a recognition 
 assembly. The performance of the CNN-based model was evaluated against 
 two alternative systems: an artificial neural network (ANN) using the 
 full feature set, and another ANN with reduced feature dimensions. 
@@ -366,8 +359,8 @@ requires a subscription, limiting transparency for non-subscribers. This work co
 important step toward faster and more linguistically aware Khmer OCR by bridging the gap between 
 speed and accuracy in scene text recognition.
 
-Khmer OCR research has progressed significantly, yet the script’s structural complexity—including 
-stacked consonants, subscript forms, diacritics, and the absence of spaces between words—continues 
+Khmer OCR research has progressed significantly, yet the script’s structural complexity including 
+stacked consonants, subscript forms, diacritics, and the absence of spaces between words continues 
 to pose major challenges. Early methods relying on wavelet descriptors, SVMs, and HMMs showed moderate 
 success but struggled with font variations, segmentation, and real-world noise. Deep learning has 
 since enabled end-to-end approaches like attention-based Sequence-to-Sequence (Seq2Seq) models, 
@@ -381,6 +374,40 @@ results, and gaps remain in handwritten recognition, font diversity, and domain 
 Future research must prioritize Khmer-aware model design, synthetic data generation, and robust 
 multimodal solutions to improve performance in real-world OCR applications.
     
+
+
+\begin{table}[H]
+\centering
+\caption{Summary of Khmer Optical Character Recognition Research}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{3.5cm}|p{3.8cm}|p{5cm}|p{3.5cm}|}
+\hline
+\textbf{Author (Year)} & \textbf{Method} & \textbf{Dataset} & \textbf{Performance} \\
+\hline
+Chey (2006) & WD + EDC & 10 fonts, 21 pages & 89-93\% accuracy \\
+\hline
+Sok (2014) & SVM & Single font, 3 sizes & 98\% accuracy \\
+\hline
+Meng (2014) & SOM + MLP & 82 classes & 65\% train, 30\% test \\
+\hline
+Muaz (2015) & HMM + HTK & 35K samples, 10 pages & 96\% overall \\
+\hline
+Valy (2018) & CNN & 106 classes on palms & 96\% accuracy \\
+\hline
+Annanurov (2018) & CNN Assembly & 6 datasets, 561 syllables & 95\% accuracy \\
+\hline
+Sokphyrum (2019) & Tesseract 4.0 & 34 fonts & 87-89\% (Unicode) \\
+\hline
+Buoy (2021) & Seq2Seq + Attention & 3M synthetic images & CER: 0.24-0.7\% \\
+\hline
+Nom (2024) & YOLO + TrOCR & 1.5K real images & CER: 0.90-1.30 \\
+\hline
+Buoy (2025) & NAR + Subword & Textlines & Better than AR \\
+\hline
+\end{tabular}
+\label{tab:khmer_ocr_summary}
+\end{table}
+
 
 \section{Challenges in Khmer OCR}
 \phantomsection
@@ -412,7 +439,7 @@ approaches are brittle and poorly suited for real-world applications where scann
 noise, skew, blur, uneven lighting, or distorted text lines. Their reliance on handcrafted rules also 
 limits scalability and adaptability to other domains.
 
-Lastly, the lack of word boundaries in Khmer—where text is often written without spaces—presents an 
+Lastly, the lack of word boundaries in Khmer where text is often written without spaces presents an 
 additional recognition barrier. This linguistic feature necessitates full line-level recognition, 
 which increases computational complexity and requires models to understand broader contextual dependencies 
 across characters.
@@ -443,8 +470,8 @@ concatenation of multiple text-line images. Each augmentation has a 50\% probabi
 with combinations occurring dynamically during training to maximize variability and minimize overfitting.
 
 The resulting synthetic dataset scales to millions of samples, covering a wide spectrum of distortions, 
-font styles, and text structures. This scale and diversity enable deep learning models—particularly 
-end-to-end architectures such as attention-based Sequence-to-Sequence networks—to learn robust 
+font styles, and text structures. This scale and diversity enable deep learning models particularly 
+end-to-end architectures such as attention-based Sequence-to-Sequence networks to learn robust 
 visual and contextual features, improving performance on both clean and noisy inputs. Ultimately, 
 synthetic data serves as a vital resource for building Khmer OCR systems capable of handling the 
 script’s inherent complexity in the absence of large, annotated real-world datasets.
@@ -457,19 +484,19 @@ script’s inherent complexity in the absence of large, annotated real-world dat
 Despite recent progress in Khmer Optical Character Recognition (OCR), 
 several critical gaps persist in the current body of research, hindering the 
 development of robust and generalizable systems. First and foremost is the issue of 
-data scarcity—there is a lack of large-scale, high-quality annotated datasets for Khmer, 
+data scarcity there is a lack of large-scale, high-quality annotated datasets for Khmer, 
 particularly for scene text and handwriting, which restricts model training, benchmarking, 
 and cross-domain evaluation. Although synthetic datasets have partially mitigated this, they 
 cannot fully replicate the variability and unpredictability of real-world documents. Second, the 
-complex structural features of Khmer script—such as stacked consonants, overlapping vowel markers, and 
-the absence of explicit word boundaries—are insufficiently addressed in many existing models, 
+complex structural features of Khmer script such as stacked consonants, overlapping vowel markers, and 
+the absence of explicit word boundaries are insufficiently addressed in many existing models, 
 especially those adapted from Latin-script OCR frameworks. These models often fail to 
 capture the script's spatial dependencies and morphological nuances. Third, font 
 variability remains a major bottleneck: Khmer documents are written in a wide range of stylistic 
 fonts, and OCR systems trained on limited font sets often generalize poorly. Lastly, there is 
 a lack of robustness to real-world document conditions, including noisy backgrounds, image blur, 
 skew, and low resolution. Many current systems, including Tesseract and some CNN-based models, 
-show significant performance drops under such conditions. Addressing these gaps—through 
-Khmer-specific model design, comprehensive dataset creation, and more resilient training strategies—is 
+show significant performance drops under such conditions. Addressing these gaps through 
+Khmer-specific model design, comprehensive dataset creation, and more resilient training strategies is 
 essential for building high-performance OCR systems tailored to the Khmer language and its 
 real-world use cases.

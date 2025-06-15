@@ -4,18 +4,48 @@
 
 \section{Experimental Environment and Tools}
 \label{sec:environment}
-All experiments in this study were conducted on a high-performance workstation running 
-Ubuntu 20.04 LTS. The system was equipped with dual NVIDIA RTX 4090 GPUs, each with 
-24 GB of VRAM, and 128 GB of system RAM, ensuring ample memory and computational power 
-for training large-scalec deep learning models efficiently.
 
-The models were implemented using the PyTorch deep learning framework, with integration of the Hugging Face Transformers library for state-of-the-art model architectures such as TrOCR. GPU acceleration was enabled via CUDA, allowing for fast and parallelized training across the two GPUs.
+All experiments were conducted on a Linux CLI system with the following hardware
+and software specifications listed below:
 
-For experiment tracking and metric logging, MLflow was used. It captured key training 
-and evaluation metrics such as character error rate (CER), word error rate (WER), 
-training loss, and validation loss in real-time. This facilitated better experiment 
-management and reproducibility, especially when comparing multiple model versions or 
-hyperparameter configurations.
+\begin{table}[H]
+    \centering
+    \caption{Experimental Setup and Environment Configuration}
+    \renewcommand{\arraystretch}{1.4}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|p{4.5cm}|p{5.7cm}|p{6.5cm}|}
+    \hline
+    \textbf{Component} & \textbf{Specification} & \textbf{Purpose} \\[0.2cm]
+    \hline
+    \multicolumn{3}{|c|}{\textbf{Hardware Configuration}} \\[0.2cm]
+    \hline
+    Operating System & Ubuntu 20.04 LTS & Stable training large model \\[0.2cm]
+    \hline
+    GPU Units & 3x NVIDIA RTX 4090 & Parallel computing \\[0.2cm]
+    \hline
+    VRAM & 24 GB per GPU (72 GB total) & Large model training and inference \\[0.2cm]
+    \hline
+    System Memory & 256 GB RAM & Great for loading \& processing \\[0.2cm]
+    \hline
+    \multicolumn{3}{|c|}{\textbf{Software Framework}} \\[0.2cm]
+    \hline
+    DL Framework & PyTorch & implementation \& training \\[0.2cm]
+    \hline
+    Model Library & Hugging Face Transformers & Pre-trained architecture access \\[0.2cm]
+    \hline
+    GPU Acceleration & CUDA & Great for training across GPUs \\[0.2cm]
+    \hline
+    \multicolumn{3}{|c|}{\textbf{Experiment Management}} \\[0.2cm]
+    \hline
+    Tracking System & MLflow & Real-time metric logging \\[0.2cm]
+    \hline
+    Monitored Metrics & CER, Train/Valid Loss & evaluation \& comparison \\[0.2cm]
+    \hline
+    \end{tabular}%
+    }
+    \label{tab:experimental_setup}
+    \end{table}
+
 
 
 
@@ -23,8 +53,8 @@ hyperparameter configurations.
 \label{sec:architecture}
 We propose the end-to-end Khmer \& English OCR solution using a CRAFT model combine
 with TrOCR architecture, as shown in Figure \ref{fig:craft-model} and \ref{fig:trocr-model}.
-In this section we will describe the details of the model architecture and configuration
-from document image to digital text output in whole pipeline.
+In this section we will dive into the details of the model architecture and configuration
+from document image to digital text in whole pipeline.
 
 \subsection{CRAFT for Text Detection}
 \label{subsec:craft}
@@ -33,7 +63,7 @@ For the text detection stage, we adopted the Character Region Awareness for Text
 Detection (CRAFT) model, which is well-regarded for its ability to detect text at 
 the character level rather than relying solely on word-level bounding boxes. 
 CRAFT produces dense predictions of character regions and affinity scores, 
-enabling it to localize irregular and closely spaced text lines—an essential 
+enabling it to localize irregular and closely spaced text lines an essential 
 requirement for handling complex scripts like Khmer.
 
 The CRAFT model architecture consists of a VGG16-based backbone followed by a series 
@@ -60,12 +90,8 @@ prevent overfitting.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/craft_model.png}
-    \caption{Illustration of the CRAFT model architecture used for text detection. 
-    The model consists of a VGG16-based backbone followed by a series of 
-    convolutional layers to produce two output maps: a region score map and 
-    an affinity score map. The model is fine-tuned on a custom Khmer dataset 
-    composed of synthetic and real-world scene text images. 
-    \citet{baek2019craft}}
+    \caption{Schematic illustration of our network architecture.
+    \citep{baek2019craft}}
     \label{fig:craft-model}
 \end{figure}
 
@@ -94,10 +120,39 @@ We fine-tuned the base version of TrOCR using the Hugging Face \texttt{transform
     \label{fig:trocr-model}
 \end{figure}
 
+
+To make the TrOCR model understand Khmer tokens, 
+we customized the processor without modifying the original 
+model architecture. We developed a CustomKhmerTokenizer 
+based on a predefined list of unique Khmer and English characters, 
+including special tokens such as \textit{<s>}, \textit{</s>}, and 
+\textit{<pad>}, to handle 
+the encoding of text into token IDs and the decoding of token IDs 
+back into readable text. This tokenizer was then wrapped inside 
+a custom processor that mimics the behavior of Hugging Face’s 
+TrOCRProcessor, allowing seamless integration with TrOCR’s image 
+processing pipeline. By doing so, we enabled the model to work 
+with Khmer script during both training and inference, while 
+preserving the original TrOCR model’s structure and leveraging 
+its pretrained capabilities.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Customize_processor.png}
+    \caption{Architecture of the customized TrOCR pipeline. 
+    The original TrOCR model is extended with a custom processor, 
+    which includes two additional fully connected layers 
+    (FC1 and FC2) tailored for Khmer character decoding.}
+    \label{fig:trocr-custom-processor}
+\end{figure}
+
+
+
 \subsection{The end-to-end pipeline}
 \label{subsec:khmer-ocr-pipeline}
 
-        The overall workflow is given in Figure \ref{fig:trocr-inference-full-pipeline}.
+The overall workflow is given in Figure \ref{fig:trocr-inference-full-pipeline}.
 It starts with the image-of-text inputs which are English and
 Khmer image-text, or even mixing language image-text, the pre-processing
 step is converted image into grayscale because we want to down-stream
@@ -189,33 +244,6 @@ factors, Gaussian kernel initialization size, and Gaussian sigma.}
 \label{tab:craft-training-config}
 \end{table}
 
-
-\subsection{Customizing TrOCR Processor}
-\label{subsec:customizing-trocr-processor}
-        To make the TrOCR model understand Khmer tokens, 
-we customized the processor without modifying the original 
-model architecture. We developed a CustomKhmerTokenizer 
-based on a predefined list of unique Khmer and English characters, 
-including special tokens such as \textit{<s>}, \textit{</s>}, and 
-\textit{<pad>}, to handle 
-the encoding of text into token IDs and the decoding of token IDs 
-back into readable text. This tokenizer was then wrapped inside 
-a custom processor that mimics the behavior of Hugging Face’s 
-TrOCRProcessor, allowing seamless integration with TrOCR’s image 
-processing pipeline. By doing so, we enabled the model to work 
-with Khmer script during both training and inference, while 
-preserving the original TrOCR model’s structure and leveraging 
-its pretrained capabilities.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/Customize_processor.png}
-    \caption{Architecture of the customized TrOCR pipeline. 
-    The original TrOCR model is extended with a custom processor, 
-    which includes two additional fully connected layers 
-    (FC1 and FC2) tailored for Khmer character decoding.}
-    \label{fig:trocr-custom-processor}
-\end{figure}
 
 
 
