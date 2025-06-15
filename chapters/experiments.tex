@@ -2,6 +2,34 @@
 \phantomsection
 \label{ch:experiments}
 
+
+\section{End-to-End Khmer OCR Network system}
+\label{sec:end_to_end_khmer_ocr_sysetm}
+
+We propose an end-to-end Khmer OCR pipeline that combines the CRAFT model 
+for text detection with the TrOCR model architecture developed by Microsoft 
+for text recognition. We have customized and adapted the system to support 
+both Khmer and English languages. The pipeline takes an input image, applies 
+the CRAFT model to detect and crop individual text-line regions, and then 
+feeds each text-line image into the TrOCR model.
+The TrOCR model operates in an auto-regressive manner, decoding one character 
+at a time until it reaches the end-of-sequence token. This approach allows the 
+system to handle variable-length input text-lines without any predefined limit, 
+as long as the input fits within the model’s maximum token capacity.
+This is a high-level description of the system architecture. Importantly, 
+our pipeline operates without any preprocessing steps like binarization, 
+noise removal, or skew adjustment. It processes raw input images directly, 
+handling both detection and recognition seamlessly within a unified end-to-end 
+framework.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/result_image_to_text.png}
+    \caption{End-to-end OCR result: The pipeline takes a raw image as input 
+    and outputs recognized text directly without any manual preprocessing.}
+    \label{fig:result_converted}
+\end{figure}
+
 \section{Experimental Environment and Tools}
 \label{sec:environment}
 
@@ -49,26 +77,39 @@ and software specifications listed below:
 \section{CRAFT for Text Detection}
 \label{sec:craft-complete}
 
-This section presents a comprehensive overview of the CRAFT (Character Region Awareness for Text Detection) model implementation, covering its architecture, configuration, training methodology, dataset preparation, and evaluation metrics.
+This section presents a comprehensive overview of the CRAFT 
+(Character Region Awareness for Text Detection) model implementation, 
+covering its architecture, configuration, training methodology, dataset 
+preparation, and evaluation metrics.
 
 \subsection{CRAFT Model Architecture}
 \label{subsec:craft-architecture}
 
 For the text detection stage, we adopted the Character Region Awareness for Text 
-Detection (CRAFT) model, which is well-regarded for its ability to detect text at 
-the character level rather than relying solely on word-level bounding boxes. 
-CRAFT produces dense predictions of character regions and affinity scores, 
-enabling it to localize irregular and closely spaced text lines an essential 
-requirement for handling complex scripts like Khmer.
-
-The CRAFT model architecture consists of a VGG16-based backbone followed by a series 
-of convolutional layers to produce two output maps:
+Detection (CRAFT) model, which is a fully convolutional network architecture 
+based on VGG-16 with batch normalization is adopted as this architecture's backbone.
+The model has skip connections in the decoding part, which is similar to U-net in
+that aggregates low-level features. The final output is producing two channels as 
+score maps:
 \begin{itemize}
 \item A \textbf{region score map}, indicating the likelihood of each pixel belonging 
 to a character region.
 \item An \textbf{affinity score map}, capturing the spatial relationships between 
 adjacent characters to form text lines.
 \end{itemize}
+
+Unlike traditional text detectors that rely on bounding-box regression, 
+CRAFT performs pixel-level predictions to detect the centers of individual 
+characters and the affinities between them, allowing it to handle curved, 
+rotated, or irregular text effectively. However, in our work, we focus on 
+text-line-level detection rather than character-level because Khmer is a 
+complex writing system. Many characters are visually dependent, invisible, 
+or cannot appear independently, making character-level detection unreliable 
+for curved or rotated Khmer text. Since curved text detection relies on accurate 
+per-character localization and grouping, CRAFT's character-centric design does 
+not perform well on curved Khmer scripts.
+
+
 
 \begin{figure}[H]
     \centering
@@ -78,7 +119,9 @@ adjacent characters to form text lines.
     \label{fig:craft-model}
 \end{figure}
 
-The model has 20,770,466 trainable parameters. We used the official implementation of CRAFT with some modifications to better support Khmer character characteristics, such as tight spacing, stacked glyphs, and diacritic marks. The input images were resized to a fixed height of 768 pixels while preserving the aspect ratio.
+The model has 20,770,466 trainable parameters. We used the official 
+implementation of CRAFT with some modifications to better support Khmer text. 
+
 
 \subsection{CRAFT Training Configuration}
 \label{subsec:craft-training-config}
