@@ -120,7 +120,9 @@ not perform well on curved Khmer scripts.
 \end{figure}
 
 The model has 20,770,466 trainable parameters. We used the official 
-implementation of CRAFT with some modifications to better support Khmer text. 
+implementation of CRAFT with some modifications to better support Khmer text,
+including the use of a custom dataset and a modified training procedure such as
+skip the character labels during training.
 
 
 \subsection{CRAFT Training Configuration}
@@ -152,16 +154,23 @@ using weak supervision.}
 \subsection{CRAFT Dataset and Data Augmentation}
 \label{subsec:craft-dataset}
 
-Throughout the training process, a variety of data augmentation techniques were employed to enhance the model's robustness against font diversity, image noise, and other real-world distortions. These augmentations included:
+Throughout the training process, a variety of data augmentation techniques 
+were employed to enhance the model's robustness against font diversity, 
+image noise, and other real-world distortions. These augmentations included:
 
 \begin{itemize}
 \item Random rotation of text instances by up to 20 degrees
 \item Random cropping with varying scales and aspect ratios
 \item Horizontal flipping to introduce mirrored perspectives
-\item Color jittering involving simultaneous adjustments in brightness, contrast, saturation, and hue (each parameter varied by a factor of 0.2)
+\item Color jittering involving simultaneous adjustments in brightness, 
+contrast, saturation, and hue (each parameter varied by a factor of 0.2)
 \end{itemize}
 
-These transformations enriched the training set with diverse visual variations, which helped the model generalize more effectively to unseen examples. We fine-tuned the pretrained model using a manually annotated dataset comprising 4,000 bounding boxes that captured the intricate structure of the Khmer script, including its unique diacritics and ligatures.
+These transformations enriched the training set with diverse visual variations, 
+which helped the model generalize more effectively to unseen examples. 
+We fine-tuned the pretrained model using a manually annotated dataset 
+comprising 4,000 bounding boxes that captured the intricate structure 
+of the Khmer script, including its unique diacritics and ligatures.
 
 \subsection{CRAFT Training Process and Results}
 \label{subsec:craft-training-results}
