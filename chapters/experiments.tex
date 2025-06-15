@@ -151,12 +151,42 @@ using weak supervision.}
 \label{tab:craft-training-config}
 \end{table}
 
+
 \subsection{CRAFT Dataset and Data Augmentation}
 \label{subsec:craft-dataset}
 
-Throughout the training process, a variety of data augmentation techniques 
-were employed to enhance the model's robustness against font diversity, 
-image noise, and other real-world distortions. These augmentations included:
+The dataset preparation for CRAFT model training involved a comprehensive manual 
+annotation process where text-line regions were annotated one by one with precise 
+bounding boxes. This meticulous approach ensured high-quality ground truth data 
+that accurately captured the complex structure of Khmer script, including its 
+unique diacritics, ligatures, and stacked character arrangements.
+To accelerate the annotation process while maintaining accuracy, we integrated 
+commercial APIs, specifically Google's text detection API, as an initial automated 
+annotation step. However, since these commercial APIs are not perfect and often 
+struggle with Khmer script complexity, each automatically generated bounding box 
+required manual verification and correction. 
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/craft_text_annotation.png}
+    \caption{The example of text detection dataset collection using commercial API}
+    \label{fig:data_craft_collection}
+\end{figure}
+
+
+This hybrid approach significantly 
+reduced annotation time while ensuring the final dataset quality met our standards.
+The entire data collection and annotation process was facilitated by a custom-built 
+annotation tool developed specifically for this project. This tool was designed with 
+easy integration capabilities for commercial APIs, allowing seamless incorporation of 
+automated suggestions while providing intuitive interfaces for manual correction 
+and refinement. The tool's flexible architecture enabled rapid switching between 
+different API providers and manual annotation modes, optimizing the overall annotation 
+workflow.
+Throughout the training process, a variety of data augmentation techniques were 
+employed to enhance the model's robustness against font diversity, image noise, 
+and other real-world distortions. These augmentations included:
 
 \begin{itemize}
 \item Random rotation of text instances by up to 20 degrees
@@ -167,10 +197,12 @@ contrast, saturation, and hue (each parameter varied by a factor of 0.2)
 \end{itemize}
 
 These transformations enriched the training set with diverse visual variations, 
-which helped the model generalize more effectively to unseen examples. 
-We fine-tuned the pretrained model using a manually annotated dataset 
-comprising 4,000 bounding boxes that captured the intricate structure 
-of the Khmer script, including its unique diacritics and ligatures.
+which helped the model generalize more effectively to unseen examples. The final 
+manually annotated dataset comprised 13200 high-quality bounding boxes that captured 
+the intricate structure of the Khmer script, ensuring robust training data for the 
+CRAFT model fine-tuning process.
+
+
 
 \subsection{CRAFT Training Process and Results}
 \label{subsec:craft-training-results}
