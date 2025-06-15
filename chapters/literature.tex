@@ -4,12 +4,55 @@
 
 \section{Khmer Script Overview}
 \phantomsection
-\label{sec:ocr-overview}
+\label{sec:Khmer-overview}
 ​ ​ ​ ​ The Constitution of Cambodia establishes Khmer as the 
 official language, making accurate digital processing of
-Khmer documents crucial for national development \citet{Accuracy_Improvement}.
+Khmer documents crucial for national 
+development \citet{Accuracy_Improvement}.
+Khmer serves as the primary medium for education, government, 
+and cultural expression for over 17 million 
+speakers. Unlike Latin-based languages, the Khmer script is an abugida system 
+in which each consonant is attached to an inherent 
+invisible vowel \citep{buoy2023khmerocr}. One of the main reasons is
+the complexity of Khmer characters, which consist of 33 consonants,
+16 dependent vowels, and 14 independent vowels and 13 
+diacritics \citet{nom2024khmerst}. 
 
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/khmer_alphabet.png}
+  \caption{The Unicode point representation of the entire 
+  Khmer alphabet, including consonants, vowels, diacritics, 
+  and punctuation. Adapted from}
+  \label{fig:khmer_alphabets}
+\end{figure}
+
+In many Khmer fonts, the subscript forms of certain 
+letters (especially DA vs TA, and some other diacritics ) are nearly indistinguishable 
+because they both reduce to a small loop shape beneath the base consonant.
+Even if they look the same, the actual 
+characters used are different in code. This is matter in
+search engine, NLP, OCR, and other systems. \citet{Ansary}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/khmer_word_codepoint.png}
+  \caption{The Unicode point representation of word forms using 
+  "coeng (U17D2)". For the first two words, they use the 
+  subscript DA; for the last two words, they use the 
+  subscript TA, but both appear the same, while the Unicode 
+  points are different.}
+  \label{fig:khmer_codepoints}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/Ambiguous_characters.png}
+  \caption{Ambiguous characters: (1) consonants, (2) subscripts, and (3) vowels. \citet{buoy2023khmerocr}}
+  \label{fig:Ambiguous_characters}
+\end{figure}
 
 \section{Definition of Optical Character Recognition (OCR)}
 \phantomsection
@@ -20,12 +63,21 @@ Khmer documents crucial for national development \citet{Accuracy_Improvement}.
  OCR systems aim to convert visual representations of text into machine-encoded formats, 
  enabling automated indexing, editing, and data extraction \citep{muaz2015khmerocr}.
 
-Modern OCR technology has evolved significantly from its early rule-based and template-matching
+Modern OCR technology has evolved significantly from its early rule-based and 
+template-matching
 roots to incorporate advanced machine learning techniques, particularly deep learning,
-which allow for improved accuracy in character detection, segmentation, and classification across 
+which allow for improved accuracy in character detection, segmentation, 
+and classification across 
 diverse languages and scripts.
 
-OCR systems typically consist of several key components: image preprocessing (e.g., noise removal, binarization), text detection, character segmentation, feature extraction, and recognition. These systems must be adapted to handle various font styles, image distortions, complex layouts, and script-specific features. While OCR for Latin-based languages has become highly accurate, extending such systems to non-Latin scripts—such as Khmer—remains a significant research challenge due to unique linguistic and structural characteristics.
+OCR systems typically consist of several key components: 
+image preprocessing (e.g., noise removal, binarization), 
+text detection, character segmentation, feature extraction, 
+and recognition. These systems must be adapted to handle various 
+font styles, image distortions, complex layouts, and script-specific 
+features. While OCR for Latin-based languages has become highly accurate, 
+extending such systems to Non-Latin scripts such as Khmer remains a 
+significant research challenge due to unique linguistic and structural characteristics.
   
 
 \section{Text Detection}
@@ -97,6 +149,29 @@ to benefit from each other during training.
 \section{Khmer Optical Character Recognition (OCR)}
 \phantomsection
 \label{sec:khmer_OCR_literature}
+
+Most previous work on Khmer OCR are based on complex character segmentation,
+standalone character classification, character re-assembling,
+word-level or short sentence recognition, single language and some research has focus only
+text recognition from the image without any pre-processing steps or text
+detection step.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/khmer_char_segmentation.png}
+  \caption{Line \& Character Segmentation \citet{Sok&Taing2014}}
+  \label{fig:khmer_character_segmentation}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/single_language_only.png}
+  \caption{Detection results from YOLOv1 enhanced with CNN: 
+  the model predicts the text area in each image by 
+  drawing bounding boxes on Khmer language only. \citet{nom2024khmerst}}
+  \label{fig:single_language_only}
+\end{figure}
+
 
 ​ ​ ​ ​ \citet{CheyFirstOCR} The first significant research on Optical Character Recognition (OCR) 
 for Khmer script was proposed in 2006, marking a foundational contribution 
@@ -306,16 +381,6 @@ results, and gaps remain in handwritten recognition, font diversity, and domain 
 Future research must prioritize Khmer-aware model design, synthetic data generation, and robust 
 multimodal solutions to improve performance in real-world OCR applications.
     
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{figures/summary_literature_review.png}
-    \caption{Summary of the literature review, which includes the types of models used, 
-    the datasets used, the metrics used to evaluate the performance of the models, 
-    and the results of the experiments. The table highlights the key findings of the 
-    literature review, including the challenges faced when developing Khmer OCR models 
-    and the need for Khmer-specific models and datasets.}
-    \label{fig:summary_literature_review}
-\end{figure}
 
 \section{Challenges in Khmer OCR}
 \phantomsection
