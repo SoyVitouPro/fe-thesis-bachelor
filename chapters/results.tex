@@ -48,7 +48,7 @@ detect each word as a single entity, rather than as whole sentence.
 By detecting text in this way, the model is able to recognize the text 
 more accurately.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{figures/image_detection_craft_02.png}
     \caption{Testing with post image type and complex scenes: example of text detection using the CRAFT 
@@ -65,16 +65,49 @@ This demonstrates the model's robustness and ability to detect text in a variety
 \subsection{CRAFT Evaluation Metrics}
 \label{subsec:craft-evaluation}
 
+The results presented in Table~\ref{tab:craft_experimental_result} are based on experiments 
+conducted using a manually annotated dataset consisting of 60 images containing both Khmer and English 
+text. To evaluate the performance of the text detection model, standard metrics were employed: 
+Precision, Recall, F1-score (also referred to as H-Mean), and Intersection over Union (IoU). 
+These metrics provide a comprehensive view of the model’s accuracy in identifying text regions. 
+The table summarizes the outcomes under various combinations of Region Score threshold, 
+Affinity Score threshold, Low Text threshold, and canvas size settings (denoted in the RALC column), 
+reflecting the model's adaptability across different configurations.
 
-The CRAFT model achieved:
-\begin{itemize}
-\item \textbf{Recall}: 90\% at IoU threshold of 0.5
-\item \textbf{Precision}: 89\% 
-\item \textbf{F1-score}: 86.8\%
-\end{itemize}
+\begin{table}[H]
+    \centering
+    \caption{Summary of Text Detection Results}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{3.5cm}|p{3.0cm}|p{3.0cm}|p{2.0cm}|p{3.0cm}|}
+    \hline
+    \textbf{RALC} & \textbf{Avg Precision} & \textbf{Avg Recall} & \textbf{H-Mean} & \textbf{Avg IoU} \\
+    \hline
+    0.3,0.2,0.1,3240 & 0.3718 & 0.2296 & 0.2648 & 0.2404\\
+    \hline
+    0.5,0.4,0.4,3240 & 0.9628 & 0.9794 & 0.9680 & 0.8383\\
+    \hline
+    0.6,0.5,0.5,3240 & 0.9480 & 0.9702 & 0.9558 & 0.7431\\
+    \hline
+    0.7,0.7,0.4,3240 & 0.2909 & 0.4242 & 0.3350 & 0.2391\\
+    \hline
+    0.7,0.6,0.5,2440 & 0.7878 & 0.8798 & 0.8239 & 0.6039\\
+    \hline
+    0.6,0.6,0.5,3440 & 0.7527 & 0.8797 & 0.8025 & 0.5751\\
+    \hline
+    0.6,0.5,0.4,3240 & 0.9641 & 0.9805 & 0.9697 & 0.8363\\
+    \hline
+    0.7,0.5,0.4,2540 & 0.9792 & 0.9746 & 0.9751 & 0.8503\\
+    \hline
+    \end{tabular}
+    \label{tab:craft_experimental_result}
+\end{table}
 
-These results demonstrate that the model successfully adapted to Khmer script characteristics and can effectively detect text regions in various conditions.
-
+{\englishfont Among all configurations, the best performance was achieved with RALC = 0.7, 0.5, 0.4, 2540, 
+which yielded an F1-score of 0.9751 and an IoU of 0.8503. This indicates that this particular 
+combination of Region Score = 0.7, Affinity Score = 0.5, Low Text = 0.4, and Canvas Size = 2540 
+strikes an optimal balance between text detection sensitivity and bounding box precision. 
+These results demonstrate that the model successfully adapted to Khmer script characteristics 
+and can effectively detect text regions under diverse conditions.}
 
 
 \section{Text Recognition Results}
@@ -94,7 +127,7 @@ Our analysis revealed several cases where the model struggled to perform effecti
 
 2. Non-standard and Artistic Text: Another significant challenge was presented by text written in unusual fonts and artistic styles. The text detection model particularly struggled with these cases, as the unconventional character shapes and varying sizes created complex visual patterns that were difficult for the model to process accurately.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/test_case.png}
     \caption{Challenging cases involving both curved text layouts and artistic typography. 
@@ -136,7 +169,7 @@ Activation Mapping (Grad-CAM) visualization techniques. Grad-CAM provides insigh
 of the input image the model focuses on when making predictions, effectively highlighting the areas that 
 contribute most to the model's decision-making process.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/grad_cam_figure.png}
     \caption{Grad-CAM visualization of the TrOCR model's attention on input text. The heatmap shows how 

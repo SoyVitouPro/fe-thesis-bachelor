@@ -119,7 +119,79 @@ not perform well on curved Khmer scripts.
     \label{fig:craft-model}
 \end{figure}
 
-Fig.\ref{fig:craft-model} shows clearly the CRAFT network architecture. 
+
+\subsection{CRAFT Network Architecture}
+
+The Character Region Awareness for Text Detection (CRAFT) model adopts a fully convolutional architecture based on the VGG-16 backbone with batch normalization. It is designed to predict two output maps: the region score map and the affinity score map, representing the center probability of each character and the space between adjacent characters, respectively.
+
+\subsubsection*{Backbone Network: VGG-16}
+
+The first part of the model utilizes VGG-16 \cite{Simonyan} 
+as the feature extractor. Let the input image be denoted by 
+$I \in \mathbb{R}^{H \times W \times 3}$. The VGG-16 backbone extracts 
+hierarchical feature maps:
+
+\[
+\begin{aligned}
+F_1 &= \text{Conv}_{1\text{-}2}(I) \quad &\text{(features after conv1)} \\
+F_2 &= \text{Conv}_{2\text{-}2}(F_1) \quad &\text{(features after conv2)} \\
+F_3 &= \text{Conv}_{3\text{-}3}(F_2) \quad &\text{(features after conv3)} \\
+F_4 &= \text{Conv}_{4\text{-}3}(F_3) \quad &\text{(features after conv4)} \\
+F_5 &= \text{Conv}_{5\text{-}3}(F_4) \quad &\text{(features after conv5)} \\
+\end{aligned}
+\]
+
+\subsubsection*{Decoder: U-Net-style Feature Fusion}
+
+The decoder employs a U-Net-like architecture \cite{Ronneberger} with skip 
+connections to aggregate semantic and spatial information. Starting from $F_5$, 
+the features are upsampled and concatenated with features from earlier layers:
+
+\[
+\begin{aligned}
+F_{54} &= \text{Concat}(\text{Upsample}(F_5), F_4) \\
+F_{543} &= \text{Concat}(\text{Upsample}(F_{54}), F_3) \\
+F_{5432} &= \text{Concat}(\text{Upsample}(F_{543}), F_2) \\
+F_{54321} &= \text{Concat}(\text{Upsample}(F_{5432}), F_1) \\
+\end{aligned}
+\]
+
+Each fusion step is followed by one or more $3 \times 3$ convolutional layers with ReLU activations. The final decoding stage uses a series of convolution layers:
+
+\[
+\text{Conv}_{3\times3\times32} \rightarrow \text{Conv}_{3\times3\times32} \rightarrow \text{Conv}_{3\times3\times16} \rightarrow \text{Conv}_{1\times1\times16}
+\]
+
+\subsubsection*{Output Heads}
+
+The final fused features are projected into two separate output maps using $1 \times 1$ convolutions:
+
+\[
+\begin{aligned}
+S_r &= \sigma(\text{Conv}_{1\times1}^{1}(F_{out})) \quad &\text{(region score map)} \\
+S_a &= \sigma(\text{Conv}_{1\times1}^{1}(F_{out})) \quad &\text{(affinity score map)} \\
+\end{aligned}
+\]
+
+Here, $\sigma$ denotes the sigmoid activation function. 
+The region score $S_r$ represents the likelihood that a pixel is at the center 
+of a character, while the affinity score $S_a$ represents the connection strength 
+between adjacent characters \citet{baek2019craft}.
+
+\subsubsection*{Output Resolution}
+
+The output maps $S_r$ and $S_a$ are of size $H' \times W'$, 
+typically at $\frac{1}{2}$ resolution of the input image due to strided 
+convolutions and pooling operations in the VGG-16 backbone.
+
+
+
+
+
+
+
+
+
 
 \begin{figure}[H]
     \centering
@@ -165,10 +237,10 @@ using strong supervision.}
 \end{table}
 
 
-\subsection{CRAFT Dataset and Data Augmentation}
+\subsection{Dataset for Text Detection}
 \label{subsec:craft-dataset}
 
-The dataset preparation for CRAFT model training involved a comprehensive manual 
+{\englishfont The dataset preparation for CRAFT model training involved a comprehensive manual 
 annotation process where text-line regions were annotated one by one with precise 
 bounding boxes. This highly approach ensured high-quality ground truth data 
 that accurately captured the complex structure of Khmer script, including its 
@@ -177,7 +249,7 @@ To accelerate the annotation process while maintaining accuracy, we integrated
 commercial APIs, specifically Google's text detection API, as an initial automated 
 annotation step. However, since these commercial APIs are not perfect and often 
 struggle with Khmer script complexity, each automatically generated bounding box 
-required manual verification and correction. 
+required manual verification and correction. }
 
 
 \begin{figure}[H]
@@ -233,7 +305,7 @@ regions with high accuracy as you can see in the Figure~\ref{fig:iou-recall-craf
 
 This section provides a comprehensive examination of the TrOCR (Transformer-based Optical Character Recognition) model implementation, including its architecture, customization for Khmer script, training methodology, and evaluation results.
 
-\subsection{TrOCR Model Architecture}
+\subsection{TrOCR Model Architecture}   
 \label{subsec:trocr-architecture}
 
 For the text recognition component of the pipeline, we used the \textbf{TrOCR} model, a transformer-based OCR system proposed by Microsoft Research. TrOCR stands for \textit{Transformer-based Optical Character Recognition}, and it integrates a vision encoder with a language decoder in a unified encoder-decoder (Seq2Seq) architecture, following the structure of the Vision Transformer (ViT) and pre-trained language models like BART.
@@ -247,7 +319,61 @@ The TrOCR model takes the cropped text-line image detected by CRAFT and processe
     \label{fig:trocr-model}
 \end{figure}
 
-\subsection{Custom Khmer Processor Development}
+
+\subsection{Architecture Overview}
+
+The TrOCR architecture consists of two main components~\cite{li2021trocr}:
+
+\begin{itemize}
+    \item \textbf{Vision Encoder:} A pre-trained Vision Transformer (ViT)~\cite{dosovitskiy2020image}, which
+     extracts a sequence of visual features from input images.
+    \item \textbf{Text Decoder:} A GPT-2-style autoregressive transformer that 
+    generates character sequences from the visual features \cite{li2021trocr}.
+\end{itemize}
+
+Let the input image be denoted as $I \in \mathbb{R}^{H \times W \times 3}$.
+
+\subsubsection*{Encoder: Vision Transformer}
+
+The image $I$ is split into a sequence of $N$ patches, each of size $P \times P$. 
+These patches are linearly projected into embeddings and processed through a Transformer encoder:
+
+\[
+x_0 = [\text{CLS}; x^1; x^2; \dots; x^N] + E_{pos}
+\]
+
+\[
+Z = \text{TransformerEncoder}(x_0)
+\]
+
+where $x^i$ is the $i$-th patch embedding, $E_{pos}$ is the 
+positional encoding, and $Z \in \mathbb{R}^{N \times D}$ is the final visual 
+feature representation of the image.
+
+\subsubsection*{Decoder: Autoregressive Transformer}
+
+The decoder takes the encoder's output $Z$ and generates a 
+character sequence $y = (y_1, y_2, \dots, y_T)$:
+
+\[
+P(y_t | y_{<t}, Z) = \text{softmax}(W_o h_t)
+\]
+
+\[
+h_t = \text{DecoderBlock}(y_{<t}, Z)
+\]
+
+where $W_o$ is the output projection matrix and $h_t$ is the hidden state at time step $t$.
+
+
+
+
+
+
+
+
+
+\subsection{Custom TrOCR Processor for Interpretability on Khmer}
 \label{subsec:trocr-customization}
 
 To make the TrOCR model understand Khmer tokens, we customized the processor without modifying the original model architecture. We developed a CustomKhmerTokenizer based on a predefined list of unique Khmer and English characters, including special tokens such as \textit{<s>}, \textit{</s>}, and \textit{<pad>}, to handle the encoding of text into token IDs and the decoding of token IDs back into readable text.
@@ -264,7 +390,7 @@ This tokenizer was then wrapped inside a custom processor that mimics the behavi
     \label{fig:trocr-custom-processor}
 \end{figure}
 
-\subsection{TrOCR Dataset and Training Methodology}
+\subsection{Training TrOCR Workflow}
 \label{subsec:trocr-training}
 
 For the TrOCR model, we selected the base model because we were working with a multilingual dataset and wanted the model to have sufficient parameter capacity for this task. The training dataset consisted of 3.5 million synthetic images generated using our text-to-image pipeline.
@@ -313,55 +439,6 @@ The graph above illustrates a clear case of overfitting when using a batch size 
 
 With the optimized batch size of 1024, the model showed remarkable performance from early stages of training, with CER quickly stabilizing around 0.03 and WER maintaining values below 0.12. This rapid convergence can be attributed to the utilization of pretrained weights and the larger batch size enabling better generalization.
 
-\subsection{TrOCR Evaluation Metrics}
-\label{subsec:trocr-evaluation}
-
-For evaluating the text recognition performance of our TrOCR model, we employed three key metrics: Character Error Rate (CER), Word Error Rate (WER), and Accuracy. These metrics provide a comprehensive assessment of the model's recognition capabilities.
-
-\subsubsection{Character Error Rate (CER)}
-\label{subsubsec:cer-metric}
-
-Character Error Rate (CER) measures the ratio of incorrect characters to the total number of characters in the ground truth text. It is calculated as:
-
-\begin{equation}
-    CER = \frac{S + D + I}{N}
-\end{equation}
-
-where $S$ is the number of substitutions, $D$ is the number of deletions, $I$ is the number of insertions, and $N$ is the total number of characters in the ground truth text.
-
-\subsubsection{Word Error Rate (WER)}
-\label{subsubsec:wer-metric}
-
-Word Error Rate (WER) operates at the word level, measuring the ratio of incorrect words to the total number of words in the ground truth text. WER is calculated as:
-
-\begin{equation}
-    WER = \frac{S_w + D_w + I_w}{N_w}
-\end{equation}
-
-where $S_w$ is the number of word substitutions, $D_w$ is the number of word deletions, $I_w$ is the number of word insertions, and $N_w$ is the total number of words in the ground truth text.
-
-\subsubsection{Accuracy Metrics}
-\label{subsubsec:accuracy-metric}
-
-Accuracy is the complement of the error rate, representing the percentage of correctly recognized characters or words. For character-level accuracy:
-
-\begin{equation}
-    Accuracy_{char} = 1 - CER
-\end{equation}
-
-And for word-level accuracy:
-
-\begin{equation}
-    Accuracy_{word} = 1 - WER
-\end{equation}
-
-The final TrOCR model achieved:
-\begin{itemize}
-\item \textbf{Overall CER}: 0.02
-\item \textbf{Khmer CER}: 0.04
-\item \textbf{English CER}: 0.01
-\item \textbf{Mixed-language CER}: 0.06
-\end{itemize}
 
 \section{End-to-End OCR Pipeline}
 \label{sec:end-to-end-pipeline}
