@@ -113,10 +113,21 @@ not perform well on curved Khmer scripts.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/craft_model.png}
+    \includegraphics[width=\textwidth]{figures/craft_layer_network.png}
     \caption{Schematic illustration of our CRAFT network architecture.
     \citep{baek2019craft}}
     \label{fig:craft-model}
+\end{figure}
+
+Fig.\ref{fig:craft-model} shows clearly the CRAFT network architecture. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/craft_model_architecture.png}
+    \caption{Figure 3. Illustration of ground truth generation procedure in our framework. 
+    We generate ground truth labels from a synthetic image that has character level annotations.
+    \citep{baek2019craft}}
+    \label{fig:craft-model-architecture-detailed}
 \end{figure}
 
 The model has 20,770,466 trainable parameters. We used the official 
@@ -128,7 +139,9 @@ skip the character labels during training.
 \subsection{CRAFT Training Configuration}
 \label{subsec:craft-training-config}
 
-The CRAFT model was fine-tuned on a custom Khmer text dataset using weak supervision, leveraging the strengths of annotated real-world images. The key configuration parameters for training the CRAFT model are summarized in Table~\ref{tab:craft-training-config}.
+The CRAFT model was fine-tuned on a custom Khmer text dataset using fully supervised learning, 
+leveraging the strengths of annotated real-world images. The key configuration parameters 
+for training the CRAFT model are summarized in Table~\ref{tab:craft-training-config}.
 
 \begin{table}[H]
 \centering
@@ -147,7 +160,7 @@ Input image size & 768px (height, aspect ratio preserved) \\
 \hline
 \end{tabular}
 \caption{Key configuration parameters for training the CRAFT model on a custom Khmer dataset 
-using weak supervision.}
+using strong supervision.}
 \label{tab:craft-training-config}
 \end{table}
 
@@ -157,7 +170,7 @@ using weak supervision.}
 
 The dataset preparation for CRAFT model training involved a comprehensive manual 
 annotation process where text-line regions were annotated one by one with precise 
-bounding boxes. This meticulous approach ensured high-quality ground truth data 
+bounding boxes. This highly approach ensured high-quality ground truth data 
 that accurately captured the complex structure of Khmer script, including its 
 unique diacritics, ligatures, and stacked character arrangements.
 To accelerate the annotation process while maintaining accuracy, we integrated 
@@ -170,12 +183,12 @@ required manual verification and correction.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/craft_text_annotation.png}
-    \caption{The example of text detection dataset collection using commercial API}
+    \caption{\englishfont The example of text detection dataset collection using commercial API}
     \label{fig:data_craft_collection}
 \end{figure}
 
 
-This hybrid approach significantly 
+{\englishfont This hybrid approach significantly 
 reduced annotation time while ensuring the final dataset quality met our standards.
 The entire data collection and annotation process was facilitated by a custom-built 
 annotation tool developed specifically for this project. This tool was designed with 
@@ -186,65 +199,34 @@ different API providers and manual annotation modes, optimizing the overall anno
 workflow.
 Throughout the training process, a variety of data augmentation techniques were 
 employed to enhance the model's robustness against font diversity, image noise, 
-and other real-world distortions. These augmentations included:
-
-\begin{itemize}
-\item Random rotation of text instances by up to 20 degrees
-\item Random cropping with varying scales and aspect ratios
-\item Horizontal flipping to introduce mirrored perspectives
-\item Color jittering involving simultaneous adjustments in brightness, 
-contrast, saturation, and hue (each parameter varied by a factor of 0.2)
-\end{itemize}
+and other real-world distortions.
 
 These transformations enriched the training set with diverse visual variations, 
-which helped the model generalize more effectively to unseen examples. The final 
-manually annotated dataset comprised 13200 high-quality bounding boxes that captured 
+which helped the model generalize more effectively to unseen data. The final 
+manually annotated dataset comprised 7000 high-quality bounding boxes that captured 
 the intricate structure of the Khmer script, ensuring robust training data for the 
-CRAFT model fine-tuning process.
+CRAFT model fine-tuning process. }
 
 
 
-\subsection{CRAFT Training Process and Results}
+\subsection{CRAFT Training Experiment}
 \label{subsec:craft-training-results}
 
-The model was trained using Adam optimizer with early stopping and validation-based checkpointing to prevent overfitting. To further strengthen the model's discriminative capabilities, we incorporated contrastive learning alongside adversarial training, which were particularly beneficial in enabling the model to distinguish between visually similar Khmer characters and different font styles.
-
+{\englishfont
+The CRAFT model was evaluated during training using precision, recall, and Intersection over
+Union (IoU) metrics. The text detection model demonstrated excellent performance in detecting text 
+regions with high accuracy as you can see in the Figure~\ref{fig:iou-recall-craft}.
+}
+ 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/mean_loss_craft.png}
-    \caption{Illustration of the mean loss during CRAFT model training, showing the performance 
-    improvement over time. The mean loss decreased rapidly in the first 500 iterations, 
-    indicating that the model was able to quickly adapt to the training data. The loss then 
-    continued to decrease at a slower rate until around 2,000 iterations, at which point 
-    the model's performance began to plateau.}
-    \label{fig:mean-loss-craft}
-\end{figure}
-
-\subsection{CRAFT Evaluation Metrics}
-\label{subsec:craft-evaluation}
-
-Text detection evaluation was performed using precision, recall, and Intersection over Union (IoU) metrics. The CRAFT model demonstrated excellent performance in detecting text regions with high accuracy.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/iou_craft.png}
-    \caption{Illustration of the intersection over union (IOU) vs. recall performance of the CRAFT model 
-    during text detection evaluation. The IOU is a measure of how well the bounding box predicted 
-    by the model overlaps with the ground truth bounding box, while the recall measures how many of 
-    the ground truth bounding boxes are detected by the model. The model reaches a high recall of 
-    90\% at an IOU of 0.5, indicating that the model is able to detect most of the text regions even 
-    when the predicted bounding box is not perfectly aligned with the ground truth.}
+    \includegraphics[width=\textwidth]{figures/craft_traning_process_5000.png}
+    \caption{Illustration of the recall, precision, and the intersection over union 
+    (IOU) performance of the CRAFT model with 5000 steps.}
     \label{fig:iou-recall-craft}
 \end{figure}
 
-The CRAFT model achieved:
-\begin{itemize}
-\item \textbf{Recall}: 90\% at IoU threshold of 0.5
-\item \textbf{Precision}: 89\% 
-\item \textbf{F1-score}: 86.8\%
-\end{itemize}
 
-These results demonstrate that the model successfully adapted to Khmer script characteristics and can effectively detect text regions in various conditions.
 
 \section{TrOCR for Text Recognition}
 \label{sec:trocr-complete}

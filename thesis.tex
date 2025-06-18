@@ -14,6 +14,8 @@
 \usepackage{enumitem}
 \usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
 
+\DeclareCaptionFont{englishcaption}{\englishfont}
+
 % ==== Page Layout ====
 \geometry{
   a4paper,
@@ -36,6 +38,9 @@
 % Enable proper line breaking for Khmer
 \XeTeXlinebreaklocale "khmer"
 \XeTeXlinebreakskip = 0pt plus 1pt
+
+
+\captionsetup{font=englishcaption}
 
 % Center chapter titles
 \usepackage{titlesec}

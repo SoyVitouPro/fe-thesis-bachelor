@@ -10,6 +10,22 @@ architecture, was evaluated on a test set consisting of 20 images. The model ach
 Intersection over Union (IoU) score of 0.98 when compared to the ground truth annotations, 
 demonstrating high accuracy in detecting text regions.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Heatmap_visualization_craft.png}
+    \caption{Headmap visualization of Region score and Affinity score of CRAFT model on English text.
+    }
+    \label{fig:headmap-craft-model-on-English}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Heatmap_visualization_craft_on_kh.png}
+    \caption{Headmap visualization of Region score and Affinity score of CRAFT model on Khmer text.
+    }
+    \label{fig:headmap-craft-model-on-khmer}
+\end{figure}
+
 The training process was conducted on a dataset of 175 images, with an additional 20 images 
 used for validation. The evaluation results indicate that the model is capable of accurately 
 detecting text in all test images, showcasing its generalization ability and robustness across 
@@ -43,6 +59,24 @@ more accurately.
 As you can see from the example in Figure \ref{fig:detection-craft-post}, 
 the model is able to detect text even when it is very small, such as the text on the poster. 
 This demonstrates the model's robustness and ability to detect text in a variety of contexts and scenarios.
+
+
+
+\subsection{CRAFT Evaluation Metrics}
+\label{subsec:craft-evaluation}
+
+
+The CRAFT model achieved:
+\begin{itemize}
+\item \textbf{Recall}: 90\% at IoU threshold of 0.5
+\item \textbf{Precision}: 89\% 
+\item \textbf{F1-score}: 86.8\%
+\end{itemize}
+
+These results demonstrate that the model successfully adapted to Khmer script characteristics and can effectively detect text regions in various conditions.
+
+
+
 \section{Text Recognition Results}
 \label{sec:recognition-results}
 The text recognition model, based on the TrOCR (Transformer-based OCR) architecture, was
