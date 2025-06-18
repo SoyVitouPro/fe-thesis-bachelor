@@ -10,28 +10,13 @@ architecture, was evaluated on a test set consisting of 20 images. The model ach
 Intersection over Union (IoU) score of 0.98 when compared to the ground truth annotations, 
 demonstrating high accuracy in detecting text regions.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/Heatmap_visualization_craft.png}
-    \caption{Headmap visualization of Region score and Affinity score of CRAFT model on English text.
-    }
-    \label{fig:headmap-craft-model-on-English}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/Heatmap_visualization_craft_on_kh.png}
-    \caption{Headmap visualization of Region score and Affinity score of CRAFT model on Khmer text.
-    }
-    \label{fig:headmap-craft-model-on-khmer}
-\end{figure}
 
 The training process was conducted on a dataset of 175 images, with an additional 20 images 
 used for validation. The evaluation results indicate that the model is capable of accurately 
 detecting text in all test images, showcasing its generalization ability and robustness across 
 various text-containing scenes.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{figures/image_detection_craft_01.png}
     \caption{Testing with documentation image type: example of text detection using the CRAFT 
@@ -109,6 +94,27 @@ strikes an optimal balance between text detection sensitivity and bounding box p
 These results demonstrate that the model successfully adapted to Khmer script characteristics 
 and can effectively detect text regions under diverse conditions.}
 
+\subsection{Headmap Visualization}
+\label{subsec:headmap_visualization}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Heatmap_visualization_craft.png}
+    \caption{Headmap visualization of Region score and Affinity score of CRAFT model on English text.
+    }
+    \label{fig:headmap-craft-model-on-English}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Heatmap_visualization_craft_on_kh.png}
+    \caption{Headmap visualization of Region score and Affinity score of CRAFT model on Khmer text.
+    }
+    \label{fig:headmap-craft-model-on-khmer}
+\end{figure}
+
+
 
 \section{Text Recognition Results}
 \label{sec:recognition-results}
@@ -119,6 +125,15 @@ containing such as char by char, word by word, and sentence by sentence, it's al
 both languages, Khmer and English. The model achieved an impressive result, we achieved CER
 ( Character Error Rate) of 0.05 and WER (Word Error Rate) of 0.03, demonstrating high accuracy
 in recognizing text in the images.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/result_log_trocr_with_7000_image.png}
+    \caption{Testing Trocr model Evaluation Metrics by CER (Character Error Rate)}
+    \label{fig:trocr_cer_log_result}
+\end{figure}
+
 \section{Error Analysis and Failure Cases}
 \label{sec:error-analysis}
 Our analysis revealed several cases where the model struggled to perform effectively. The primary failure cases can be categorized into two main scenarios:
