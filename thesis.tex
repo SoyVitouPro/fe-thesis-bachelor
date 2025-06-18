@@ -12,6 +12,7 @@
 \usepackage{changepage}
 \usepackage[round]{natbib}
 \usepackage{enumitem}
+\usepackage{etoolbox}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
@@ -42,8 +43,19 @@
 \XeTeXlinebreaklocale "khmer"
 \XeTeXlinebreakskip = 0pt plus 1pt
 
+\AtBeginEnvironment{tabular}{\sffamily}
 
 \captionsetup{font=englishcaption}
+
+\makeatletter
+\renewenvironment{table}%
+  {%
+    \renewcommand{\familydefault}{\ttdefault}%
+    \selectfont%
+    \@float{table}%
+  }%
+  {\end@float}
+\makeatother
 
 % Center chapter titles
 \usepackage{titlesec}
@@ -54,6 +66,9 @@
 \title{}
 \author{}
 \date{}
+
+
+
 
 \begin{document}
 
@@ -105,9 +120,12 @@
 \input{chapters/dataset.tex}
 \input{chapters/experiments.tex}
 \input{chapters/results.tex}
+\input{chapters/development.tex}
 \input{chapters/discussion.tex}
 
 % === References ===
+\phantomsection
+\label{ch:references}
 \renewcommand{\bibname}{References}
 \bibliographystyle{plainnat}
 \bibliography{references}

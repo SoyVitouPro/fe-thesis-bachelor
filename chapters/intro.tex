@@ -17,7 +17,7 @@
 \section{Background to the Study}
 \label{sec:background}
 
-OCR technology has revolutionized how we convert printed 
+{\englishfont\fontsize{13.5pt}{17pt}\selectfont OCR technology has revolutionized how we convert printed 
 documents into digital text. With recent AI breakthroughs, 
 OCR systems now use deep learning to automatically find and 
 recognize characters in images. This technology is everywhere from digital libraries to search engines to language translation tools.
@@ -39,26 +39,32 @@ marks, subscripts, and vowel symbols that can appear
 above, below, or wrapped around the main letter. If 
 there is missing even a small mark, the word meaning 
 is completely changed.
+
 \begin{table}[H]
-    \caption{Why Khmer OCR is Desperately Needed}
-    \vspace{10pt}
+    \centering
+    \caption{Why Khmer OCR Is Desperately Needed}
+    \vspace{6pt}
     \phantomsection
     \label{sec:textbook}
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{|l|l|l|}
-    \hline
-    Sector & Cause & Effect \\
-    \hline
-    Education & Physical Textbooks & Students can't search or edit content \\
-    Libraries & Books Rotting on Shelves & Knowledge becomes inaccessible \\
-    Government & Tranditional Paper Work& Slow bureaucracy, hard to find documents \\
-    Administrative & Handwritten Document  & Manual Data Entry \\
-    Culture & Ancient Texts Deteriorating & Losing heritage records \\
-    \hline
-    \end{tabular}
+    \renewcommand{\arraystretch}{1.5} % adjust row height multiplier
+    \resizebox{\textwidth}{!}{%
+      \begin{tabular}{|p{2.7cm}|p{4.8cm}|p{7cm}|}
+        \hline
+        \rule{0pt}{0.4cm}\textbf{Sector} & \textbf{Cause} & \textbf{Effect} \\
+        \hline
+        \rule{0pt}{0.4cm}Education & Physical textbooks & Students cannot search or edit content \\
+        \hline
+        \rule{0pt}{0.4cm}Libraries & Books rotting on shelves & Knowledge becomes inaccessible \\
+        \hline
+        \rule{0pt}{0.4cm}Government & Traditional paperwork & Slow bureaucracy, and hard to find \\
+        \hline
+        \rule{0pt}{0.4cm}Administrative & Handwritten documents & Manual data entry required \\
+        \hline
+        \rule{0pt}{0.4cm}Culture & Ancient texts deteriorating & Loss of heritage records \\
+        \hline
+      \end{tabular}%
     }
-\end{table}
-
+  \end{table}
 
 
 
@@ -203,3 +209,5 @@ This thesis is structured into the following chapters:
 \end{enumerate}
 
 Each chapter progressively builds on previous sections to deliver a complete investigation of advanced Khmer OCR technology development.
+
+}
