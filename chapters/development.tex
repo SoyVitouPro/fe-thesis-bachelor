@@ -286,6 +286,13 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 \subsection{API Performance Evaluation}
 \label{subsec:api-performance-evaluation}
 
+
+To assess the practical viability of our OCR system in production environments, we conducted 
+comprehensive performance evaluations of both individual services and the complete end-to-end 
+pipeline. The evaluation focused on key metrics including throughput (Requests Per Second), 
+latency, and scalability under varying load conditions.
+
+
 \begin{table}[H]
     \centering
     \caption{Report of API Performance on CRAFT model. }
@@ -342,6 +349,31 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     \end{tabular}
     \label{tab:api_performance_evaluation}
 \end{table}
+
+
+The performance evaluation reveals a clear distinction between the two pipeline components in terms of production readiness. The {\englishfont\selectfont CRAFT} text detection service demonstrates excellent production-ready characteristics, achieving high throughput (8 to 128 RPS) with consistently low latency even under varying image complexity and concurrent loads. This performance profile makes it highly suitable for real-world deployment scenarios requiring responsive text localization.
+
+However, the {\englishfont\selectfont CRAFT + TrOCR} text detection and recognition component presents significant challenges for high-throughput production environments. The autoregressive nature of the model, which generates text token-by-token, inherently limits processing speed and creates scalability bottlenecks. With throughput ranging from 1 to 2 RPS for the complete pipeline, the recognition stage becomes the primary limiting factor for overall system performance.
+
+\vspace{0.5cm}
+
+The current {\englishfont\selectfont TrOCR} implementation uses full-precision ({\englishfont\selectfont FP32}) computations, which prioritize accuracy over speed. Several optimization strategies could significantly improve inference performance:
+
+\begin{itemize}
+    \item \textbf{Mixed Precision Inference (FP16):} Could potentially double inference speed with minimal accuracy loss.
+    \item \textbf{Quantization (INT8):} May achieve 2 to 4$\times$ speedup but requires careful evaluation of accuracy trade-offs.
+    \item \textbf{Model Distillation:} Training smaller, faster models while maintaining acceptable accuracy.
+    \item \textbf{Non-autoregressive Architectures:} Exploring parallel text generation approaches for faster inference.
+\end{itemize}
+
+
+The decision to optimize for speed versus accuracy depends heavily on the specific application requirements. For applications where accuracy is paramount such as digitizing historical documents, legal texts, or academic materials the current {\englishfont\selectfont FP32} implementation may be entirely appropriate despite slower processing speeds.
+
+Conversely, applications requiring real-time processing, such as mobile OCR apps or high-volume document processing systems, would benefit significantly from the optimization strategies mentioned above.
+
+\vspace{0.3cm}
+\noindent
+The current system provides a solid foundation for production deployment, with the text detection component ready for immediate high-throughput use and the recognition component suitable for accuracy-critical applications where processing speed is less critical.
 
 
 \section{End-to-End Pipeline Integration}
