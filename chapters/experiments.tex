@@ -3,6 +3,10 @@
 \label{ch:experiments}
 
 
+\vspace{-1cm}
+\setlength{\parindent}{0pt}
+\vspace{0.3cm}
+
 \section{End-to-End Khmer OCR Network system}
 \label{sec:end_to_end_khmer_ocr_sysetm}
 
@@ -309,7 +313,7 @@ regions with high accuracy as you can see in the Figure~\ref{fig:iou-recall-craf
 This section provides a comprehensive examination of the TrOCR (Transformer-based Optical Character Recognition) model implementation, including its architecture, customization for Khmer script, training methodology, and evaluation results.
 
 \subsection{TrOCR Model Architecture}   
-\label{subsec:trocr-architecture}
+\label{subsec:trocr-architecture-architecture}
 
 For the text recognition component of the pipeline, we used the \textbf{TrOCR} model, a transformer-based OCR system proposed by Microsoft Research. TrOCR stands for \textit{Transformer-based Optical Character Recognition}, and it integrates a vision encoder with a language decoder in a unified encoder-decoder (Seq2Seq) architecture, following the structure of the Vision Transformer (ViT) and pre-trained language models like BART.
 
@@ -372,11 +376,6 @@ where $W_o$ is the output projection matrix and $h_t$ is the hidden state at tim
 
 
 
-
-
-
-
-
 \subsection{Custom TrOCR Processor for Interpretability on Khmer}
 \label{subsec:trocr-customization}
 
@@ -397,7 +396,7 @@ This tokenizer was then wrapped inside a custom processor that mimics the behavi
 \subsection{Training TrOCR Workflow}
 \label{subsec:trocr-training}
 
-For the TrOCR model, we selected the base model because we were working with a multilingual dataset and wanted the model to have sufficient parameter capacity for this task. The training dataset consisted of 3.5 million synthetic images generated using our text-to-image pipeline.
+For the TrOCR model, we selected the base model because we were working with a multilingual dataset and wanted the model to have sufficient parameter capacity for this task. The training dataset consisted of 7.4 million synthetic images generated using our text-to-image pipeline.
 
 \begin{figure}[H]
     \centering

@@ -2,14 +2,18 @@
 \phantomsection
 \label{ch:results}
 
+\vspace{-1cm}
+\setlength{\parindent}{0pt}
+\vspace{0.3cm}
+
 \section{Text Detection Results}
 \label{sec:detection-results}
 
 {\englishfont\fontsize{13.5pt}{17pt}\selectfont
 
 The text detection model, based on the CRAFT (Character Region Awareness for Text detection) 
-architecture, was evaluated on a test set consisting of 20 images. The model achieved an impressive 
-Intersection over Union (IoU) score of 0.98 when compared to the ground truth annotations, 
+architecture, was evaluated on a test set consisting of 60 images. The model achieved an impressive 
+Intersection over Union (IoU) score of 0.85 when compared to the ground truth annotations, 
 demonstrating high accuracy in detecting text regions.
 
 
@@ -121,11 +125,11 @@ and can effectively detect text regions under diverse conditions.}
 \section{Text Recognition Results}
 \label{sec:recognition-results}
 The text recognition model, based on the TrOCR (Transformer-based OCR) architecture, was
-evaluated on a test set consisting of real dataset manually collected amount 3000 images, we
-spend time around 3 days to collect this dataset for fairly evaluation. The testing dataset
+evaluated on a test set consisting of real dataset manually collected amount 7000 images, we
+spend time around 10 days to collect this dataset for fairly evaluation. The testing dataset
 containing such as char by char, word by word, and sentence by sentence, it's also included
 both languages, Khmer and English. The model achieved an impressive result, we achieved CER
-( Character Error Rate) of 0.05 and WER (Word Error Rate) of 0.03, demonstrating high accuracy
+( Character Error Rate) of 0.12, demonstrating high accuracy
 in recognizing text in the images.
 
 
@@ -160,8 +164,8 @@ These failure cases highlight the need for further model improvements, particula
 \label{sec:robustness}
 The robustness and generalization capabilities of our text recognition model have demonstrated 
 remarkable performance beyond our initial expectations. Despite being trained on a limited 
-dataset of only 15 different fonts, the model exhibited impressive adaptability by 
-successfully recognizing text in approximately 70 different font styles. This significant 
+dataset of diversity fonts, the model exhibited impressive adaptability by 
+successfully recognizing real-scene text, on documentation with different font styles. This significant 
 improvement in font recognition capability highlights the model's strong generalization 
 abilities, particularly when dealing with fonts that maintain similar structural characteristics 
 to the training data.
@@ -193,10 +197,10 @@ contribute most to the model's decision-making process.
     the model progressively focuses on different parts of the text during prediction, with warmer colors 
     indicating higher attention weights. This visualization reveals the model's systematic approach to text 
     recognition, starting from the beginning of the text and moving sequentially.}
-    \label{fig:grad_cam}
+    \label{fig:grad-cam-trocr}
 \end{figure}
 
-As shown in Figure \ref{fig:grad_cam}, the Grad-CAM visualization reveals several interesting patterns in the model's 
+As shown in Figure \ref{fig:grad-cam-trocr}, the Grad-CAM visualization reveals several interesting patterns in the model's 
 attention mechanism:
 
 \begin{enumerate}

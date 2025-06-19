@@ -1,3 +1,5 @@
+\setlength{\parskip}{0.5em}
+\linespread{1.5}\selectfont
 \begin{adjustwidth}{0.2cm}{0.2cm}
 
     % Khmer Abstract
@@ -11,80 +13,91 @@
     \small
     នៅក្នុងអត្ថបទស្រាវជ្រាវមួយនេះ យើងនឹងបង្ហាញអំពី ការបំប្លែងរូបភាពឯកសារទៅជាអក្សរ 
     ដែលអាចកែប្រែបាន នៅលើ ភាសាខ្មែរ និងភាសាអង់គ្លេស។ ចំពោះការបំប្លែងរូបភាពឯកសារ 
-    នៃភាសាខ្មែរ ទៅជាអក្សរដែលអាចកែប្រែបាន នៅតែមានបញ្ហាសម្រាប់ OCR System ។ 
-    មិនត្រឹមតែភាពខ្វះខាតនៃ ទិន្នន័យ {\englishfont\fontsize{13.5pt}{20pt}\selectfont (dataset)} 
-    សម្រាប់ ឲ្យម៉ូដែលរៀនប៉ុណ្ណោះ ទេ ប៉ុន្តែ 
+    នៃភាសាខ្មែរ ទៅជាអក្សរដែលអាចកែប្រែបាន នៅតែមានបញ្ហាសម្រាប់ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont OCR System}។ 
+    មិនត្រឹមតែភាពខ្វះខាតនៃ ទិន្នន័យ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont (dataset)} 
+    សម្រាប់ឲ្យម៉ូដែលរៀនប៉ុណ្ណោះទេ ប៉ុន្តែ 
     ភាពស្មុគស្មាញនៃភាសាខ្មែររឹតតែមានភាពពិបាកក្នុងការចាប់យកអក្សរចេញពីរូបភាពផងដែរ 
-    ដូចជា ការសរសេរតម្រួតជាន់លើគ្នា ការដកឃ្លាមានភាពមិនទៀតទាត់ ដែលធ្វើឲ្យការចាប់ 
-    យកអក្សរចេញពី រូបភាព មានការលំបាក ខ្លាំង។ ការស្រាវជ្រាវភាគច្រើន គឺគេធ្វើតែទៅលើភាសា 
+    ដូចជា ការសរសេរតម្រួតជាន់លើគ្នា ការដកឃ្លាមានភាពមិនទៀតទាត់ ដែលធ្វើឲ្យការចាប់យកអក្សរចេញពី 
+    រូបភាព មានការលំបាកខ្លាំង។ ការស្រាវជ្រាវភាគច្រើន គឺគេធ្វើតែទៅលើភាសា 
     អក្សរឡាតាំងតែប៉ុណ្ណោះ ជាប្រភេទ 
     {\englishfont\fontsize{13.5pt}{20pt}\selectfont (latin-based scripts)}  
-    ដែលជាអក្សរ ប្រព័ន្ធ មួយប្រភេទ
-    ដែលមិនសូវមានការសរសេរតម្រួតគ្នាច្រើនតង់។ ការកើនឡើងនៃការប្រើប្រាស់ភាសាចូលគ្នានៅ
-    ក្នុងប្រទេសកម្ពុជា មានការកើនឡើងយ៉ាងខ្លាំង នៅពីរទសវត្សរ៍ចុងក្រោយមកនេះ ទៅលើឯក
-    សារដូចជា ស្លាកសញ្ញា អត្ថបទការសែត មេរៀន និង ការសន្ទនាផ្សេងៗទៀតដែលបង្កឲ្យមាន
-    ភាពស្មុគស្មាញ ខ្លាំងសម្រាប់ការចាប់យកអក្សរ ចេញពីរូបភាពដែលមានអក្សរលាយលំគ្នាច្រើន
-    ភាសាបែបនេះ។
-
-    នៅក្នុងការសិក្សាស្រាវជ្រាវមួយនេះ ពួកយើងបានបង្កើត វិធីសាស្ដ្រមួយដែលហៅថា 
-    {\englishfont\fontsize{13.5pt}{20pt}\selectfont End-to-end OCR approach}  
-    ដែលធ្វើឡើងសម្រាប់ដោះស្រាយបញ្ហាខាងលើ។ វិធីសាស្ដ្រមួយនេះបានធ្វើការបែង
-    ចែកជាពីរផ្នែកធំៗ ដំណាក់កាលទីមួយនោះគឺ ការចាប់យកទីតាំងអក្សរនៅលើរូបភាពដើម្បី បង្កឲ្យ
-    មានភាពងាយស្រួលសម្រាប់ ការចាប់យកអក្សរចេញពី រូបភាពឲ្យបានប្រសិទ្ធភាពខ្ពស់ជាងមុន 
-    {\englishfont\fontsize{13.5pt}{20pt}\selectfont (text-detection)}។ នៅក្នុងដំណាក់កាលទី២វិញ 
-    គឺការបម្លែងរូបភាពទាំងអស់នោះ ទៅជា
-    អត្ថបទដែលអាចធ្វើការកែប្រែបាន {\englishfont\fontsize{13.5pt}{20pt}\selectfont (text-recognition)}។ 
-    ដំណាក់កាលទាំងពីរនេះ គឺបង្កើត
-    ឡើងសម្រាប់ធ្វើការដោះស្រាយភាពស្មុគស្មាញទៅលើភាសាខ្មែរ និងការលាយលំភាសាខ្មែរជាមួយ
-    នឹងភាសាអង់គ្លេស។
-    ដើម្បីបង្រៀនម៉ូដែល និងធ្វើការវាយតម្លៃបាន ដំបូងយើង បានរៀបចំ 
-    {\englishfont\fontsize{13.5pt}{20pt}\selectfont (dataset)} ដែលមាន 
-    {\englishfont\fontsize{13.5pt}{20pt}\selectfont high-quality} 
-    ទាំង {\englishfont\fontsize{13.5pt}{20pt}\selectfont real dataset} 
-    និង {\englishfont\fontsize{13.5pt}{20pt}\selectfont synthetic dataset}, យើងបានប្រមូល 
-    data ទាំងអស់នោះដោយខ្លួន ឯង ចំនួន 369 រូបភាព ហើយបានធ្វើការកំណត់ទីតាំងអក្សរ
-    នៅលើរូបភាព ទទួលបាន 7552 ទីតាំងផ្សេងគ្នា។
-    ដើម្បីបង្កើន data ឲ្យកាន់តែច្រើន យើងបានប្រើប្រាស់វិធីសាស្ដ្រ 
-    {\englishfont\fontsize{13.5pt}{20pt}\selectfont (text-to-image)} ដើម្បី
-    បង្កើនរូបភាពឲ្យកាន់តែច្រើនជាងមុន ដោយសារតែបើពឹងផ្អែកតែទៅលើ ការប្រមូលម្ដងមួយៗ
-    គឺចំណាយពេលវេលានឹងថវិការច្រើន ដូច្នេះមានតែប្រើប្រាស់វិធីសាស្ដ្រ 
-    {\englishfont\fontsize{13.5pt}{20pt}\selectfont generate} មួយនេះ។ 
-    បន្ទាប់មកយើងទទួលបានពីការ {\englishfont\fontsize{13.5pt}{20pt}\selectfont generate} 
-    ប្រហែល 7.4 លាន រូបភាព។
-
-    សម្រាប់ ការកំណត់ទីតាំងនៃអក្សរនៅលើរូបភាព (text detection stage), ពួកយើងបាន
-    ប្រើប្រាស់ Craft ម៉ូដែល, ដែលវាល្អសម្រាប់ ការចាប់យកទីតាំងអក្សរ នៅលើរូបភាព។ ពួក
-    យើងបាន បង្រៀនម៉ូដែល ទៅលើ dataset manually collected ប្រហែល 369 
-    រូបភាព ដែលអាចកំណត់ទីតាំងអក្សរនៅលើរូបភាពបានល្អ។ យើងទទួលបាន 
-    {\englishfont\fontsize{13.5pt}{20pt}\selectfont recall 97\%, precision 97\%,} 
-    IOU 85\%
-    និងចុងក្រោយគឺ {\englishfont\fontsize{13.5pt}{20pt}\selectfont F1-score 97\%} ។ 
-
-    នៅក្នុង ការចាប់យកអក្សរចេញពីរូបភាពយើងបានប្រើប្រាស់ TrOCR ម៉ូដែលដែលបាន បង្កើត
-    ឡើងដោយក្រុមស្រាវជ្រាវរបស់ microsoft ដែលវាបានប្រើប្រាស់ transformer-based
-    architecture ម៉ូដែលមួយនេះមិនមាន feature ដើម្បី បម្លែងរូបភាពនៅលើភាសាខ្មែរនោះទេ
-    យើងមានតែធ្វើការ កែប្រែ processor របស់ម៉ូដែលមួយនេះ ដើម្បីឲ្យម៉ូដែលមួយនេះ មាន
-    សមត្ថភាព បំប្លែងរូបភាពភាសាខ្មែរបាន។ យើងបានបង្រៀនវាទៅលើ dataset ទាំងពីរប្រភព
-    real dataset និង synthetic dataset ដែលទទួលបាន CER 0.02 សម្រាប់ទូទៅ,
-    CER 0.04 សម្រាប់ ភាសាខ្មែរ,  CER 0.01 សម្រាប់ភាសាអង្គគ្លេស និងចុងក្រោយទទួលបាន
-    CER 0.06 សម្រាប់ ការលាយលំអក្សរខ្មែរ ជាមួយនឹងភាសាអង្គគ្លេស។
-
-    ដើម្បីឲ្យការស្រាវជ្រាវមួយនេះ មានការប្រើប្រាស់ជាក់ស្ដែងបាន យើងបាន សរសេរពីរបៀប
-    hosting ការស្រាវជ្រាវមូយនេះ សម្រាប់អនុញ្ញាតឲ្យ មានការ យកទៅប្រើប្រាស់បាន
-    តាមរយៈបង្កើតជា API service សម្រាប់ការតភ្ជាប់ជាមួយនឹងកម្មវិធីផ្សេងៗទៀតបាន។
-    វាបានបំពេញចន្លោះប្រហោងរវាងការស្រាវជ្រាវនិងការអនុវត្តន៍ក្នុងភាពពិតជាក់ស្ដែងក្នុងសហគមន៍។
-    ដែលវាមានសមត្ថភាពស្គាល់អក្សរពហុភាសាខ្មែរ-អង់គ្លេស បានយ៉ាងល្អ។
+    ដែលជាប្រព័ន្ធអក្សរមួយប្រភេទ 
+    ដែលមិនសូវមានការសរសេរតម្រួតគ្នាច្រើនតង់។ ការកើនឡើងនៃការប្រើប្រាស់ភាសាចូលគ្នា 
+    នៅក្នុងប្រទេសកម្ពុជា មានការកើនឡើងយ៉ាងខ្លាំង នៅពីរទសវត្សរ៍ចុងក្រោយនេះ 
+    ទៅលើឯកសារដូចជា ស្លាកសញ្ញា អត្ថបទការសែត មេរៀន និងការសន្ទនាផ្សេងៗ 
+    ដែលបង្កឲ្យមានភាពស្មុគស្មាញខ្លាំងសម្រាប់ការចាប់យកអក្សរចេញពីរូបភាពដែលមានអក្សរលាយលំ 
+    គ្នាច្រើនភាសាបែបនេះ។ នៅក្នុងការសិក្សាស្រាវជ្រាវមួយនេះ ពួកយើងបានបង្កើតវិធីសាស្ដ្រមួយដែលហៅថា 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont End-to-End OCR Approach}  
+    ដែលធ្វើឡើងសម្រាប់ដោះស្រាយបញ្ហាខាងលើ។ វិធីសាស្ដ្រមួយនេះបានបែងចែកជាពីរផ្នែកធំៗ 
+    ដំណាក់កាលទីមួយគឺ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont text detection} 
+    ដោយចាប់យកទីតាំងអក្សរនៅលើរូបភាព ដើម្បីបង្កើនប្រសិទ្ធភាព។ 
+    ដំណាក់កាលទីពីរគឺ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont text recognition} 
+    ដែលបម្លែងអក្សរពីរូបភាពទៅជា អត្ថបទដែលអាចកែប្រែបាន។ 
+    វិធីសាស្ត្រទាំងពីរនេះ គឺបង្កើតឡើងសម្រាប់ដោះស្រាយភាពស្មុគស្មាញនៃភាសាខ្មែរនិងការលាយភាសា 
+    ខ្មែរជាមួយភាសាអង់គ្លេស។ ដើម្បីបង្រៀនម៉ូដែល និងធ្វើការវាយតម្លៃបានយ៉ាងមានប្រសិទ្ធភាព 
+    យើងបានរៀបចំ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont high-quality dataset} 
+    រួមមានទាំង 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont real dataset} 
+    និង 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont synthetic dataset}។ 
+    យើងបានប្រមូលទិន្នន័យដោយខ្លួនឯង ចំនួន 369 រូបភាព និងបង្កើត bounding boxes 
+    ចំនួន 7,552 ទីតាំង។ 
+    ដើម្បីបង្កើនទិន្នន័យ យើងបានប្រើវិធីសាស្ត្រ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont text-to-image generation} 
+    ដែលអាចបង្កើនរូបភាពបានប្រហែល 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont 7.4 million}។ សម្រាប់ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont text detection stage}, 
+    យើងបានប្រើ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont CRAFT model} 
+    ដែលល្អក្នុងការចាប់យកទីតាំងអក្សរនៅលើរូបភាព។ 
+    វាត្រូវបានបង្រៀនលើ dataset ដោយដៃដែលមាន 369 រូបភាព 
+    និងទទួលបានលទ្ធផល 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont Recall 97\%, Precision 97\%, IOU 85\%, F1-score 97\%}។ 
+    សម្រាប់ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont text recognition}, 
+    យើងបានប្រើ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont TrOCR model} 
+    ដែលបង្កើតដោយ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont Microsoft Research}។ 
+    ម៉ូដែលនេះប្រើ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont transformer-based architecture} 
+    ដែលមិនមាន support សម្រាប់ភាសាខ្មែរដោយផ្ទាល់។ 
+    យើងបានកែប្រែ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont processor} 
+    របស់វា ដើម្បីឲ្យ support ភាសាខ្មែរ 
+    និងបានបង្រៀនលើ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont synthetic dataset} 
+    ដែលបានទទួល 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont CER 0.12} 
+    នៅលើ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont Real World Dataset}។ ដើម្បីធ្វើឲ្យការស្រាវជ្រាវនេះអាចប្រើប្រាស់បានជាក់ស្តែង 
+    យើងបានអភិវឌ្ឍ 
+    {\englishfont\fontsize{13.5pt}{20pt}\selectfont API service} 
+    សម្រាប់តភ្ជាប់ជាមួយកម្មវិធីផ្សេងៗ។ 
+    វាបំពេញចន្លោះរវាងការស្រាវជ្រាវ និងអនុវត្តន៍ក្នុងពេលជាក់ស្តែង 
+    ដោយមានសមត្ថភាពស្គាល់អក្សរពហុភាសា ខ្មែរ-អង់គ្លេសបានយ៉ាងល្អ។
     \vspace{2cm}
     
+    \clearpage
     % English Abstract
     \begin{center}
-        {\bfseries\large Abstract \par}
+        {\bfseries\large Abstract}
     \end{center}
+
+    \vspace{-0.2cm}
+    \setlength{\parindent}{0pt}
+    \vspace{0.3cm}
+
+
     \phantomsection
     \label{abstract}
-    \vspace{0.2cm}
     \englishfont\fontsize{13.5pt}{17pt}\selectfont 
-    Khmer text recognition presents persistent challenges for OCR 
+    ​ ​ ​ ​ ​ ​ ​​ ​ ​ ​  Khmer text recognition presents persistent challenges for OCR 
     systems not only due to the limited availability of annotated 
     training data, but also because of the language's complex script 
     structure, including stacked characters, overlapping diacritics, 
@@ -117,10 +130,10 @@
     OCR architecture. Since TrOCR’s original processor lacked 
     support for Khmer language, we customize it to properly tokenize 
     and decode Khmer characters by build on top of original 
-    processor. After training on the combined real and synthetic 
+    processor. After training on synthetic 
     datasets, the model achieved a character error rate (CER) of 
-    0.02 overall 0.04 for Khmer, 0.01 for English, and 0.06 for 
-    mixed-language text-line. To ensure practical usability, we deployed the system as a 
+    0.12 on real dataset text-line based. To ensure practical usability, 
+    we deployed the system as a 
     production-ready public API, allowing direct integration into 
     real-world applications. Unlike many academic models that 
     remain unused after publication, our deployment helps close 
