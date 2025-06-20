@@ -17,7 +17,7 @@ Intersection over Union (IoU) score of 0.85 when compared to the ground truth an
 demonstrating high accuracy in detecting text regions.
 
 
-The training process was conducted on a dataset of 175 images, with an additional 20 images 
+The training process was conducted on a dataset of 369 images, with an additional 60 images 
 used for validation. The evaluation results indicate that the model is capable of accurately 
 detecting text in all test images, showcasing its generalization ability and robustness across 
 various text-containing scenes.
@@ -46,6 +46,14 @@ more accurately.
     model on a natural scene text image.}
     \label{fig:detection-craft-post}
 \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/testing_with_khmer_id.png}
+    \caption{Example testing Khmer ID Card image with CRAFT model.}
+    \label{fig:detection-craft-post-with-khmer-id}
+\end{figure}
+
 
 As you can see from the example in Figure \ref{fig:detection-craft-post}, 
 the model is able to detect text even when it is very small, such as the text on the poster. 

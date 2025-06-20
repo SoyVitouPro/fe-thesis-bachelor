@@ -68,17 +68,15 @@ The CRAFT text detection service is implemented using FastAPI, a modern Python w
 def main():
     # FastAPI app initialization
     app = FastAPI(title="CRAFT Text Detection API")
-    
+
     # CORS middleware setup
     # Model loading and GPU configuration
     # API endpoint definitions
-
 
 def load_model(model_path, device):
     # Load CRAFT model from checkpoint
     # Apply state dict and move to GPU
     # Set model to evaluation mode
-
 
 def predict_endpoint(file):
     # Save uploaded image temporarily
@@ -200,20 +198,17 @@ def main():
     # FastAPI app initialization
     # CORS middleware configuration
     # Global model and processor variables
-
 def startup_event():
     # Load custom Khmer tokenizer
     # Initialize TrOCR processor
     # Load pre-trained model from checkpoint
     # Move model to GPU and optimize
-
 def recognize_single_image(file):
     # Decode uploaded image to RGB
     # Handle different image formats
     # Preprocess using custom processor
     # Generate text with beam search
     # Clean and format output
-
 def recognize_batch_images(files):
     # Load and resize multiple images
     # Process images in efficient batches
@@ -232,18 +227,13 @@ def setup_custom_processor():
     # Load base TrOCR processor
     # Initialize custom Khmer tokenizer
     # Create custom processor wrapper
-
-
 def clean_decoded_text(raw_text):
     # Extract text between special tokens
     # Remove formatting artifacts
-    # Return cleaned text string
-    
+    # Return cleaned text string 
 \end{verbatim}
-
 \subsection{Input and Output Specifications}
 \label{subsec:trocr-io}
-
 \textbf{Available Endpoints:}
 \begin{itemize}
 \item \textbf{Single Image}: \texttt{POST /ocr/printed/}
@@ -268,17 +258,14 @@ def clean_decoded_text(raw_text):
 \begin{verbatim}
 # Dockerfile structure
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
-
 # Extended system dependencies for transformers
 RUN apt-get install build-essential, libcairo2-dev, 
     gobject-introspection libraries
-
 # PyTorch and transformers installation
 RUN pip install torch torchvision transformers
-
 # Application configuration
-WORKDIR /app
-COPY . .
+WORKDIR /app # Create working directory path
+COPY . . # Copy all file and data to the image
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 \end{verbatim}
 
