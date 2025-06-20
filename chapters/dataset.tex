@@ -29,7 +29,7 @@ the collection with more natural language data.
 
 In total, the dataset collection process yielded over 3.7 million 
 character/symbols/words/sentences, including Khmer/English char-level, word-level, 
-and sentence-level. The natural text data from the internet is a crucial role in
+and sentence-level, this dataset will double by apply different font and diversity. The natural text data from the internet is a crucial role in
 OCR model training.
 
 \section{Data Manual Collection}
@@ -111,6 +111,14 @@ degrees to simulate variations in text orientation. Additionally, margins of
 1-5 pixels were randomly added to the text images to account for inconsistent 
 text detection. As each text line could generate two images, the total number 
 of images produced was 7.4 million.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/result_after_generation.png}
+    \caption{The annotated result of a synthetic image generated for the OCR training dataset.}
+    \label{fig:synthetic-image_output}
+\end{figure}
 
 
 The resulting synthetic dataset contained 7.4 million images, each with a unique 

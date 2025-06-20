@@ -28,14 +28,6 @@ noise removal, or skew adjustment. It processes raw input images directly,
 handling both detection and recognition seamlessly within a unified end-to-end 
 framework.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/result_image_to_text.png}
-    \caption{End-to-end OCR result: The pipeline takes a raw image as input 
-    and outputs recognized text directly without any manual preprocessing.}
-    \label{fig:result_converted}
-\end{figure}
-
 \section{Experimental Environment and Tools}
 \label{sec:environment}
 
@@ -388,8 +380,7 @@ This tokenizer was then wrapped inside a custom processor that mimics the behavi
     \includegraphics[width=\textwidth]{figures/Customize_processor.png}
     \caption{Architecture of the customized TrOCR pipeline. 
     The original TrOCR model is extended with a custom processor, 
-    which includes two additional fully connected layers 
-    (FC1 and FC2) tailored for Khmer character decoding.}
+    which is tailored for Khmer character decoding.}
     \label{fig:trocr-custom-processor}
 \end{figure}
 
