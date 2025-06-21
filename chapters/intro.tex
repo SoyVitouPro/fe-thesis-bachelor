@@ -141,6 +141,16 @@ difficult to implement OCR model as listed below:
                 \label{fig:text_stacking}
             \end{minipage}
         \end{figure}
+
+        \item \textbf{Ambiguity in Khmer Character Rendering:} Certain Khmer characters, especially subscript forms like subscript DA and subscript TA, can appear visually identical despite having different Unicode encodings. This leads to high intra-class variance and low inter-class variance, making OCR difficult. As shown in Fig.~\ref{fig:khmer_text_ambiguous}, different char but hard to recognize between characters, increasing recognition errors.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.87\textwidth]{figures/ambiguous_problem.png}
+            \begin{minipage}{0.87\textwidth}
+                \caption{Same characters having ambiguous text render \citep{nom2024khmerst}}
+                \label{fig:khmer_text_ambiguous}
+            \end{minipage}
+        \end{figure}
  \end{enumerate}
 
 
